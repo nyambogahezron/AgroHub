@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
-import { HomeNavData } from '../../../Data/AppData';
+import { HomeNavData } from '../Data/AppData';
 import AuthButtons from './AuthButtons';
 
 const logoStyle = {
@@ -179,7 +179,6 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                       flexDirection: 'column',
                       alignItems: 'center',
                       flexGrow: 1,
-                    
                     }}
                   >
                     <AuthButtons />

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import * as React from 'react';
 import { PaletteMode } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,16 +8,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
-import AppAppBar from './components/AppAppBar';
-import Hero from './components/Hero';
-import LogoCollection from './components/LogoCollection';
-import Highlights from './components/Highlights';
-import Pricing from './components/Pricing';
-import Features from './components/Features';
-import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
-import Footer from './components/Footer';
-import getLPTheme from './getLPTheme';
+import AppAppBar from '../../components/AppAppBar';
+import Hero from '../../components/Hero';
+import LogoCollection from '../../components/LogoCollection';
+import Highlights from '../../components/Highlights';
+import Pricing from '../../components/Pricing';
+import Features from '../../components/Features';
+import Testimonials from '../../components/Testimonials';
+import FAQ from '../../components/FAQ';
+import Footer from '../../components/Footer';
+import getLPTheme from '../../components/getLPTheme';
 
 interface ToggleCustomThemeProps {
   showCustomTheme: Boolean;
@@ -40,11 +40,11 @@ function ToggleCustomTheme({
       }}
     >
       <ToggleButtonGroup
-        color="primary"
+        color='primary'
         exclusive
         value={showCustomTheme}
         onChange={toggleCustomTheme}
-        aria-label="Platform"
+        aria-label='Platform'
         sx={{
           backgroundColor: 'background.default',
           '& .Mui-selected': {
@@ -77,7 +77,7 @@ export default function LandingPage() {
   };
 
   return (
-    <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
+    <ThemeProvider theme={LPtheme}>
       <CssBaseline />
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
@@ -95,10 +95,6 @@ export default function LandingPage() {
         <Divider />
         <Footer />
       </Box>
-      <ToggleCustomTheme
-        showCustomTheme={showCustomTheme}
-        toggleCustomTheme={toggleCustomTheme}
-      />
     </ThemeProvider>
   );
 }

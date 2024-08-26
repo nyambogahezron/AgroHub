@@ -1,5 +1,6 @@
+import React from 'react';
 import { Poppins } from 'next/font/google';
-import './globals.css';
+import '../assets/css/globals.css';
 
 // fonts
 const poppins = Poppins({
@@ -14,9 +15,17 @@ export const metadata = {
   description: 'AgroHub, a platform for farmers for better management',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='en'>
+      <link
+        rel='icon'
+        href='/icon?<generated>'
+        type='image/png'
+        sizes='32x32'
+      />
       <body className={poppins.className}>{children}</body>
     </html>
   );
