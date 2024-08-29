@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function AuthButtons() {
   return (
-    <div>
+    <>
       <Button
         color='primary'
         variant='text'
@@ -24,6 +24,6 @@ export default function AuthButtons() {
       >
         Sign up
       </Button>
-    </div>
+    </>
   );
 }
