@@ -16,3 +16,13 @@
   }
 }
 
+@media screen and (max-width: 400px) {
+  .hero-btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-btn .button {
+    width: 100%;
+  }
+}

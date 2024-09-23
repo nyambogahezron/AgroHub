@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { alpha } from '@mui/material';
+import { alpha, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { RxDashboard } from 'react-icons/rx';
+import { FaArrowRight } from 'react-icons/fa';
 
 export default function Hero() {
   return (
@@ -21,6 +23,7 @@ export default function Hero() {
           display: 'flex',
           flexDirection: { lg: 'row', xs: 'column' },
           alignItems: 'center',
+          justifyContent: 'center',
           pt: { xs: 14, sm: 20 },
           pb: { xs: 8, sm: 12 },
           marginTop: { xs: -0, lg: -15 },
@@ -31,28 +34,60 @@ export default function Hero() {
           spacing={2}
           useFlexGap
           sx={{ width: { xs: '100%', sm: '70%' }, alignItems: 'center' }}
+          className=' w-full items-start -mt-20 justify-center'
         >
           <Typography
-            variant='h1'
+            variant='h2'
             sx={{
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              alignSelf: 'center',
+              marginTop: { xs: 8, md: 0 },
+              alignSelf: 'start',
               textAlign: 'center',
-              fontSize: 'clamp(3.5rem, 10vw, 4rem)',
+              justifyContent: 'center',
+              fontSize: 'clamp(2rem, 10vw, 2.5rem)',
+              fontWeight: 'bold',
             }}
           >
-            AgroHub
+            <span>Agro</span> <span className='text-green-600'>Hub</span>
           </Typography>
           <Typography
-            textAlign='center'
-            color='text.secondary'
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
+            variant='h2'
+            sx={{
+              display: 'flex',
+              alignSelf: 'start',
+              textAlign: 'start',
+              justifyContent: 'center',
+              fontSize: 'clamp(1rem, 10vw, 1.5rem)',
+              fontWeight: 'bold',
+            }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality
-            solutions tailored to your needs. Elevate your experience with
-            top-tier features and services.
+            Empowering Farmers, Maximizing Profitability: Smart Solutions for
+            Modern Agriculture
           </Typography>
+          <Typography
+            className='mt-10'
+            color='text.secondary'
+            sx={{ width: { sm: '100%', md: '80%' } }}
+          >
+            Track expenses, manage operations, and boost profitability with our
+            smart agricultural platform. From farm inputs to sales, we provide
+            data-driven insights, predictive analytics, and a marketplace to
+            help farmers grow smarter and succeed.
+          </Typography>
+
+          <Stack className='hero-btn flex flex-row gap-4 mt-10 flex-wrap'>
+            <Button
+              sx={{ border: 1, borderColor: 'green' }}
+              className='button py-3 px-4 items-center justify-center  bg-green-50 rounded-full capitalize text-black font-bold w-52 hover:bg-green-400 transition duration-500 ease-in-out'
+            >
+              Get Started
+              <FaArrowRight className='ml-2 text-lg text-gray-700' />
+            </Button>
+            <Button className=' bg-green-100 rounded-lg capitalize py-3 px-8 text-blue-500 font-bold'>
+              <RxDashboard className='mr-2 text-lg' />
+              Dashboard
+            </Button>
+          </Stack>
         </Stack>
         <Box
           id='image'
