@@ -15,46 +15,46 @@ import ThumbUpAltRoundedIcon from '@mui/icons-material/ThumbUpAltRounded';
 const items = [
   {
     icon: <SettingsSuggestRoundedIcon />,
-    title: 'Adaptable performance',
+    title: 'Comprehensive Farm Management',
     description:
-      'Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.',
+      'Efficiently track expenses, labor costs, and sales to get a clear overview of your farm operations in real-time.',
   },
   {
     icon: <ConstructionRoundedIcon />,
-    title: 'Built to last',
+    title: 'Built for Scalability',
     description:
-      'Experience unmatched durability that goes above and beyond with lasting investment.',
+      'Designed to grow with your farm, our platform handles the needs of small to large-scale farming operations.',
   },
   {
     icon: <ThumbUpAltRoundedIcon />,
-    title: 'Great user experience',
+    title: 'User-Friendly Interface',
     description:
-      'Integrate our product into your routine with an intuitive and easy-to-use interface.',
+      'Our intuitive interface makes it easy for farmers to manage their farms with minimal learning curve.',
   },
   {
     icon: <AutoFixHighRoundedIcon />,
-    title: 'Innovative functionality',
+    title: 'Advanced Predictive Analytics',
     description:
-      'Stay ahead with features that set new standards, addressing your evolving needs better than the rest.',
+      'Leverage powerful analytics to forecast trends, optimize resources, and improve profitability with data-driven insights.',
   },
   {
     icon: <SupportAgentRoundedIcon />,
-    title: 'Reliable support',
+    title: 'Dedicated Support',
     description:
-      'Count on our responsive customer support, offering assistance that goes beyond the purchase.',
+      'Get reliable customer support with quick responses to help you maximize the platform’s benefits.',
   },
   {
     icon: <QueryStatsRoundedIcon />,
-    title: 'Precision in every detail',
+    title: 'Accurate Reporting',
     description:
-      'Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.',
+      'Generate detailed reports on farm expenses, sales, and productivity to make informed decisions for better results.',
   },
 ];
 
 export default function Highlights() {
   return (
     <Box
-      id="highlights"
+      id='highlights'
       sx={{
         pt: { xs: 4, sm: 12 },
         pb: { xs: 8, sm: 16 },
@@ -77,21 +77,23 @@ export default function Highlights() {
             textAlign: { sm: 'left', md: 'center' },
           }}
         >
-          <Typography component="h2" variant="h4">
+          <Typography component='h2' variant='h4' className='mb-4'>
             Highlights
           </Typography>
-          <Typography variant="body1" sx={{ color: 'grey.400' }}>
-            Explore why our product stands out: adaptability, durability,
-            user-friendly design, and innovation. Enjoy reliable customer support and
-            precision in every detail.
+          <Typography variant='body1' sx={{ color: 'grey.400' }}>
+            Our platform stands out with its adaptability, durability, and
+            user-friendly design. Built for efficient farm management, it offers
+            innovative features like predictive analytics and detailed
+            reporting. Enjoy reliable support and precision in every detail for
+            a seamless experience.
           </Typography>
         </Box>
         <Grid container spacing={2.5}>
           {items.map((item, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Stack
-                direction="column"
-                color="inherit"
+                direction='column'
+                color='inherit'
                 component={Card}
                 spacing={1}
                 useFlexGap
@@ -106,10 +108,10 @@ export default function Highlights() {
               >
                 <Box sx={{ opacity: '50%' }}>{item.icon}</Box>
                 <div>
-                  <Typography fontWeight="medium" gutterBottom>
+                  <Typography fontWeight='medium' gutterBottom>
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'grey.400' }}>
+                  <Typography variant='body2' sx={{ color: 'grey.400' }}>
                     {item.description}
                   </Typography>
                 </div>
