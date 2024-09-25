@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -12,6 +11,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
+import { useState } from 'react';
 
 const items = [
   {
@@ -19,29 +19,35 @@ const items = [
     title: 'Dashboard',
     description:
       'This item could provide a snapshot of the most important metrics or data points related to the product.',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+    imageLight:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
+    imageDark:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
+    title: 'Expenses Tracking',
     description:
       'This item could provide information about the mobile app version of the product.',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+    imageLight:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
+    imageDark:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
   },
   {
     icon: <DevicesRoundedIcon />,
-    title: 'Available on all platforms',
+    title: 'Products sales tracking',
     description:
       'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
-    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+    imageLight:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
+    imageDark:
+      'url("https://assets.justinmind.com/wp-content/uploads/2020/02/dahsboard-design-best-practices-example.png")',
   },
 ];
 
 export default function Features() {
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
   const handleItemClick = (index: number) => {
     setSelectedItemIndex(index);
@@ -50,24 +56,36 @@ export default function Features() {
   const selectedFeature = items[selectedItemIndex];
 
   return (
-    <Container id="features" sx={{ py: { xs: 8, sm: 16 } }}>
+    <Container id='features' sx={{ py: { xs: 8, sm: 16 } }}>
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <div>
-            <Typography component="h2" variant="h4" color="text.primary">
-              Product features
+            <Typography
+              component='h2'
+              variant='h4'
+              color='text.primary'
+              className='font-bold mb-2'
+            >
+              Features
             </Typography>
             <Typography
-              variant="body1"
-              color="text.secondary"
+              variant='body1'
+              color='text.secondary'
               sx={{ mb: { xs: 2, sm: 4 } }}
             >
-              Here you can provide a brief overview of the key features of the
-              product. For example, you could list the number of features, the types
-              of features, add-ons, or the benefits of the features.
+              Effortlessly manage farm expenses and labor, track sales, and
+              generate detailed reports. Leverage predictive analytics to
+              optimize farming practices, and access our marketplace to connect
+              with buyers, meet market standards, and attract investors among
+              others features.
             </Typography>
           </div>
-          <Grid container item gap={1} sx={{ display: { xs: 'auto', sm: 'none' } }}>
+          <Grid
+            container
+            item
+            gap={1}
+            sx={{ display: { xs: 'auto', sm: 'none' } }}
+          >
             {items.map(({ title }, index) => (
               <Chip
                 key={index}
@@ -86,7 +104,8 @@ export default function Features() {
                     }
                     return selectedItemIndex === index ? 'none' : '';
                   },
-                  backgroundColor: selectedItemIndex === index ? 'primary.main' : '',
+                  backgroundColor:
+                    selectedItemIndex === index ? 'primary.main' : '',
                   '& .MuiChip-label': {
                     color: selectedItemIndex === index ? '#fff' : '',
                   },
@@ -96,7 +115,7 @@ export default function Features() {
           </Grid>
           <Box
             component={Card}
-            variant="outlined"
+            variant='outlined'
             sx={{
               display: { xs: 'auto', sm: 'none' },
               mt: 4,
@@ -114,16 +133,24 @@ export default function Features() {
               }}
             />
             <Box sx={{ px: 2, pb: 2 }}>
-              <Typography color="text.primary" variant="body2" fontWeight="bold">
+              <Typography
+                color='text.primary'
+                variant='body2'
+                fontWeight='bold'
+              >
                 {selectedFeature.title}
               </Typography>
-              <Typography color="text.secondary" variant="body2" sx={{ my: 0.5 }}>
+              <Typography
+                color='text.secondary'
+                variant='body2'
+                sx={{ my: 0.5 }}
+              >
                 {selectedFeature.description}
               </Typography>
               <Link
-                color="primary"
-                variant="body2"
-                fontWeight="bold"
+                color='primary'
+                variant='body2'
+                fontWeight='bold'
                 sx={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -133,16 +160,16 @@ export default function Features() {
               >
                 <span>Learn more</span>
                 <ChevronRightRoundedIcon
-                  fontSize="small"
+                  fontSize='small'
                   sx={{ mt: '1px', ml: '2px' }}
                 />
               </Link>
             </Box>
           </Box>
           <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="flex-start"
+            direction='column'
+            justifyContent='center'
+            alignItems='flex-start'
             spacing={2}
             useFlexGap
             sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}
@@ -150,7 +177,7 @@ export default function Features() {
             {items.map(({ icon, title, description }, index) => (
               <Card
                 key={index}
-                variant="outlined"
+                variant='outlined'
                 component={Button}
                 onClick={() => handleItemClick(index)}
                 sx={{
@@ -166,7 +193,9 @@ export default function Features() {
                         ? 'primary.light'
                         : 'grey.200';
                     }
-                    return selectedItemIndex === index ? 'primary.dark' : 'grey.800';
+                    return selectedItemIndex === index
+                      ? 'primary.dark'
+                      : 'grey.800';
                   },
                 }}
               >
@@ -198,23 +227,23 @@ export default function Features() {
                   </Box>
                   <Box sx={{ textTransform: 'none' }}>
                     <Typography
-                      color="text.primary"
-                      variant="body2"
-                      fontWeight="bold"
+                      color='text.primary'
+                      variant='body2'
+                      fontWeight='bold'
                     >
                       {title}
                     </Typography>
                     <Typography
-                      color="text.secondary"
-                      variant="body2"
+                      color='text.secondary'
+                      variant='body2'
                       sx={{ my: 0.5 }}
                     >
                       {description}
                     </Typography>
                     <Link
-                      color="primary"
-                      variant="body2"
-                      fontWeight="bold"
+                      color='primary'
+                      variant='body2'
+                      fontWeight='bold'
                       sx={{
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -227,7 +256,7 @@ export default function Features() {
                     >
                       <span>Learn more</span>
                       <ChevronRightRoundedIcon
-                        fontSize="small"
+                        fontSize='small'
                         sx={{ mt: '1px', ml: '2px' }}
                       />
                     </Link>
@@ -244,7 +273,7 @@ export default function Features() {
           sx={{ display: { xs: 'none', sm: 'flex' }, width: '100%' }}
         >
           <Card
-            variant="outlined"
+            variant='outlined'
             sx={{
               height: '100%',
               width: '100%',

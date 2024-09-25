@@ -2,7 +2,7 @@ import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { Button, Divider, MenuItem, PaletteMode } from '@mui/material';
-import { HomeNavData } from '../Data/AppData';
+import { HomeNavData } from '../Data';
 import ScrollToSection from './ScrollToSection';
 import AuthButtons from './AuthButtons';
 import MenuIcon from '@mui/icons-material/Menu';

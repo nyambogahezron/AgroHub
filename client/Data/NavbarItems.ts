@@ -1,7 +1,4 @@
-interface HomeNavDataProps {
-  id: number;
-  name: string;
-}
+import { HomeNavDataProps } from "../Types";
 
 const HomeNavData: HomeNavDataProps[] = [
   { id: 1, name: 'features' },
@@ -11,4 +8,6 @@ const HomeNavData: HomeNavDataProps[] = [
   { id: 5, name: 'faq' },
 ];
 
-export { HomeNavData };
+
+
+export default  HomeNavData;

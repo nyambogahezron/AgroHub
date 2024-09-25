@@ -7,10 +7,11 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import ToggleColorMode from './ToggleColorMode';
-import { HomeNavData } from '../Data/AppData';
+import { HomeNavData } from '../Data';
 import AuthButtons from './AuthButtons';
 import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
+import { HomeNavbarProps } from '../Types';
 
 const logoStyle = {
   width: '140px',
@@ -18,10 +19,6 @@ const logoStyle = {
   cursor: 'pointer',
 };
 
-interface HomeNavbarProps {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
-}
 
 function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
   return (
@@ -72,7 +69,7 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
                 {HomeNavData.map((item) => {
                   return (
                     <MenuItem
-                    className='hover:bg-gray-200 hover:rounded-full'
+                      className='hover:bg-gray-200 hover:rounded-full'
                       key={item.id}
                       onClick={() =>
                         ScrollToSection({
