@@ -1,50 +1,5 @@
-/* Import Google font - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-a {
-  text-decoration: none;
-}
 
-.button {
-  padding: 6px 24px;
-  border: 2px solid #fff;
-  background: transparent;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.button:active {
-  transform: scale(0.98);
-}
 
-/* Home */
-.home {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  background-image: url("bg.jpg");
-  background-size: cover;
-  background-position: center;
-}
-.home::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease-out;
-}
-.home.show::before {
-  opacity: 1;
-  pointer-events: auto;
-}
 /* From */
 .form_container {
   position: fixed;

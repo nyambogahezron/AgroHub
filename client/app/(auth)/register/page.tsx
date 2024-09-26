@@ -1,38 +1,83 @@
 import React from 'react';
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Link,
+  Typography,
+} from '@mui/material';
+import ContainerCard from '../../../components/ContainerCard';
+import AuthHeader from '../../../components/AuthHeader';
 
+export const metadata = {
+  title: 'Register',
+};
 export default function Register() {
   return (
-    <section className='home'>
-      <div className='form_container'>
-        <div className='form signup_form'>
-          <form action='#'>
-            <h2>Signup</h2>
-            <div className='input_box'>
-              <input type='email' placeholder='Enter your email' required />
-              <i className='uil uil-envelope-alt email'></i>
-            </div>
-            <div className='input_box'>
-              <input type='password' placeholder='Create password' required />
-              <i className='uil uil-lock password'></i>
-              <i className='uil uil-eye-slash pw_hide'></i>
-            </div>
-            <div className='input_box'>
-              <input type='password' placeholder='Confirm password' required />
-              <i className='uil uil-lock password'></i>
-              <i className='uil uil-eye-slash pw_hide'></i>
-            </div>
-
-            <button className='button'>Signup Now</button>
-
-            <div className='login_signup'>
-              Already have an account?{' '}
-              <a href='#' id='login'>
-                Login
-              </a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
+    <ContainerCard>
+      <Box>
+        <Container
+          className='max-w-[500px] flex items-center justify-center w-full p-6 rounded-lg shadow-lg'
+          sx={{
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
+          }}
+        >
+          <Box className='max-w-[500px] w-full' component='form'>
+            <AuthHeader title='Register' />
+            <Box className='input_box'>
+              <TextField
+                type='email'
+                placeholder='Enter your email'
+                required
+                fullWidth
+                margin='normal'
+              />
+            </Box>
+            <Box className='input_box'>
+              <TextField
+                type='text'
+                placeholder='Enter your username'
+                required
+                fullWidth
+                margin='normal'
+              />
+            </Box>
+            <Box className='input_box'>
+              <TextField
+                type='password'
+                placeholder='Enter your password'
+                required
+                fullWidth
+                margin='normal'
+              />
+            </Box>
+            <Box className='input_box'>
+              <TextField
+                type='password'
+                placeholder='Confirm your password'
+                required
+                fullWidth
+                margin='normal'
+              />
+            </Box>
+            <Button
+              className='bg-purple-700 mt-7 w-full py-2.5 rounded-lg'
+              variant='contained'
+            >
+              Register
+            </Button>
+            <Box className='text-xs text-center mt-3.5'>
+              <Typography>
+                {`Don't have an account? `}
+                <Link href='/login' id='signup'>
+                  Signin
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+    </ContainerCard>
   );
 }

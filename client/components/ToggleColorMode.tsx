@@ -1,8 +1,4 @@
-import * as React from 'react';
-import { PaletteMode } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-
+import { PaletteMode, Box, Button } from '@mui/material';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
 
@@ -15,16 +11,16 @@ function ToggleColorMode({ mode, toggleColorMode }: ToggleColorModeProps) {
   return (
     <Box sx={{ maxWidth: '32px' }}>
       <Button
-        variant="text"
+        variant='text'
         onClick={toggleColorMode}
-        size="small"
-        aria-label="button to toggle theme"
+        size='small'
+        aria-label='button to toggle theme'
         sx={{ minWidth: '32px', height: '32px', p: '4px' }}
       >
         {mode === 'dark' ? (
-          <WbSunnyRoundedIcon fontSize="small" />
+          <WbSunnyRoundedIcon fontSize='small' />
         ) : (
-          <ModeNightRoundedIcon fontSize="small" />
+          <ModeNightRoundedIcon fontSize='small' />
         )}
       </Button>
     </Box>

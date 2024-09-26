@@ -1,48 +1,79 @@
 import React from 'react';
-
+import {
+  Box,
+  Container,
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Link,
+  Typography,
+} from '@mui/material';
+import ContainerCard from '../../../components/ContainerCard';
+import AuthHeader from '../../../components/AuthHeader';
+export const metadata = {
+  title: 'Login',
+};
 export default function Login() {
   return (
-    <section className='home'>
-      <div className='form_container'>
-        <div className='form login_form'>
-          <form action='#'>
-            <h2>Login</h2>
+    <ContainerCard>
+      <Box>
+        <Container
+          className='max-w-[500px] flex items-center justify-center w-full p-6 rounded-lg shadow-lg'
+          sx={{
+            boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px',
+          }}
+        >
+          <Box className='max-w-[500px] w-full' component='form'>
+            <AuthHeader title='Login' />
 
-            <div className='input_box'>
-              <input type='email' placeholder='Enter your email' required />
-              <i className='uil uil-envelope-alt email'></i>
-            </div>
-            <div className='input_box'>
-              <input
+            <Box className='input_box'>
+              <TextField
+                type='email'
+                placeholder='Enter your email'
+                required
+                fullWidth
+                margin='normal'
+              />
+            </Box>
+            <Box className='input_box'>
+              <TextField
                 type='password'
                 placeholder='Enter your password'
                 required
+                fullWidth
+                margin='normal'
               />
-              <i className='uil uil-lock password'></i>
-              <i className='uil uil-eye-slash pw_hide'></i>
-            </div>
+            </Box>
 
-            <div className='option_field'>
-              <span className='checkbox'>
-                <input type='checkbox' id='check' />
-                <label htmlFor='check'>Remember me</label>
-              </span>
-              <a href='#' className='forgot_pw'>
+            <Box className='option_field'>
+              <FormControlLabel
+                control={<Checkbox id='check' />}
+                label='Remember me'
+              />
+              <Link href='#' className='forgot_pw'>
                 Forgot password?
-              </a>
-            </div>
+              </Link>
+            </Box>
 
-            <button className='button'>Login Now</button>
+            <Button
+              className='bg-purple-700 mt-7 w-full py-2.5 rounded-lg'
+              variant='contained'
+            >
+              Login Now
+            </Button>
 
-            <div className='login_signup'>
-              {` Don't have an account?`}
-              <a href='#' id='signup'>
-                Signup
-              </a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
+            <Box className='text-xs text-center mt-3.5'>
+              <Typography>
+                {`Don't have an account? `}
+                <Link href='/register' id='signup'>
+                  Signup
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+    </ContainerCard>
   );
 }

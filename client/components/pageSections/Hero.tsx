@@ -1,10 +1,14 @@
-import { alpha, Button } from '@mui/material';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import {
+  alpha,
+  Button,
+  Box,
+  Container,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { RxDashboard } from 'react-icons/rx';
 import { FaArrowRight } from 'react-icons/fa';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -75,17 +79,22 @@ export default function Hero() {
           </Typography>
 
           <Stack className='hero-btn flex flex-row gap-4 mt-10 flex-wrap'>
-            <Button
-              sx={{ border: 1, borderColor: 'green' }}
-              className='button py-3 px-4 items-center justify-center  bg-green-50 rounded-full capitalize text-black font-bold w-52 hover:bg-green-400 transition duration-500 ease-in-out'
-            >
-              Get Started
-              <FaArrowRight className='ml-2 text-lg text-gray-700' />
-            </Button>
-            <Button className=' bg-green-100 rounded-lg capitalize py-3 px-8 text-blue-500 font-bold'>
-              <RxDashboard className='mr-2 text-lg' />
-              Dashboard
-            </Button>
+            <Link href='/login'>
+              <Button
+                variant='outlined'
+                sx={{ border: 1, borderColor: 'green' }}
+                className='button py-3 px-4 items-center justify-center  bg-green-50 rounded-full capitalize text-black font-bold w-52 hover:bg-green-400 transition duration-500 ease-in-out'
+              >
+                Get Started
+                <FaArrowRight className='ml-2 text-lg text-gray-700' />
+              </Button>
+            </Link>
+            <Link href='/dashboard'>
+              <Button className=' bg-green-100 rounded-lg capitalize py-3 px-8 text-blue-500 font-bold'>
+                <RxDashboard className='mr-2 text-lg' />
+                Dashboard
+              </Button>
+            </Link>
           </Stack>
         </Stack>
         <Box

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { PaletteMode } from '@mui/material';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  AppBar,
+  Box,
+  Container,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import ToggleColorMode from './ToggleColorMode';
 import { HomeNavData } from '../Data';
 import AuthButtons from './AuthButtons';
@@ -18,7 +19,6 @@ const logoStyle = {
   height: 'auto',
   cursor: 'pointer',
 };
-
 
 function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
   return (

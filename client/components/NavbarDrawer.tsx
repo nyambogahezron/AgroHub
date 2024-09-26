@@ -1,12 +1,10 @@
-import React from 'react';
-import Drawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import { Button, Divider, MenuItem, PaletteMode } from '@mui/material';
+import {Box, Drawer , Button, Divider, MenuItem, PaletteMode } from '@mui/material';
 import { HomeNavData } from '../Data';
 import ScrollToSection from './ScrollToSection';
 import AuthButtons from './AuthButtons';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
+import { useState } from 'react';
 
 interface NavDrawerProps {
   mode: PaletteMode;
@@ -14,7 +12,7 @@ interface NavDrawerProps {
 }
 
 export default function NavDrawer({ mode, toggleColorMode }: NavDrawerProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   // toggle sidebar
   const toggleDrawer = (newOpen: boolean) => () => {
