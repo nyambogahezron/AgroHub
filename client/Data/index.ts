@@ -84,4 +84,5 @@ const accordionData = [
   },
 ];
 
+
 export { FeaturesItem, HomeNavData, priceTiers, accordionData };
