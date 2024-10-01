@@ -1,5 +1,6 @@
 {
   "name": "agro-hub",
+   "description": "AgroHub is a platform that helps farmers maximize there profits trough expenses tracking and market analysis",
   "version": "0.1.0",
   "private": true,
   "scripts": {
