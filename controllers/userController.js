@@ -21,7 +21,7 @@ const getSingleUser = asyncWrapper( async (req, res) => {
 });
 
 // @ Get Current user
-// @ endpoint /api/users/showMe
+// @ endpoint /api/v1/users/showMe
 // @ method GET
 
 const showCurrentUser = asyncWrapper( async (req, res) => {
@@ -29,7 +29,7 @@ const showCurrentUser = asyncWrapper( async (req, res) => {
 });
 
 // @ Update user
-// @ endpoint /api/users/updateUser
+// @ endpoint /api/v1/users/updateUser
 // @ method PATCH
 
 const updateUser = asyncWrapper(async (req, res) => {
