@@ -2,40 +2,51 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please provide Name'],
-    minlength: [3, 'Name too short'],
-    maxlength: [50, 'Name too long']
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, 'Please provide email'],
-    validate: {
-      validator: validator.isEmail,
-      message: 'Please provide valid email',
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please provide Name'],
+      minlength: [3, 'Name too short'],
+      maxlength: [50, 'Name too long'],
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, 'Please provide email'],
+      validate: {
+        validator: validator.isEmail,
+        message: 'Please provide valid email',
+      },
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'admin',
+    },
+    subscription: {
+      type: String,
+      enum: ['free', 'pro', 'premium'],
+      default: 'free',
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide password'],
+      minlength: [6, 'Password too short'],
+    },
+    verificationToken: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: Date,
+    passwordToken: {
+      type: String,
+    },
+    passwordTokenExpirationDate: {
+      type: Date,
     },
   },
-  password: {
-    type: String,
-    required: [true, 'Please provide password'],
-    minlength: [6, 'Password too short']
-  },
-  verificationToken: String,
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  verified: Date,
-  passwordToken: {
-    type: String,
-  },
-  passwordTokenExpirationDate: {
-    type: Date,
-  },
-},
   { timestamps: true }
 );
 
