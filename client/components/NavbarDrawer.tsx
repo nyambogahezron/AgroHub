@@ -1,7 +1,14 @@
-import {Box, Drawer , Button, Divider, MenuItem, PaletteMode } from '@mui/material';
+import {
+  Box,
+  Drawer,
+  Button,
+  Divider,
+  MenuItem,
+  PaletteMode,
+} from '@mui/material';
 import { HomeNavData } from '../Data';
 import ScrollToSection from './ScrollToSection';
-import AuthButtons from './AuthButtons';
+import AuthButtons from './Auth/AuthButtons';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 import { useState } from 'react';

@@ -1,10 +1,18 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react'
+import React from 'react';
+type AuthHeaderProps = {
+  title: string;
+  customTitleStyles?: string;
+};
 
-export default function AuthHeader({ title }: { title: string }) {
+export default function AuthHeader({
+  title,
+  customTitleStyles,
+}: AuthHeaderProps) {
   return (
     <Box>
       <Typography
+        className={customTitleStyles}
         variant='h2'
         sx={{
           display: 'flex',
@@ -17,7 +25,7 @@ export default function AuthHeader({ title }: { title: string }) {
           fontWeight: 'bold',
         }}
       >
-       {title}
+        {title}
       </Typography>
     </Box>
   );

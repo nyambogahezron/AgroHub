@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import ToggleColorMode from './ToggleColorMode';
 import { HomeNavData } from '../Data';
-import AuthButtons from './AuthButtons';
+import AuthButtons from './Auth/AuthButtons';
 import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
 import { HomeNavbarProps } from '../Types';
