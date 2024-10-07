@@ -3,13 +3,14 @@
 import React from 'react';
 import { Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, IconButton, InputAdornment, TextField } from '@mui/material';
-
-type CustomPasswordInputProps = {
-  requireViewPassword?: boolean;
-  placeholder?: string;
-};
+import { CustomPasswordInputProps } from '@/types';
 
 export default function CustomPasswordInput({
+  id,
+  name,
+  label,
+  value,
+  onChange,
   requireViewPassword = false,
   placeholder = 'Enter your password',
 }: CustomPasswordInputProps) {
@@ -19,19 +20,24 @@ export default function CustomPasswordInput({
   return (
     <Box className='input_box'>
       <TextField
+        id={id}
+        name={name}
+        label={label}
+        onChange={onChange}
+        variant='outlined'
+        value={value}
         type={showPassword ? 'text' : 'password'}
         placeholder={placeholder}
-        required
         fullWidth
         margin='normal'
         InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <Lock />
-            </InputAdornment>
-          ),
-
           ...(requireViewPassword && {
+            startAdornment: (
+              <InputAdornment position='start'>
+                <Lock />
+              </InputAdornment>
+            ),
+
             endAdornment: (
               <InputAdornment position='end'>
                 <IconButton

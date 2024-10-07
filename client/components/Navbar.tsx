@@ -8,11 +8,11 @@ import {
   Typography,
 } from '@mui/material';
 import ToggleColorMode from './ToggleColorMode';
-import { HomeNavData } from '../Data';
+import { HomeNavData } from '../data';
 import AuthButtons from './Auth/AuthButtons';
 import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
-import { HomeNavbarProps } from '../Types';
+import { HomeNavbarProps } from '../types';
 
 const logoStyle = {
   width: '140px',

@@ -1,14 +1,6 @@
 'use client';
+import { CustomButtonProps } from '@/types';
 import { Button } from '@mui/material';
-
-type CustomButtonProps = {
-  title: string;
-  onClick?: () => void;
-  isLoading?: boolean;
-  containerStyles?: string;
-  textStyles?: string;
-  variant?: 'contained' | 'outlined';
-};
 
 export default function CustomButton({
   title,
@@ -17,10 +9,12 @@ export default function CustomButton({
   containerStyles,
   textStyles,
   variant = 'contained',
+  type = 'button',
 }: CustomButtonProps) {
   return (
     <Button
       onClick={onClick}
+      type={type}
       disabled={isLoading}
       className={`bg-purple-700 mt-7 w-full py-2.5 rounded-lg ${containerStyles}`}
       variant={variant}

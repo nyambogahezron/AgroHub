@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { Box,  Checkbox, FormControlLabel } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import ContainerCard from '@/components/ContainerCard';
 import Link from 'next/link';
@@ -10,6 +10,8 @@ import {
 } from '@/components/FormInputs';
 import { AuthFooter, AuthHeader } from '@/components/Auth';
 import CustomButton from '@/components/CustomButton';
+
+import { signIn } from '@/utils/actions/auth';
 
 export default function Login() {
   return (

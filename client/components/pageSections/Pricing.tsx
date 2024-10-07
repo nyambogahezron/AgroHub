@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
-import { priceTiers } from '../../Data';
+import { priceTiers } from '../../data';
 
 export default function Pricing() {
   return (

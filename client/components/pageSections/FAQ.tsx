@@ -8,7 +8,7 @@ import {
   Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { accordionData } from '../../Data';
+import { accordionData } from '../../data';
 
 export default function FAQ() {
   const [expanded, setExpanded] = React.useState<string | false>(false);

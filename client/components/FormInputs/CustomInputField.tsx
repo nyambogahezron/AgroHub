@@ -1,44 +1,42 @@
-import React from 'react';
-import { Box, InputAdornment, SvgIconTypeMap, TextField } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
-
-type CustomInputFieldProps = {
-  textInputStyles?: string;
-  containerStyles?: string;
-  placeholder?: string;
-  type?: React.HTMLInputTypeAttribute;
-  required?: boolean;
-  fullWidth?: boolean;
-  margin?: 'none' | 'dense' | 'normal';
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showInputAdornment?: boolean;
-  icon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-    muiName: string;
-  };
-};
+import { Box, InputAdornment, TextField } from '@mui/material';
+import { CustomInputFieldProps } from '@/types';
 
 export default function CustomInputField({
-  containerStyles,
-  textInputStyles,
+  id,
+  name,
+  label,
   placeholder,
-  type,
-  required = true,
+  variant,
   fullWidth = true,
   margin = 'normal',
+  containerStyles,
+  textInputStyles,
+  type,
+  required = false,
   onChange,
+  value,
   showInputAdornment = true,
   icon: Icon,
+  inputRef,
+  disabled
 }: CustomInputFieldProps) {
   return (
     <Box className={containerStyles}>
       <TextField
+        id={id}
+        name={name}
+        label={label}
+        variant={variant}
+        value={value}
+        disabled={disabled}
         onChange={onChange}
         className={textInputStyles}
+        required={required}
         type={type}
         placeholder={placeholder}
-        required={required}
         fullWidth={fullWidth}
         margin={margin}
+        inputRef={inputRef}
         InputProps={
           showInputAdornment && Icon
             ? {

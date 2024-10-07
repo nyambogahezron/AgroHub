@@ -1,6 +1,8 @@
 import React from 'react';
 import { Poppins } from 'next/font/google';
 import '../assets/css/globals.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // fonts
 const poppins = Poppins({
@@ -26,7 +28,10 @@ export default function RootLayout({
         type='image/png'
         sizes='32x32'
       />
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        <ToastContainer />
+        {children}
+      </body>
     </html>
   );
 }

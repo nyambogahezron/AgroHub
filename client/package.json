@@ -1,6 +1,6 @@
 {
   "name": "agro-hub",
-   "description": "AgroHub is a platform that helps farmers maximize there profits trough expenses tracking and market analysis",
+  "description": "AgroHub is a platform that helps farmers maximize there profits trough expenses tracking and market analysis",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,11 +14,14 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "axios": "^1.7.7",
     "next": "14.2.4",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.3.0",
-    "styled-components": "^6.1.11"
+    "react-toastify": "^10.0.5",
+    "styled-components": "^6.1.11",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "eslint": "^8",

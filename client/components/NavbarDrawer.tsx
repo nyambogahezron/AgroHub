@@ -6,7 +6,7 @@ import {
   MenuItem,
   PaletteMode,
 } from '@mui/material';
-import { HomeNavData } from '../Data';
+import { HomeNavData } from '../data';
 import ScrollToSection from './ScrollToSection';
 import AuthButtons from './Auth/AuthButtons';
 import MenuIcon from '@mui/icons-material/Menu';
