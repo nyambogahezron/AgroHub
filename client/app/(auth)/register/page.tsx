@@ -1,5 +1,4 @@
 'use client';
-
 import { useFormState, useFormStatus } from 'react-dom';
 import { signUp } from '@/utils/actions/auth';
 import ContainerCard from '@/components/ContainerCard';

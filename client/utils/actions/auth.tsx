@@ -2,8 +2,6 @@ import { redirect } from 'next/navigation';
 import { SignUpFormSchema, FormState } from '../lib/definitions';
 import axios from 'axios';
 
-export function signIn(state: FormState, formData: FormData) {}
-
 export async function signUp(state: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = SignUpFormSchema.safeParse({
@@ -25,17 +23,28 @@ export async function signUp(state: FormState, formData: FormData) {
     state.errors = undefined;
   }
 
-  // console.log('Form data is valid!', validatedFields.data);
-  // login user
-
   const data = {
     name: validatedFields.data.name,
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   };
 
+  // Register user
+  const res = await register(data);
+
+  if (!res?.error) {
+    const email = validatedFields.data.email;
+    redirect(`/verify-email/${email}`);
+  } else {
+    return {
+      error: res?.error,
+    };
+  }
+}
+
+async function register(data) {
   try {
-    const response = await axios.post(
+    await axios.post(
       'http://localhost:5000/api/v1/auth/register',
       JSON.stringify(data),
       {
@@ -44,14 +53,16 @@ export async function signUp(state: FormState, formData: FormData) {
         },
       }
     );
-
-    if (response.data.success) {
-      const email = encodeURIComponent(data.email);
-      redirect(`/verify-email?email=${email}`);
-    }
   } catch (error) {
-    return {
-      error: error.response.data.msg,
-    };
+    if (error.response?.status === 400) {
+      return {
+        error: error.response.data.msg,
+      };
+    } else if (error.message !== 'NEXT_REDIRECT') {
+      console.error('Error during sign up:', error);
+      return {
+        error: error?.response?.data?.msg,
+      };
+    }
   }
 }

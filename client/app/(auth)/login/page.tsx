@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Box,  Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import ContainerCard from '@/components/ContainerCard';
 import Link from 'next/link';
@@ -10,10 +12,18 @@ import {
 } from '@/components/FormInputs';
 import { AuthFooter, AuthHeader } from '@/components/Auth';
 import CustomButton from '@/components/CustomButton';
-
-import { signIn } from '@/utils/actions/auth';
+import { toast } from 'react-toastify';
 
 export default function Login() {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleSubmission = () => {
+    if (!email || !password) return toast.error('Please fill in all fields');
+
+    console.log('Email:', email);
+    console.log('Password, password');
+  };
   return (
     <ContainerCard>
       <Box>
@@ -27,8 +37,14 @@ export default function Login() {
               placeholder='Email'
               type='email'
               icon={Email}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <CustomPasswordInput requireViewPassword={true} />
+            <CustomPasswordInput
+              requireViewPassword={true}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
             <Box className='option_field'>
               <FormControlLabel
@@ -43,7 +59,7 @@ export default function Login() {
               </Link>
             </Box>
 
-            <CustomButton title='Login Now' />
+            <CustomButton title='Login Now' onClick={handleSubmission} />
 
             <AuthFooter
               title='Sign Up'

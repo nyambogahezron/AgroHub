@@ -8,10 +8,10 @@ import {
 } from '@mui/material';
 import { HomeNavData } from '../data';
 import ScrollToSection from './ScrollToSection';
-import AuthButtons from './Auth/AuthButtons';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface NavDrawerProps {
   mode: PaletteMode;
@@ -82,7 +82,16 @@ export default function NavDrawer({ mode, toggleColorMode }: NavDrawerProps) {
               flexGrow: 1,
             }}
           >
-            <AuthButtons />
+            <Button color='primary' variant='text' size='small'>
+              <Link className='text-black' href='/login'>
+                Sign In
+              </Link>
+            </Button>
+            <Button color='primary' variant='contained' size='small'>
+              <Link className='text-white font-bold text-sm ' href='/register'>
+                Sign Up
+              </Link>
+            </Button>
           </Box>
         </Box>
       </Drawer>

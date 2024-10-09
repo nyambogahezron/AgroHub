@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import ContainerCard from '@/components/ContainerCard';
 import FormContainerCard from '@/components/FormInputs/FormContainerCard';
@@ -10,26 +10,28 @@ import CustomButton from '@/components/CustomButton';
 import { Email } from '@mui/icons-material';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { redirect } from 'next/navigation';
 
-export default function VerifyEmail() {
+export default function VerifyEmail({ params }: { params: { email: string } }) {
   const [code, setCode] = useState('');
-  const [email, setEmail] = useState('h@gmail.com');
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
-  const handleCodeVerification = async (e) => {
-    e.preventDefault();
-    console.log('Code:', code);
-    console.log('Email:', email);
+  useEffect(() => {
+    if (isEmailVerified) {
+      redirect('/login');
+    }
+  }, [isEmailVerified]);
 
-    const data = {
-      email: email,
-      code: code,
-    };
+  // Decode the email parameter
+  const decodedEmail = decodeURIComponent(params.email);
+
+  async function verifyEmail() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        '/api/v1/auth/verify-email',
-        JSON.stringify(data),
+        'http://localhost:5000/api/v1/auth/verify-email',
+        JSON.stringify({ email: decodedEmail, verificationToken: code }),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -37,21 +39,26 @@ export default function VerifyEmail() {
         }
       );
 
-      if (res.data.success) {
+      if (res.status === 200) {
         setIsLoading(false);
         toast.success(res.data.msg);
-
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 3000);
+        setIsEmailVerified(true);
       }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
-      toast.error(error.response.data.msg);
+      toast.error(error?.response?.data?.msg);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  const handleCodeVerification = async (e) => {
+    e.preventDefault();
+
+    if (!code) return toast.error('Invalid code');
+
+    verifyEmail();
   };
 
   return (
@@ -73,7 +80,7 @@ export default function VerifyEmail() {
               margin='normal'
               type='email'
               icon={Email}
-              value={email}
+              value={decodedEmail}
               disabled
             />
             <CustomInputField
