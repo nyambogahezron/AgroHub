@@ -1,3 +1,5 @@
+
+
 import * as React from 'react';
 import {
   AppBar,
@@ -12,7 +14,6 @@ import ToggleColorMode from './ToggleColorMode';
 import { HomeNavData } from '../data';
 import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
-import { HomeNavbarProps } from '../types';
 import Link from 'next/link';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
@@ -22,7 +23,7 @@ const logoStyle = {
   cursor: 'pointer',
 };
 
-function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
+function Navbar() {
   const { session } = useGlobalContext();
 
   return (
@@ -37,25 +38,16 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
     >
       <Container maxWidth='lg'>
         <Toolbar
+          className='flex items-center justify-between rounded-full h-20 border'
           variant='regular'
           sx={(theme) => ({
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
             flexShrink: 0,
-            borderRadius: '999px',
             bgcolor:
               theme.palette.mode === 'light'
                 ? 'rgba(255, 255, 255, 0.4)'
                 : 'rgba(0, 0, 0, 0.4)',
             backdropFilter: 'blur(24px)',
-            maxHeight: 40,
-            border: '1px solid',
             borderColor: 'divider',
-            boxShadow:
-              theme.palette.mode === 'light'
-                ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                : '0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)',
           })}
         >
           <Box
@@ -101,8 +93,6 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
               alignItems: 'center',
             }}
           >
-            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-
             {session ? (
               <>
                 <Link href='/dashboard'>
@@ -116,9 +106,15 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
                 </Link>
                 <Link href='/profile'>
                   <Box className='flex items-center justify-center h-10 w-10 rounded-full border-2 border-gray-200 ml-2'>
-                    <span className='text-black font-bold'>
+                    <Box
+                      sx={(theme) => ({
+                        fontWeight: 'bold',
+                        color:
+                          theme.palette.mode === 'light' ? 'black' : 'white',
+                      })}
+                    >
                       {session?.name.charAt(0).toUpperCase()}
-                    </span>
+                    </Box>
                   </Box>
                 </Link>
               </>
@@ -139,10 +135,11 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
                 </Link>
               </>
             )}
+            <ToggleColorMode />
           </Box>
 
           {/* mobile menu / drawer  */}
-          <NavbarDrawer mode={mode} toggleColorMode={toggleColorMode} />
+          <NavbarDrawer />
         </Toolbar>
       </Container>
     </AppBar>

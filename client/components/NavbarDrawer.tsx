@@ -1,11 +1,6 @@
-import {
-  Box,
-  Drawer,
-  Button,
-  Divider,
-  MenuItem,
-  PaletteMode,
-} from '@mui/material';
+'use client';
+
+import { Box, Drawer, Button, Divider, MenuItem } from '@mui/material';
 import { HomeNavData } from '../data';
 import ScrollToSection from './ScrollToSection';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,12 +8,7 @@ import ToggleColorMode from './ToggleColorMode';
 import { useState } from 'react';
 import Link from 'next/link';
 
-interface NavDrawerProps {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
-}
-
-export default function NavDrawer({ mode, toggleColorMode }: NavDrawerProps) {
+export default function NavDrawer() {
   const [open, setOpen] = useState(false);
 
   // toggle sidebar
@@ -55,7 +45,7 @@ export default function NavDrawer({ mode, toggleColorMode }: NavDrawerProps) {
               flexGrow: 1,
             }}
           >
-            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+            <ToggleColorMode />
           </Box>
           {HomeNavData.map((item) => {
             return (

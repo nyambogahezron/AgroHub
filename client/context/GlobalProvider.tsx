@@ -1,3 +1,5 @@
+'use client';
+
 import { GlobalContextProps } from '@/types';
 import { createContext, useContext, useEffect, useState } from 'react';
 

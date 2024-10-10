@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -7,7 +9,7 @@ import {
   Grid,
   Link,
   Stack,
-  Typography
+  Typography,
 } from '@mui/material';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';

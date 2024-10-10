@@ -1,4 +1,4 @@
-import { PaletteMode, SvgIconTypeMap } from '@mui/material';
+import {  SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import React, { SetStateAction } from 'react';
 
@@ -14,11 +14,6 @@ export type FeaturesItemProps = {
   imageLight: string;
   imageDark: string;
 };
-
-export interface HomeNavbarProps {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
-}
 
 export type CustomInputFieldProps = {
   id?: string;

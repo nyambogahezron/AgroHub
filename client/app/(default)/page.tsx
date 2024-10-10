@@ -1,6 +1,6 @@
 'use client';
-import { PaletteMode, CssBaseline, Box, Divider } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+import { CssBaseline, Box, Divider } from '@mui/material';
 import HomeNavbar from '../../components/Navbar';
 import {
   Hero,
@@ -11,20 +11,13 @@ import {
   FAQ,
 } from '../../components/pageSections';
 import Footer from '../../components/Footer';
-import getLPTheme from '../../components/Theme';
-import { useState } from 'react';
+import ThemeProviderWrapper from '@/components/ThemeProviderWrapper';
 
 export default function LandingPage() {
-  const [mode, setMode] = useState<PaletteMode>('light');
-  const LPtheme = createTheme(getLPTheme(mode));
-  const toggleColorMode = () => {
-    setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
   return (
-    <ThemeProvider theme={LPtheme}>
+    <ThemeProviderWrapper>
       <CssBaseline />
-      <HomeNavbar mode={mode} toggleColorMode={toggleColorMode} />
+      <HomeNavbar />
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
         <Features />
@@ -39,6 +32,6 @@ export default function LandingPage() {
         <Divider />
         <Footer />
       </Box>
-    </ThemeProvider>
+    </ThemeProviderWrapper>
   );
 }

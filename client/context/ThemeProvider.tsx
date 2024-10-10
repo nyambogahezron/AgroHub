@@ -1,19 +1,21 @@
+'use client';
+
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type ThemeProviderProps = {
-    theme: string;
-    setTheme: (theme: string) => void;
-    toggleTheme: (theme: string) => void;
+  theme: 'light' | 'dark';
+  toggleTheme: (theme: string) => void;
+  getTheme: () => void;
 };
 
 const ThemeContext = createContext<ThemeProviderProps>({
-    theme: 'light',
-    setTheme: () => {},
-    toggleTheme: () => {},
+  theme: 'light',
+  toggleTheme: () => {},
+  getTheme: () => {},
 });
 
 export default function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   async function getTheme() {
     const theme = await localStorage.getItem('theme');
@@ -32,12 +34,10 @@ export default function ThemeProvider({ children }) {
 
   useEffect(() => {
     getTheme();
-
-    console.log('theme', theme);
-  }, [theme]);
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, getTheme }}>
       {children}
     </ThemeContext.Provider>
   );

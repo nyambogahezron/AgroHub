@@ -1,5 +1,4 @@
 import type {} from '@mui/material/themeCssVarsAugmentation';
-import { ThemeOptions } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
 const getDesignTokens = (mode: PaletteMode) => ({
@@ -8,7 +7,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
   },
 });
 
-export default function getLPTheme(mode: PaletteMode): ThemeOptions {
+export default function getLPTheme(mode) {
   return {
     ...getDesignTokens(mode),
   };
