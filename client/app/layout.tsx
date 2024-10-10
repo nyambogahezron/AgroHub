@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google';
 import '../assets/css/globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Providers } from './providers';
 
 // fonts
 const poppins = Poppins({
@@ -29,8 +30,10 @@ export default function RootLayout({
         sizes='32x32'
       />
       <body className={poppins.className}>
-        <ToastContainer />
-        {children}
+        <Providers>
+          <ToastContainer />
+          {children}
+        </Providers>
       </body>
     </html>
   );

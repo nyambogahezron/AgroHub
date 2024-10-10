@@ -1,12 +1,13 @@
 import { PaletteMode, SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import React, { SetStateAction } from 'react';
 
-type HomeNavDataProps = {
+export type HomeNavDataProps = {
   id: number;
   name: string;
 };
 
-type FeaturesItemProps = {
+export type FeaturesItemProps = {
   icon: any;
   title: string;
   description: string;
@@ -14,12 +15,12 @@ type FeaturesItemProps = {
   imageDark: string;
 };
 
-interface HomeNavbarProps {
+export interface HomeNavbarProps {
   mode: PaletteMode;
   toggleColorMode: () => void;
 }
 
-type CustomInputFieldProps = {
+export type CustomInputFieldProps = {
   id?: string;
   name?: string;
   label?: string;
@@ -41,7 +42,7 @@ type CustomInputFieldProps = {
   disabled?: boolean;
 };
 
-type CustomPasswordInputProps = {
+export type CustomPasswordInputProps = {
   id?: string;
   name?: string;
   label?: string;
@@ -51,7 +52,7 @@ type CustomPasswordInputProps = {
   requireViewPassword?: boolean;
 };
 
-type CustomButtonProps = {
+export type CustomButtonProps = {
   title: string;
   onClick?: () => void;
   isLoading?: boolean;
@@ -61,11 +62,14 @@ type CustomButtonProps = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-export type {
-  HomeNavDataProps,
-  FeaturesItemProps,
-  HomeNavbarProps,
-  CustomPasswordInputProps,
-  CustomInputFieldProps,
-  CustomButtonProps,
+
+export type GlobalContextProps = {
+  User: any;
+  setUser: React.Dispatch<SetStateAction<any>>;
+  isLoading: boolean;
+  session: any;
+  setSession: React.Dispatch<SetStateAction<any>>;
+  deleteSession: () => void;
 };
+
+

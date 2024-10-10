@@ -14,6 +14,7 @@ import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
 import { HomeNavbarProps } from '../types';
 import Link from 'next/link';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const logoStyle = {
   width: '140px',
@@ -22,6 +23,8 @@ const logoStyle = {
 };
 
 function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
+  const { session } = useGlobalContext();
+
   return (
     <AppBar
       position='fixed'
@@ -100,16 +103,42 @@ function Navbar({ mode, toggleColorMode }: HomeNavbarProps) {
           >
             <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
 
-            <Link className='text-black' href='/login'>
-              <Button color='primary' variant='text' size='small'>
-                Sign In
-              </Button>
-            </Link>
-            <Link className='text-white font-bold text-sm ' href='/register'>
-              <Button color='primary' variant='contained' size='small'>
-                Sign Up
-              </Button>
-            </Link>
+            {session ? (
+              <>
+                <Link href='/dashboard'>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    sx={{ textTransform: 'capitalize' }}
+                  >
+                    Dashboard
+                  </Button>
+                </Link>
+                <Link href='/profile'>
+                  <Box className='flex items-center justify-center h-10 w-10 rounded-full border-2 border-gray-200 ml-2'>
+                    <span className='text-black font-bold'>
+                      {session?.name.charAt(0).toUpperCase()}
+                    </span>
+                  </Box>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link className='text-black' href='/login'>
+                  <Button color='primary' variant='text' size='small'>
+                    Sign In
+                  </Button>
+                </Link>
+                <Link
+                  className='text-white font-bold text-sm '
+                  href='/register'
+                >
+                  <Button color='primary' variant='contained' size='small'>
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </Box>
 
           {/* mobile menu / drawer  */}
