@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
 import {
-  AppBar,
   Toolbar,
   IconButton,
   Typography,
@@ -13,7 +12,6 @@ import {
   Divider,
   Avatar,
   Box,
-  CssBaseline,
   Drawer,
   Tooltip,
 } from '@mui/material';
@@ -29,23 +27,30 @@ import {
   ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
 import SegmentIcon from '@mui/icons-material/Segment';
+import Link from 'next/link';
+import { useGlobalContext } from '@/context/GlobalProvider';
 const drawerWidth = 78;
 const expandedDrawerWidth = 250;
 
 export default function DashboardAsideNavbar() {
   const [open, setOpen] = useState(false);
+  const { session } = useGlobalContext();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
   const DashboardMenuItem = [
-    { text: 'Dashboard', icon: <DashboardIcon /> },
-    { text: 'Analytics', icon: <PieChartIcon /> },
-    { text: 'Market', icon: <ShoppingCartIcon /> },
-    { text: 'User', icon: <PersonIcon /> },
-    { text: 'Notifications', icon: <ChatIcon /> },
-    { text: 'Setting', icon: <SettingsIcon /> },
+    { text: 'Dashboard', icon: <DashboardIcon />, link: '/dashboard' },
+    { text: 'Analytics', icon: <PieChartIcon />, link: '/dashboard/analytics' },
+    { text: 'Market', icon: <ShoppingCartIcon />, link: '/dashboard/market' },
+    { text: 'User', icon: <PersonIcon />, link: '/dashboard/users' },
+    {
+      text: 'Notifications',
+      icon: <ChatIcon />,
+      link: '/dashboard/notifications',
+    },
+    { text: 'Settings', icon: <SettingsIcon />, link: '/dashboard/settings' },
   ];
 
   return (
@@ -96,100 +101,94 @@ export default function DashboardAsideNavbar() {
       {/* drawer menu */}
       <Box sx={{ overflow: 'hidden' }}>
         <List>
-          {/* search btn */}
-          <Tooltip title='Search' placement='right' disableHoverListener={open}>
-            <ListItem>
-              <ListItemIcon>
-                <IconButton
-                  className='bg-[#1d1b31] rounded-lg items-center justify-center hover:bg-white hover:text-black'
-                  color='inherit'
-                  aria-label='menu'
-                  onClick={handleDrawerToggle}
-                  sx={{ ml: -1 }}
-                >
-                  <SearchIcon
+          <Divider className='' />
+          {DashboardMenuItem.map((item, index) => (
+            <Link href={item.link} key={index}>
+              <Tooltip
+                title={item.text}
+                placement='right'
+                key={index}
+                disableHoverListener={open}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: '#1d1b31',
+                    color: '#11101d',
+                    cursor: 'pointer',
+                  },
+                }}
+              >
+                <ListItem>
+                  <ListItemIcon
                     sx={{
                       color: '#fff',
                       '&:hover': {
-                        backgroundColor: '#FFF',
-                        color: '#11101d',
+                        color: 'blue',
                       },
                     }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      color: '#fff',
+                      opacity: open ? 1 : 0,
+                      transition: 'opacity 0.5s',
+                    }}
                   />
-                </IconButton>
-              </ListItemIcon>
-              <InputBase
-                placeholder='Search...'
-                sx={{
-                  color: '#FFF',
-                  background: '#1d1b31',
-                  borderRadius: '12px',
-                  padding: open ? '0 24px 0 60px' : '0',
-                  width: open ? '100%' : '50px',
-                  transition: 'all 0.5s',
-                }}
-              />
-            </ListItem>
-          </Tooltip>
-          {/* search btn end */}
-
-          <Divider />
-          {DashboardMenuItem.map((item, index) => (
-            <Tooltip
-              title={item.text}
-              placement='right'
-              key={index}
-              disableHoverListener={open}
-              sx={{
-                '&:hover': {
-                  backgroundColor: '#1d1b31',
-                  color: '#11101d',
-                  cursor: 'pointer',
-                },
-              }}
-            >
-              <ListItem>
-                <ListItemIcon
-                  sx={{
-                    color: '#fff',
-                    '&:hover': {
-                      color: 'blue',
-                    },
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.text}
-                  sx={{
-                    color: '#fff',
-                    opacity: open ? 1 : 0,
-                    transition: 'opacity 0.5s',
-                  }}
-                />
-              </ListItem>
-            </Tooltip>
+                </ListItem>
+              </Tooltip>
+            </Link>
           ))}
           <Divider />
         </List>
       </Box>
 
-      <ListItem className='flex absolute bottom-3'>
-        <ListItemIcon>
-          <Avatar
-            alt='John Doe'
-            src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-          />
-        </ListItemIcon>
-        <ListItemText
-          primary='John Doe'
-          color='white'
-          sx={{
-            color: '#fff',
-            opacity: open ? 1 : 0,
-            transition: 'opacity 0.5s',
-          }}
-        />
+      <ListItem
+        className={`flex absolute bottom-3 transition-all ${
+          open ? '' : 'flex-col items-start gap-4 '
+        }`}
+      >
+        <Link
+          href='/dashboard/account'
+          className='flex justify-between w-full items-center'
+        >
+          {session ? (
+            session.avatar ? (
+              <ListItemIcon>
+                <Avatar alt={session.name} src={session.avatar} />
+              </ListItemIcon>
+            ) : (
+              <Box className='flex items-center justify-center h-10 w-10 rounded-full border-2 border-gray-200 mr-2'>
+                <Box
+                  sx={(theme) => ({
+                    fontWeight: 'bold',
+                    color: theme.palette.mode === 'light' ? 'black' : 'white',
+                  })}
+                >
+                  {session?.name.charAt(0).toUpperCase()}
+                </Box>
+              </Box>
+            )
+          ) : (
+            ''
+          )}
+          {open && (
+            <ListItemText
+              primary={
+                session?.name.length > 30
+                  ? session?.name.slice(0, 30) + '...'
+                  : session?.name
+              }
+              color='white'
+              sx={{
+                color: '#fff',
+                opacity: open ? 1 : 0,
+                transition: 'opacity 0.5s',
+              }}
+            />
+          )}
+        </Link>
         <IconButton
           edge='end'
           color='inherit'

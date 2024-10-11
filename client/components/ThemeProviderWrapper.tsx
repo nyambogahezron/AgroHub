@@ -15,4 +15,3 @@ export default function ThemeProviderWrapper({
 
   return <ThemeProvider theme={LPtheme}>{children}</ThemeProvider>;
 }
-s
