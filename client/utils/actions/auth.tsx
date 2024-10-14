@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { SignUpFormSchema, FormState } from '../lib/definitions';
+import { SignUpFormSchema, FormState } from '../../lib/definitions';
 import axios from 'axios';
 
 export async function signUp(state: FormState, formData: FormData) {

@@ -18,7 +18,7 @@ export default function CustomInputField({
   showInputAdornment = true,
   icon: Icon,
   inputRef,
-  disabled
+  disabled,
 }: CustomInputFieldProps) {
   return (
     <Box className={containerStyles}>

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -7,9 +9,12 @@ import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import CreateOrganizationModel from '@/components/CreateOrganizationModel';
+import { Box } from '@mui/material';
 
 const user = {
-  name: 'Sofia Rivers',
+  name: 'Sofia Farms',
   avatar: '/assets/avatar.png',
   jobTitle: 'Senior Developer',
   country: 'USA',
@@ -17,31 +22,23 @@ const user = {
   timezone: 'GTM-7',
 } as const;
 
-export function AccountInfo(): React.JSX.Element {
+export default function OrganizationInfo() {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Card className='w-full min-w-[600px] mb-10'>
       <CardContent>
-        <Stack spacing={2} sx={{ alignItems: 'center' }}>
-          <div>
-            <Avatar src={user.avatar} sx={{ height: '80px', width: '80px' }} />
-          </div>
-          <Stack spacing={1} sx={{ textAlign: 'center' }}>
-            <Typography variant="h5">{user.name}</Typography>
-            <Typography color="text.secondary" variant="body2">
-              {user.city} {user.country}
-            </Typography>
-            <Typography color="text.secondary" variant="body2">
-              {user.timezone}
-            </Typography>
-          </Stack>
-        </Stack>
+        <Box className='flex flex-row border-6 p-4 border-blue-600'></Box>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button fullWidth variant="text">
-          Upload picture
+        <Button fullWidth variant='text' onClick={() => handleOpen()}>
+          Create Organization
         </Button>
       </CardActions>
+
+      <CreateOrganizationModel open={open} handleClose={handleClose} />
     </Card>
   );
 }
