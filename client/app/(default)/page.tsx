@@ -1,7 +1,7 @@
 'use client';
 
 import { CssBaseline, Box, Divider } from '@mui/material';
-import HomeNavbar from '../../components/Navbar';
+import HomeNavbar from '../../components/Navigation/Navbar';
 import {
   Hero,
   Highlights,
@@ -10,7 +10,7 @@ import {
   Testimonials,
   FAQ,
 } from '../../components/pageSections';
-import Footer from '../../components/Footer';
+import Footer from '../../components/pageSections/Footer';
 import ThemeProviderWrapper from '@/components/ThemeProviderWrapper';
 
 export default function LandingPage() {

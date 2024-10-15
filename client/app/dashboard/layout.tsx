@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import DashboardAsideNavbar from '../../components/DashboardAsideNavbar';
-import DashboardTopNavbar from '../../components/DashboardTopNavbar';
+import DashboardAsideNavbar from '../../components/dashboard/DashboardAsideNavbar';
+import DashboardTopNavbar from '../../components/dashboard/DashboardTopNavbar';
 import ThemeProviderWrapper from '@/components/ThemeProviderWrapper';
 import ThemedBox from '@/components/theme/ThemedBox';
 

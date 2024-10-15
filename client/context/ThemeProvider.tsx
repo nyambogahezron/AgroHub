@@ -18,17 +18,17 @@ export default function ThemeProvider({ children }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   async function getTheme() {
-    const theme = await localStorage.getItem('theme');
+    const theme = await localStorage.getItem('theme') as 'light' | 'dark';
 
     if (theme) {
-      setTheme(JSON.parse(theme));
+      setTheme(theme);
     } else {
       setTheme('light');
     }
   }
 
   async function toggleTheme(theme) {
-    await localStorage.setItem('theme', JSON.stringify(theme));
+    await localStorage.setItem('theme', theme);
     getTheme(); // reload the theme
   }
 

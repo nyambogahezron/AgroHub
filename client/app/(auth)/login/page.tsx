@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import ContainerCard from '@/components/ContainerCard';
 import Link from 'next/link';
@@ -16,6 +16,9 @@ import { toast } from 'react-toastify';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import axios from 'axios';
 import { redirect } from 'next/navigation';
+import Image from 'next/image';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import { useRouter } from 'next/navigation';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -23,6 +26,8 @@ export default function Login() {
   const { setSession, setUser } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (loggedIn) {
@@ -66,8 +71,32 @@ export default function Login() {
   return (
     <ContainerCard>
       <Box>
+        <Box className=' absolute top-0 left-0 flex  h-10 w-10 hover:cursor-pointer items-center justify-center mx-auto ml-4 mt-4 '>
+          <Button onClick={() => router.back()} className='p-3'>
+            <KeyboardBackspaceIcon
+              sx={{
+                fontSize: 35,
+              }}
+            />
+          </Button>
+        </Box>
         <FormContainerCard containerStyles='flex flex-col'>
-          <AuthHeader title='Login' />
+          <Link href='/'>
+            <Box className='flex border border-gray-200 rounded-full h-24 w-24 hover:cursor-pointer items-center justify-center mx-auto bg-slate-100 -mt-20 mb-4'>
+              <Image
+                height='500'
+                width='500'
+                src='/images/logo.png'
+                alt='logo'
+                className='w-20 h-20 mx-auto rounded-full'
+              />
+            </Box>
+          </Link>
+          <AuthHeader
+            title=' Welcome Back, Login'
+            customTitleStyles='text-2xl font-semibold text-center mt-2'
+          />
+
           <Box className='max-w-[500px] w-full mt-10' component='form'>
             <CustomInputField
               containerStyles='container-class'

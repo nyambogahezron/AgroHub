@@ -1,5 +1,3 @@
-
-
 import * as React from 'react';
 import {
   AppBar,
@@ -10,8 +8,8 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import ToggleColorMode from './ToggleColorMode';
-import { HomeNavData } from '../data';
+import ToggleColorMode from '../ToggleColorMode';
+import { HomeNavData } from '../../data';
 import ScrollToSection from './ScrollToSection';
 import NavbarDrawer from './NavbarDrawer';
 import Link from 'next/link';

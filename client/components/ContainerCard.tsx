@@ -4,8 +4,11 @@ import React from 'react';
 
 export default function ContainerCard({
   children,
+  className,
+  ...props
 }: {
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
     <Container
@@ -17,7 +20,10 @@ export default function ContainerCard({
         alignContent: 'center',
         justifyContent: 'center',
         height: '100vh',
+        postion: 'relative',
       })}
+      className={className}
+      {...props}
     >
       {children}
     </Container>
