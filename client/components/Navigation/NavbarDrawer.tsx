@@ -1,10 +1,10 @@
 'use client';
 
 import { Box, Drawer, Button, Divider, MenuItem } from '@mui/material';
-import { HomeNavData } from '../data';
+import { HomeNavData } from '../../data';
 import ScrollToSection from './ScrollToSection';
 import MenuIcon from '@mui/icons-material/Menu';
-import ToggleColorMode from './ToggleColorMode';
+import ToggleColorMode from '../ToggleColorMode';
 import { useState } from 'react';
 import Link from 'next/link';
 

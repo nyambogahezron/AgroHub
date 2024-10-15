@@ -29,6 +29,7 @@ export default function RootLayout({
         type='image/png'
         sizes='32x32'
       />
+
       <body className={poppins.className}>
         <Providers>
           <ToastContainer />

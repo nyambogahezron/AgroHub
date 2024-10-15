@@ -1,15 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // async redirects() {
-  //   return [
-  //     // Basic redirect
-  //     {
-  //       source: '/register',
-  //       destination: '/verify-email',
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+  env: {
+    NEXT_PUBLIC_PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
+  },
 };
 
 export default nextConfig;
