@@ -14,9 +14,13 @@ export default function DashboardLayout({
     <ThemeProviderWrapper>
       <ThemedBox>
         <DashboardAsideNavbar />
-        <Box component='main' sx={{ flexGrow: 1 }}>
+        <Box component='main' sx={{ flexGrow: 1, overflow: 'hidden' }} >
           <DashboardTopNavbar />
+
+          <Box className='px-3 py-2'>
+
           {children}
+          </Box>
         </Box>
       </ThemedBox>
     </ThemeProviderWrapper>

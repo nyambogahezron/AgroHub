@@ -11,8 +11,13 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { useGlobalContext } from '@/context/GlobalProvider';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Button } from '@mui/material';
 
 export default function DashboardTopNavbar() {
+  const { session } = useGlobalContext();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -20,13 +25,10 @@ export default function DashboardTopNavbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
-  };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
+  const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -55,7 +57,6 @@ export default function DashboardTopNavbar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -76,14 +77,7 @@ export default function DashboardTopNavbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+      
       <MenuItem>
         <IconButton
           size='large'
@@ -96,7 +90,7 @@ export default function DashboardTopNavbar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={() =>{}}>
         <IconButton
           size='large'
           aria-label='account of current user'
@@ -117,15 +111,7 @@ export default function DashboardTopNavbar() {
         <Toolbar sx={{ background: '#11101D' }}>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 4 new mails'
-              color='inherit'
-            >
-              <Badge badgeContent={4} color='error'>
-                <MailIcon />
-              </Badge>
-            </IconButton>
+            {/* notification  badge */}
             <IconButton
               size='large'
               aria-label='show 17 new notifications'
@@ -135,17 +121,30 @@ export default function DashboardTopNavbar() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size='large'
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
+            <Box className='flex flex-row items-center w-full px-3 ml-2'>
+              <Box className='flex items-center justify-center h-8 w-8 rounded-lg border-2 border-gray-200 mr-2'>
+                <Box
+                  sx={(theme) => ({
+                    fontWeight: 'bold',
+                    color: theme.palette.mode === 'light' ? 'black' : 'white',
+                  })}
+                >
+                  {session?.name.charAt(0).toUpperCase()}
+                </Box>
+              </Box>
+              <Box className='p-1 rounded-lg flex flex-row justify-between items-center'>
+                <Button
+                  aria-controls={menuId}
+                  aria-haspopup='true'
+                  onClick={handleProfileMenuOpen}
+                  color='inherit'
+                  sx={{ fontSize: 15 }}
+                >
+                  Organization
+                  <ArrowForwardIosIcon sx={{ fontSize: 15, marginLeft:1 }} />
+                </Button>
+              </Box>
+            </Box>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton

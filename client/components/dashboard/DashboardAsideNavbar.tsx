@@ -4,7 +4,6 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  InputBase,
   List,
   ListItem,
   ListItemIcon,
