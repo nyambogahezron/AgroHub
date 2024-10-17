@@ -1,4 +1,5 @@
 'use client';
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,57 +9,35 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from '@mui/material';
+import CreateOrganizationModel from '../CreateOrganizationModel';
+import Link from 'next/link';
+import OrganizationDialog from './OrganizationDialog';
 
 export default function DashboardTopNavbar() {
-  const { session } = useGlobalContext();
+  const { session, organization, currentOrganization } = useGlobalContext();
+  const [open, setOpen] = React.useState(false);
+  const [openDialog, setDialogOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(event.currentTarget);
-
   const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -77,7 +56,6 @@ export default function DashboardTopNavbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      
       <MenuItem>
         <IconButton
           size='large'
@@ -90,7 +68,7 @@ export default function DashboardTopNavbar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={() =>{}}>
+      <MenuItem onClick={() => {}}>
         <IconButton
           size='large'
           aria-label='account of current user'
@@ -122,28 +100,43 @@ export default function DashboardTopNavbar() {
               </Badge>
             </IconButton>
             <Box className='flex flex-row items-center w-full px-3 ml-2'>
-              <Box className='flex items-center justify-center h-8 w-8 rounded-lg border-2 border-gray-200 mr-2'>
-                <Box
-                  sx={(theme) => ({
-                    fontWeight: 'bold',
-                    color: theme.palette.mode === 'light' ? 'black' : 'white',
-                  })}
-                >
-                  {session?.name.charAt(0).toUpperCase()}
+              <Link href='/dashboard/account'>
+                <Box className='flex items-center justify-center h-8 w-8 rounded-lg border-2 border-gray-200 mr-2'>
+                  <Box
+                    sx={(theme) => ({
+                      fontWeight: 'bold',
+                      color: theme.palette.mode === 'light' ? 'black' : 'white',
+                    })}
+                  >
+                    {session?.name.charAt(0).toUpperCase()}
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
               <Box className='p-1 rounded-lg flex flex-row justify-between items-center'>
                 <Button
-                  aria-controls={menuId}
-                  aria-haspopup='true'
-                  onClick={handleProfileMenuOpen}
+                  onClick={handleDialogOpen}
                   color='inherit'
                   sx={{ fontSize: 15 }}
                 >
-                  Organization
-                  <ArrowForwardIosIcon sx={{ fontSize: 15, marginLeft:1 }} />
+                  {currentOrganization?.name.length > 10
+                    ? currentOrganization?.name.slice(0, 10) + '...'
+                    : currentOrganization?.name}
+                  <ArrowForwardIosIcon sx={{ fontSize: 15, marginLeft: 1 }} />
                 </Button>
               </Box>
+
+              {!organization.length && (
+                <Box className='p-1 rounded-lg flex flex-row justify-between items-center'>
+                  <Button
+                    color='primary'
+                    onClick={handleOpen}
+                    sx={{ fontSize: 15 }}
+                    className='text-white capitalize bg-blue-500'
+                  >
+                    Create Organization
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -161,7 +154,16 @@ export default function DashboardTopNavbar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+
+      {/* create organization model */}
+      <CreateOrganizationModel open={open} handleClose={handleClose} />
+
+      {/* set default organization dialog */}
+      <OrganizationDialog
+        openCreateOrgModal={handleOpen}
+        open={openDialog}
+        onClose={handleDialogClose}
+      />
     </Box>
   );
 }

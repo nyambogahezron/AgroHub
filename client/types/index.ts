@@ -65,6 +65,17 @@ export type GlobalContextProps = {
   session: any;
   setSession: React.Dispatch<SetStateAction<any>>;
   deleteSession: () => void;
+  organization: any;
+  getOrganization: () => void;
+  deleteOrganization: () => void;
+  setUserOrganization: (data: any) => void;
+  currentOrganization: any;
+  setCurrentOrganizationData: (data: any) => void;
 };
 
 
+export interface OrganizationDialogProps {
+  open: boolean;
+  openCreateOrgModal: () => void;
+  onClose: (value: string) => void;
+}
