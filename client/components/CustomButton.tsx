@@ -1,5 +1,5 @@
 'use client';
-import { CustomButtonProps } from '@/src/types';
+import { CustomButtonProps } from '@/types';
 import { Button } from '@mui/material';
 
 export default function CustomButton({

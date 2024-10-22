@@ -11,7 +11,8 @@ const connectDB = require('./config/connectDB');
 
 //routers
 const authRoutes = require('./routes/authRoutes');
-const userRouter = require('./routes/userRoutes');
+const userRouters = require('./routes/userRoutes');
+const organizationRouters = require('./routes/organizationRoutes');
 
 // middlewares
 const notFoundMiddleware = require('./middleware/notFound');
@@ -32,7 +33,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/users', userRouter);
+app.use('/api/v1/users', userRouters);
+app.use('/api/v1/org', organizationRouters);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

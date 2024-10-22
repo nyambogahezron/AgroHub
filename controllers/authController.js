@@ -9,7 +9,6 @@ const {
   generateCode,
   sendVerificationEmail,
   sendResetPasswordEmail,
-  generateToken,
   attachCookiesToResponse,
   createTokenUser,
   createHash,
