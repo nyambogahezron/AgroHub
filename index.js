@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
@@ -13,6 +15,7 @@ const connectDB = require('./config/connectDB');
 const authRoutes = require('./routes/authRoutes');
 const userRouters = require('./routes/userRoutes');
 const organizationRouters = require('./routes/organizationRoutes');
+const budgetRouters = require('./routes/budgetRoutes');
 
 // middlewares
 const notFoundMiddleware = require('./middleware/notFound');
@@ -35,6 +38,7 @@ app.use(cors(corsOptions));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRouters);
 app.use('/api/v1/org', organizationRouters);
+app.use('/api/v1/budget', budgetRouters);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -1,6 +1,6 @@
 'use client';
 import { useFormState, useFormStatus } from 'react-dom';
-import { signUp } from '@/utils/actions/auth';
+import { signUp } from '@/lib/actions/auth';
 import ContainerCard from '@/components/ContainerCard';
 import { CustomInputField, CustomPasswordInput } from '@/components/FormInputs';
 import { Box, Button, Container } from '@mui/material';

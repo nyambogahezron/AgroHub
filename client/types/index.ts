@@ -1,4 +1,4 @@
-import {  SvgIconTypeMap } from '@mui/material';
+import { SvgIconTypeMap, SxProps } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import React, { SetStateAction } from 'react';
 
@@ -57,7 +57,6 @@ export type CustomButtonProps = {
   type?: 'button' | 'submit' | 'reset';
 };
 
-
 export type GlobalContextProps = {
   User: any;
   setUser: React.Dispatch<SetStateAction<any>>;
@@ -73,9 +72,43 @@ export type GlobalContextProps = {
   setCurrentOrganizationData: (data: any) => void;
 };
 
-
 export interface OrganizationDialogProps {
   open: boolean;
   openCreateOrgModal: () => void;
   onClose: (value: string) => void;
+}
+
+export interface NavItemConfig {
+  key: string;
+  title?: string;
+  disabled?: boolean;
+  external?: boolean;
+  label?: string;
+  icon?: string;
+  href?: string;
+  items?: NavItemConfig[];
+  matcher?: { type: 'startsWith' | 'equals'; href: string };
+}
+
+export interface BudgetItem {
+  id: string;
+  title: string;
+  amount: number;
+}
+
+export interface BudgetProps {
+  id: string;
+  user: string;
+  title: string;
+  date: string;
+  amount: number;
+  organization: number;
+  items: BudgetItem[];
+}
+
+export interface BudgetTableProps {
+  count?: number;
+  page?: number;
+  rows?: BudgetProps[];
+  rowsPerPage?: number;
 }

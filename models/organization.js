@@ -1,4 +1,7 @@
+const CustomError = require('../errors');
 const mongoose = require('mongoose');
+const validator = require('validator');
+const User = require('./User');
 
 const OrganizationSchema = new mongoose.Schema(
   {
@@ -39,5 +42,18 @@ const OrganizationSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// Pre-save hook to validate user reference
+OrganizationSchema.pre('save', async function (next) {
+  try {
+    const user = await User.findById(this.user);
+    if (!user) {
+      throw new CustomError.BadRequestError('Invalid user ref');
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = mongoose.model('Organization', OrganizationSchema);

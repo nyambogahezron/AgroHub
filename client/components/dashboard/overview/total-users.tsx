@@ -4,14 +4,13 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import { Icon } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 
-export function Budget({ value }) {
+export function TotalUsers({ value }) {
   return (
     <Card sx={{ height: '100%' }}>
       <CardContent>
-        <Stack spacing={3}>
+        <Stack spacing={2}>
           <Stack
             direction='row'
             sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }}
@@ -19,18 +18,18 @@ export function Budget({ value }) {
           >
             <Stack spacing={1}>
               <Typography color='text.secondary' variant='overline'>
-                Budget
+                Total Users
               </Typography>
               <Typography variant='h4'>{value}</Typography>
             </Stack>
             <Avatar
               sx={{
-                backgroundColor: 'var(--mui-palette-primary-main)',
+                backgroundColor: 'var(--mui-palette-success-main)',
                 height: '56px',
                 width: '56px',
               }}
             >
-              <Icon component={AttachMoneyIcon} sx={{ color: 'white' }} />
+              <PersonIcon sx={{ color: 'white' }} />
             </Avatar>
           </Stack>
         </Stack>

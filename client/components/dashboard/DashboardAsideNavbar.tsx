@@ -13,21 +13,18 @@ import {
   Box,
   Drawer,
   Tooltip,
+  Icon,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
-  Search as SearchIcon,
-  Dashboard as DashboardIcon,
-  Person as PersonIcon,
-  Chat as ChatIcon,
-  PieChart as PieChartIcon,
-  ShoppingCart as ShoppingCartIcon,
-  Settings as SettingsIcon,
   ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
 import SegmentIcon from '@mui/icons-material/Segment';
 import Link from 'next/link';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { usePathname } from 'next/navigation';
+import { DashboardMenuItem } from '@/data';
+
 const drawerWidth = 78;
 const expandedDrawerWidth = 250;
 
@@ -38,19 +35,7 @@ export default function DashboardAsideNavbar() {
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-
-  const DashboardMenuItem = [
-    { text: 'Dashboard', icon: <DashboardIcon />, link: '/dashboard' },
-    { text: 'Analytics', icon: <PieChartIcon />, link: '/dashboard/analytics' },
-    { text: 'Market', icon: <ShoppingCartIcon />, link: '/dashboard/market' },
-    { text: 'User', icon: <PersonIcon />, link: '/dashboard/users' },
-    {
-      text: 'Notifications',
-      icon: <ChatIcon />,
-      link: '/dashboard/notifications',
-    },
-    { text: 'Settings', icon: <SettingsIcon />, link: '/dashboard/settings' },
-  ];
+  const currentPath = usePathname();
 
   return (
     <Drawer
@@ -114,18 +99,19 @@ export default function DashboardAsideNavbar() {
                     color: '#11101d',
                     cursor: 'pointer',
                   },
+                  backgroundColor: currentPath === item.link ? '#1d1b31' : '',
                 }}
               >
                 <ListItem>
                   <ListItemIcon
                     sx={{
-                      color: '#fff',
+                      color: currentPath === item.link ? '#2b55b5' : '#fff',
                       '&:hover': {
-                        color: 'blue',
+                        color: '#2b55b5',
                       },
                     }}
                   >
-                    {item.icon}
+                    <Icon component={item.icon} />
                   </ListItemIcon>
                   <ListItemText
                     primary={item.text}

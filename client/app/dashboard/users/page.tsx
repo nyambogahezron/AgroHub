@@ -7,14 +7,12 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PlusIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import dayjs from 'dayjs';
-
-import { config } from '@/config';
 import { CustomersFilters } from '@/components/dashboard/customer/customers-filters';
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import type { Customer } from '@/components/dashboard/customer/customers-table';
 
 export const metadata = {
-  title: `Customers | Dashboard | ${config.site.name}`,
+  title: `Dashboard | Users`,
 } satisfies Metadata;
 
 const customers = [
