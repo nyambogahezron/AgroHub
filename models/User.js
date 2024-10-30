@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const Subscription = require('./Subscription');
+// TODO -- create subscription using this model
 
 const UserSchema = new mongoose.Schema(
   {

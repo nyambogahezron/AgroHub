@@ -16,6 +16,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRouters = require('./routes/userRoutes');
 const organizationRouters = require('./routes/organizationRoutes');
 const budgetRouters = require('./routes/budgetRoutes');
+const transactionRouters = require('./routes/transactionRoutes');
+const subscriptionRouters = require('./routes/subscriptionRoutes');
 
 // middlewares
 const notFoundMiddleware = require('./middleware/notFound');
@@ -39,7 +41,10 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRouters);
 app.use('/api/v1/org', organizationRouters);
 app.use('/api/v1/budget', budgetRouters);
+app.use('/api/v1/transaction', transactionRouters);
+app.use('/api/v1/sub', subscriptionRouters);
 
+// Error handling middleware
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 app.use(asyncHandlerMiddleware);
