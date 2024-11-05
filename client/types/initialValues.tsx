@@ -11,4 +11,5 @@ export const GlobalContextInitialValues = {
   setUserOrganization: () => {},
   currentOrganization: null,
   setCurrentOrganizationData: () => {},
+  getCurrentOrganization: () => Promise<void>,
 };

@@ -108,7 +108,7 @@ export default function DashboardTopNavbar() {
                       color: theme.palette.mode === 'light' ? 'black' : 'white',
                     })}
                   >
-                    {session?.name.charAt(0).toUpperCase()}
+                    {session?.name?.charAt(0).toUpperCase()}
                   </Box>
                 </Box>
               </Link>
@@ -118,14 +118,14 @@ export default function DashboardTopNavbar() {
                   color='inherit'
                   sx={{ fontSize: 15 }}
                 >
-                  {currentOrganization?.name.length > 10
-                    ? currentOrganization?.name.slice(0, 10) + '...'
+                  {currentOrganization?.name?.length > 10
+                    ? currentOrganization?.name?.slice(0, 10) + '...'
                     : currentOrganization?.name}
                   <ArrowForwardIosIcon sx={{ fontSize: 15, marginLeft: 1 }} />
                 </Button>
               </Box>
 
-              {!organization.length && (
+              {!organization?.length && (
                 <Box className='p-1 rounded-lg flex flex-row justify-between items-center'>
                   <Button
                     color='primary'

@@ -35,7 +35,7 @@ const GetUserSingleBudget = asyncWrapper(async (req, res) => {
 });
 
 // @ Get User's Organization Budget
-// @ endpoint /api/v1/budget/org/:id
+// @ endpoint /api/v1/budget/budget/:id
 // @ method GET
 const GetUserOrgBudget = asyncWrapper(async (req, res) => {
   const user = req.user.userId;
@@ -57,7 +57,7 @@ const GetUserOrgBudget = asyncWrapper(async (req, res) => {
 // @ method POST
 const CreateBudget = asyncWrapper(async (req, res) => {
   const user = req.user.userId;
-  const { title, amount, date, items, organization } = req.body;
+  const { title, date, items, organization } = req.body;
 
   const org = await Organization.findOne({ _id: organization, user: user });
 
@@ -86,7 +86,7 @@ const CreateBudget = asyncWrapper(async (req, res) => {
 });
 
 // @ Update Budget
-// @ endpoint /api/v1/org/:id
+// @ endpoint /api/v1/budget/:id
 // @ method PATCH
 const UpdateBudget = asyncWrapper(async (req, res) => {
   const user = req.user.userId;

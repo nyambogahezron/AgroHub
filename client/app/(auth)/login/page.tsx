@@ -14,11 +14,11 @@ import { AuthFooter, AuthHeader } from '@/components/Auth';
 import CustomButton from '@/components/CustomButton';
 import { toast } from 'react-toastify';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import axios from 'axios';
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { useRouter } from 'next/navigation';
+import { axiosInstance } from '@/lib/axios';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -38,8 +38,8 @@ export default function Login() {
   async function loginUser(data) {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/v1/auth/login',
+      const response = await axiosInstance.post(
+        '/api/v1/auth/login',
         JSON.stringify(data),
         {
           headers: {
@@ -56,9 +56,12 @@ export default function Login() {
       setIsLoading(false);
       setLoggedIn(true);
     } catch (error) {
-      toast.error(error.response.data.msg);
       setIsLoading(false);
-      console.log(error);
+      if (error?.response?.status == 500) {
+        toast.error('Something went wrong, try again later');
+      } else {
+        toast.error(error?.response?.data?.msg);
+      }
     } finally {
       setIsLoading(false);
     }

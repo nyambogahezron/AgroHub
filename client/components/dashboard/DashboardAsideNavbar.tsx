@@ -24,18 +24,27 @@ import Link from 'next/link';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { usePathname } from 'next/navigation';
 import { DashboardMenuItem } from '@/data';
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 78;
 const expandedDrawerWidth = 250;
 
 export default function DashboardAsideNavbar() {
+  const currentPath = usePathname();
   const [open, setOpen] = useState(false);
-  const { session } = useGlobalContext();
+  const { session, deleteSession } = useGlobalContext();
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-  const currentPath = usePathname();
+
+  const handleOnLogout = () => {
+    deleteSession();
+
+    // Redirect to home
+    router.replace('/');
+  };
 
   return (
     <Drawer
@@ -175,6 +184,7 @@ export default function DashboardAsideNavbar() {
           )}
         </Link>
         <IconButton
+          onClick={() => handleOnLogout()}
           edge='end'
           color='inherit'
           sx={{

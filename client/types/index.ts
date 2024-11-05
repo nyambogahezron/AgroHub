@@ -70,6 +70,7 @@ export type GlobalContextProps = {
   setUserOrganization: (data: any) => void;
   currentOrganization: any;
   setCurrentOrganizationData: (data: any) => void;
+  getCurrentOrganization: () => void;
 };
 
 export interface OrganizationDialogProps {
@@ -91,19 +92,22 @@ export interface NavItemConfig {
 }
 
 export interface BudgetItem {
-  id: string;
-  title: string;
+  _id: string;
+  name: string;
   amount: number;
 }
 
 export interface BudgetProps {
-  id: string;
+  _id: string;
   user: string;
+  organization: string;
   title: string;
   date: string;
-  amount: number;
-  organization: number;
   items: BudgetItem[];
+  createdAt: string;
+  updatedAt: string;
+  amount: number;
+  __v?: number;
 }
 
 export interface BudgetTableProps {

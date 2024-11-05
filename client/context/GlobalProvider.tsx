@@ -1,5 +1,6 @@
 'use client';
 
+import { getUserOrg } from '@/query/api';
 import { GlobalContextProps } from '@/types';
 import { GlobalContextInitialValues } from '@/types/initialValues';
 import { createContext, useContext, useEffect, useState } from 'react';
@@ -20,8 +21,12 @@ export default function GlobalProvider({
   const [currentOrganization, setCurrentOrganization] = useState();
 
   async function deleteSession() {
-    await localStorage.removeItem('user');
+    localStorage.removeItem('user');
+    localStorage.removeItem('organization');
+    localStorage.removeItem('currentOrganization');
     setSession(null);
+    setOrganization(null);
+    setCurrentOrganization(null);
   }
 
   async function getSession() {
@@ -51,21 +56,15 @@ export default function GlobalProvider({
 
     organizationData.push(data);
 
-    await localStorage.setItem(
-      'organization',
-      JSON.stringify(organizationData)
-    );
-
-    return organizationData;
+    localStorage.setItem('organization', JSON.stringify(organizationData));
   }
 
   // get user organization from local storage
   async function getOrganization() {
-    const organization = await localStorage.getItem('organization');
-    const data = JSON.parse(organization) || [];
+    const organization = localStorage.getItem('organization');
+    const data = JSON.parse(organization);
     if (organization) {
       setOrganization(data);
-      // console.log('organization', data);
     } else {
       setOrganization(null);
     }
@@ -76,18 +75,22 @@ export default function GlobalProvider({
     const currentOrganization = await localStorage.getItem(
       'currentOrganization'
     );
-    console.log('currentOrganization', currentOrganization);
+    const organization = await localStorage.getItem('organization');
     const data = JSON.parse(currentOrganization);
     if (currentOrganization) {
       setCurrentOrganization(data);
     } else {
-      setCurrentOrganization(null);
+      if (organization) {
+        setCurrentOrganization(JSON.parse(organization)[0]);
+      } else {
+        setCurrentOrganization(null);
+      }
     }
   }
 
   // set current organization
   async function setCurrentOrganizationData(data: any) {
-    await localStorage.setItem('currentOrganization', JSON.stringify(data));
+   localStorage.setItem('currentOrganization', JSON.stringify(data));
     setCurrentOrganization(data);
   }
 
@@ -96,6 +99,20 @@ export default function GlobalProvider({
     await localStorage.removeItem('organization');
     setOrganization(null);
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getUserOrg();
+      localStorage.setItem('organization', JSON.stringify(result.organization));
+      setOrganization(result.organization);
+      const org = getCurrentOrganization();
+      if (!org) {
+        setCurrentOrganizationData(result.organization[0]);
+      }
+    };
+
+    fetchData();
+  }, [User]);
 
   useEffect(() => {
     getSession();
@@ -113,6 +130,7 @@ export default function GlobalProvider({
         deleteSession,
         organization,
         getOrganization,
+        getCurrentOrganization,
         deleteOrganization,
         setUserOrganization,
         currentOrganization,

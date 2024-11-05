@@ -1,11 +1,14 @@
 'use client';
+
 import Modal from '@mui/material/Modal';
 import { Box, Container, Grid, TextField } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
 import { AuthHeader } from '@/components/Auth';
 import CustomButton from '@/components/CustomButton';
 import { OrganizationSchema } from '@/lib/schema';
+import { toast } from 'react-toastify';
+import { axiosInstance } from '@/lib/axios';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 type CreateOrganizationModelProps = {
   open: boolean;
@@ -16,6 +19,7 @@ export default function CreateOrganizationModel({
   open,
   handleClose,
 }: CreateOrganizationModelProps) {
+  const { setUserOrganization, getCurrentOrganization } = useGlobalContext();
   return (
     <Modal
       open={open}
@@ -52,14 +56,17 @@ export default function CreateOrganizationModel({
               validationSchema={OrganizationSchema}
               onSubmit={async (values, { setSubmitting }) => {
                 try {
-                  const response = await axios.post(
-                    '/api/organizations',
+                  const response = await axiosInstance.post(
+                    '/api/v1/org',
                     values
                   );
-                  console.log('Organization Created:', response.data);
+                  // store organization in local storage
+                  setUserOrganization(response.data.organization);
+                  getCurrentOrganization();
+                  toast.success('Organization created successfully');
                   setSubmitting(false);
                 } catch (error) {
-                  console.error('Error creating organization:', error);
+                  toast.error(error.response.data.msg);
                   setSubmitting(false);
                 }
               }}

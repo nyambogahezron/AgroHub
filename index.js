@@ -27,12 +27,12 @@ const asyncHandlerMiddleware = require('./middleware/asyncHandler');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cookieParser(process.env.JWT_SECRET));
 
 const corsOptions = {
-  origin: '*', // Allows requests from all domains.
+  origin: 'http://localhost:3000', // allow to server to accept request from different origin
   optionsSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));

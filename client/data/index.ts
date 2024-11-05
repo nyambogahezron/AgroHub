@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { BudgetProps } from '@/types';
-
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 export { FeaturesItem, HomeNavData };
 
 export const priceTiers = [
@@ -98,7 +98,7 @@ export const DashboardMenuItem = [
   { text: 'Analytics', icon: PieChartIcon, link: '/dashboard/analytics' },
   { text: 'Market', icon: ShoppingCartIcon, link: '/dashboard/market' },
   { text: 'User', icon: PersonIcon, link: '/dashboard/users' },
-  { text: 'Budget', icon: PersonIcon, link: '/dashboard/budget' },
+  { text: 'Budget', icon: AttachMoneyIcon, link: '/dashboard/budget' },
   {
     text: 'Notifications',
     icon: ChatIcon,

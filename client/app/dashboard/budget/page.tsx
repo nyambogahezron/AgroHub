@@ -1,5 +1,6 @@
+'use client';
+
 import * as React from 'react';
-import type { Metadata } from 'next';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -8,13 +9,17 @@ import PlusIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import BudgetTable from '@/components/dashboard/budget/budget-table';
 import { budgetData } from '@/data';
-import { BudgetProps, BudgetTableProps } from '@/types';
-export const metadata = {
-  title: `Dashboard | Budget`,
-} satisfies Metadata;
-
+import { BudgetProps} from '@/types';
+import AddBudgetDialog from '@/components/dashboard/budget/add-budget';
 
 export default function Page(): React.JSX.Element {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleModelClose = () => setOpen(false);
+
   const page = 0;
   const rowsPerPage = 5;
 
@@ -37,7 +42,11 @@ export default function Page(): React.JSX.Element {
           </Stack>
         </Stack>
         <div>
-          <Button startIcon={<PlusIcon />} variant='contained'>
+          <Button
+            startIcon={<PlusIcon />}
+            variant='contained'
+            onClick={() => setOpen(true)}
+          >
             Add
           </Button>
         </div>
@@ -47,6 +56,10 @@ export default function Page(): React.JSX.Element {
         page={page}
         rows={paginatedBudget}
         rowsPerPage={rowsPerPage}
+      />
+      <AddBudgetDialog
+        open={open}
+        handleModelClose={handleModelClose}
       />
     </Stack>
   );
