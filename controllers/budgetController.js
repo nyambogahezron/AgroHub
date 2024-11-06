@@ -93,15 +93,18 @@ const UpdateBudget = asyncWrapper(async (req, res) => {
   const { id: budgetId } = req.params;
   const { title, date, items, organization } = req.body;
 
-  const budget = await Budget.findOneAndUpdate(
-    { _id: budgetId, user: user },
-    { title, date, items, organization },
-    { new: true, runValidators: true }
-  );
+  const budget = await Budget.findOne({ _id: budgetId, user: user });
 
   if (!budget) {
     throw new CustomError.NotFoundError(`No budget with id : ${budgetId}`);
   }
+
+  budget.title = title || budget.title;
+  budget.date = date || budget.date;
+  budget.items = items || budget.items;
+  budget.organization = organization || budget.organization;
+
+  await budget.save();
 
   res
     .status(StatusCodes.OK)

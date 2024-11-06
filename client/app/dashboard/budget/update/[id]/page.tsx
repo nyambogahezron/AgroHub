@@ -1,6 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import {
-  Dialog,
   AppBar,
   Toolbar,
   IconButton,
@@ -15,28 +16,59 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Stack,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { updateBudget } from '@/query/api'; 
+import { getSingleBudget, updateBudget } from '@/query/api';
 import { toast } from 'react-toastify';
 import PreLoading from '@/components/Loading';
+import { useParams, useRouter } from 'next/navigation';
 
-export default function UpdateBudget({ open, handleModelClose, budget }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+export default function UpdateBudget() {
   const { organization: org, currentOrganization } = useGlobalContext();
+  const [budgetData, setBudgetData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
+  const router = useRouter();
   const nowDate = new Date();
 
   const [formData, setFormData] = useState({
-    organization: budget.organization || currentOrganization?._id,
-    title: budget.title || '',
-    date:
-      budget.date ||
-      `${nowDate.getMonth()}/${nowDate.getDate()}/${nowDate.getFullYear()}`,
-    items: budget.items || [{ name: '', amount: '' }],
+    organization: '',
+    title: '',
+    date: `${
+      nowDate.getMonth() + 1
+    }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+    items: [{ name: '', amount: '' }],
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      const data = await getSingleBudget(id.toString());
+      if (data && data.budget) {
+        setBudgetData(data.budget);
+        setFormData({
+          organization: data.budget.organization || currentOrganization?._id,
+          title: data.budget.title || '',
+          date:
+            data.budget.date ||
+            `${
+              nowDate.getMonth() + 1
+            }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+          items: data.budget.items || [{ name: '', amount: '' }],
+        });
+        setIsLoading(false);
+      } else {
+        setBudgetData(undefined);
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, [id, currentOrganization]);
+
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -99,7 +131,7 @@ export default function UpdateBudget({ open, handleModelClose, budget }) {
   };
 
   const handleSubmit = async () => {
-    const res = await updateBudget(formData, budget._id); 
+    const res = await updateBudget(formData, budgetData._id);
     if (res) {
       toast.success('Budget updated successfully');
     }
@@ -107,22 +139,27 @@ export default function UpdateBudget({ open, handleModelClose, budget }) {
     setFormData({
       organization: currentOrganization?._id,
       title: '',
-      date: `${nowDate.getMonth()}/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+      date: `${
+        nowDate.getMonth() + 1
+      }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
       items: [{ name: '', amount: '' }],
     });
-    handleModelClose();
+    router.back();
   };
 
+  if (isLoading) {
+    return <PreLoading />;
+  }
+
   return (
-    <Dialog fullScreen open={open} onClose={handleModelClose}>
-      {isLoaded && <PreLoading />}
-      <AppBar sx={{ position: 'fixed', marginBottom: 3 }}>
+    <Stack>
+      <AppBar position='relative' sx={{ top: 0, width: '100%' }}>
         {/* header */}
         <Toolbar>
           <IconButton
             edge='start'
             color='inherit'
-            onClick={handleModelClose}
+            onClick={() => router.back()}
             aria-label='close'
           >
             <CloseIcon />
@@ -231,6 +268,6 @@ export default function UpdateBudget({ open, handleModelClose, budget }) {
           </Button>
         </ListItem>
       </List>
-    </Dialog>
+    </Stack>
   );
 }

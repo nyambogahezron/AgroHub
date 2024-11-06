@@ -13,29 +13,62 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '@/hooks/use-selection';
 import { BudgetProps, BudgetTableProps } from '@/types';
-import { Box, IconButton } from '@mui/material';
-import { getAllBudgets } from '@/query/api';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+} from '@mui/material';
+import { deleteBudget, getAllBudgets } from '@/query/api';
 import PreLoading from '@/components/Loading';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
-function noop(): void {
-  // do nothing
-}
-
-export default function BudgetTable({
-  count = 0,
-  rows = [],
-  page = 0,
-  rowsPerPage = 0,
-}: BudgetTableProps) {
+export default function BudgetTable({ rows = [] }: BudgetTableProps) {
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [budgetData, setBudgetData] = React.useState<BudgetProps[]>([]);
+  const [open, setOpen] = React.useState(false);
+  const [selectedBudgetId, setSelectedBudgetId] = React.useState<string | null>(
+    null
+  );
   const { organization } = useGlobalContext();
   const router = useRouter();
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedBudgetId(null);
+  };
+
+  const handleModelOpen = (id: string) => {
+    setSelectedBudgetId(id);
+    setOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (selectedBudgetId) {
+      const data = await deleteBudget(selectedBudgetId);
+
+      if (data) {
+        const newData = budgetData.filter(
+          (budget) => budget._id !== selectedBudgetId
+        );
+        setBudgetData(newData);
+
+        toast.success('Budget deleted successfully');
+      }
+      setOpen(false);
+      router.refresh();
+      setSelectedBudgetId(null);
+    }
+  };
 
   // fetch all budgets
   React.useEffect(() => {
@@ -143,7 +176,7 @@ export default function BudgetTable({
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
                             onClick={() =>
-                              router.push(`/dashboard/budget/${row._id}`)
+                              router.push(`/dashboard/budget/update/${row._id}`)
                             }
                             size='small'
                             color='primary'
@@ -153,16 +186,40 @@ export default function BudgetTable({
                         </Stack>
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
-                            onClick={noop}
+                            onClick={() => handleModelOpen(row._id)}
                             size='small'
                             color='primary'
                           >
                             <DeleteIcon sx={{ color: 'red' }} />
                           </IconButton>
+                          <Dialog
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby='alert-dialog-title'
+                            aria-describedby='alert-dialog-description'
+                          >
+                            <DialogTitle id='alert-dialog-title'>
+                              {'Delete Budget'}
+                            </DialogTitle>
+                            <DialogContent>
+                              <DialogContentText id='alert-dialog-description'>
+                                You are about to delete this budget, are you
+                                sure?
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={handleClose}>Disagree</Button>
+                              <Button onClick={handleDelete} autoFocus>
+                                Agree
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
                         </Stack>
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
-                            onClick={noop}
+                            onClick={() =>
+                              router.push(`/dashboard/budget/${row._id}`)
+                            }
                             size='small'
                             color='primary'
                           >

@@ -20,7 +20,7 @@ async function apiCall(
     return response.data;
   } catch (error) {
     console.error(error);
-    toast.error(error.response.data.msg);
+    toast.error(error?.response?.data?.msg);
     return null;
   }
 }
@@ -37,7 +37,7 @@ export async function createBudget(data: any) {
 
 // update budget
 export async function updateBudget(data: any, id: string) {
-  return await apiCall(`/api/v1/budget/${id}`, '', 'PUT', data);
+  return await apiCall(`/api/v1/budget/${id}`, '', 'PATCH', data);
 }
 
 // delete budget
@@ -48,4 +48,9 @@ export async function deleteBudget(id: string) {
 // get all budgets
 export async function getAllBudgets() {
   return await apiCall(`/api/v1/budget/`, '', 'GET');
+}
+
+// get single budget
+export async function getSingleBudget(id: string) {
+  return await apiCall(`/api/v1/budget/${id}`, '', 'GET');
 }

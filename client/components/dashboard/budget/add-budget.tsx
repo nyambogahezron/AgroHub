@@ -23,11 +23,13 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 import { createBudget } from '@/query/api';
 import { toast } from 'react-toastify';
 import PreLoading from '@/components/Loading';
+import { useRouter } from 'next/navigation';
 
 export default function AddBudget({ open, handleModelClose }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const { organization: org, currentOrganization } = useGlobalContext();
   const nowDate = new Date();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     organization: currentOrganization?._id,
@@ -99,6 +101,7 @@ export default function AddBudget({ open, handleModelClose }) {
       items: [{ name: '', amount: '' }],
     });
     handleModelClose();
+    router.refresh()
   };
 
   return (

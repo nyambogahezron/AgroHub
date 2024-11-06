@@ -6,40 +6,49 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
+type Props = {
+  showConfirm: boolean;
+  setShowConfirm: React.Dispatch<React.SetStateAction<boolean>>;
+  onConfirm: () => void;
+  info: string;
+  title: string;
+};
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function ConfirmationDialog({
+  showConfirm,
+  setShowConfirm,
+  onConfirm,
+  info,
+  title,
+}: Props) {
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setShowConfirm(true);
+    };
+
+    const handleClose = () => {
+      setShowConfirm(false);
+    };
 
   return (
     <React.Fragment>
-      <Button variant='outlined' onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
-        open={open}
+        open={showConfirm}
         onClose={handleClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>
-          {"Use Google's location service?"}
-        </DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            {info}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={onConfirm} autoFocus>
             Agree
           </Button>
         </DialogActions>
