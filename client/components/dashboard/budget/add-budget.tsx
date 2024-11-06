@@ -27,7 +27,12 @@ import { useRouter } from 'next/navigation';
 
 export default function AddBudget({ open, handleModelClose }) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { organization: org, currentOrganization } = useGlobalContext();
+  const {
+    organization: org,
+    currentOrganization,
+    setBudgetData,
+    budgetData,
+  } = useGlobalContext();
   const nowDate = new Date();
   const router = useRouter();
 
@@ -90,9 +95,12 @@ export default function AddBudget({ open, handleModelClose }) {
 
   const handleSubmit = async () => {
     const res = await createBudget(formData);
+
     if (res) {
       toast.success('Budget created successfully');
+      setBudgetData([...budgetData, res.budget]);
     }
+
     // clear form data
     setFormData({
       organization: currentOrganization?._id,
@@ -100,8 +108,8 @@ export default function AddBudget({ open, handleModelClose }) {
       date: `${nowDate.getMonth()}/${nowDate.getDate()}/${nowDate.getFullYear()}`,
       items: [{ name: '', amount: '' }],
     });
+    setTotal(0);
     handleModelClose();
-    router.refresh()
   };
 
   return (

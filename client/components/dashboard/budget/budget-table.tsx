@@ -32,14 +32,14 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export default function BudgetTable({ rows = [] }: BudgetTableProps) {
+export default function BudgetTable() {
   const [isLoaded, setIsLoaded] = React.useState(true);
-  const [budgetData, setBudgetData] = React.useState<BudgetProps[]>([]);
   const [open, setOpen] = React.useState(false);
   const [selectedBudgetId, setSelectedBudgetId] = React.useState<string | null>(
     null
   );
-  const { organization } = useGlobalContext();
+  const { organization, fetchBudgets, budgetData, setBudgetData } =
+    useGlobalContext();
   const router = useRouter();
 
   const handleClose = () => {
@@ -70,34 +70,21 @@ export default function BudgetTable({ rows = [] }: BudgetTableProps) {
     }
   };
 
-  // fetch all budgets
-  React.useEffect(() => {
-    setIsLoaded(true);
-    async function fetchBudgets() {
-      const data = await getAllBudgets();
-      console.log('budgets', data);
-      if (data) {
-        setBudgetData(data.budgets);
-        setIsLoaded(false);
-      }
-    }
-    fetchBudgets();
-  }, []);
-
+ 
   const rowIds = React.useMemo(() => {
-    return rows.map((budgetData) => budgetData._id);
-  }, [rows]);
+    return budgetData?.map((budgetData) => budgetData._id);
+  }, [budgetData]);
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } =
     useSelection(rowIds);
 
   const selectedSome =
-    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < rows.length;
-  const selectedAll = rows.length > 0 && selected?.size === rows.length;
+    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < budgetData?.length;
+  const selectedAll =
+    budgetData?.length > 0 && selected?.size === budgetData?.length;
 
   return (
     <Card>
-      {isLoaded && <PreLoading />}
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>

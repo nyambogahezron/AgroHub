@@ -22,14 +22,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { getSingleBudget, updateBudget } from '@/query/api';
+import { updateBudget } from '@/query/api';
 import { toast } from 'react-toastify';
 import PreLoading from '@/components/Loading';
 import { useParams, useRouter } from 'next/navigation';
 
 export default function UpdateBudget() {
-  const { organization: org, currentOrganization } = useGlobalContext();
-  const [budgetData, setBudgetData] = useState<any>();
+  const {
+    organization: org,
+    currentOrganization,
+    budgetData,
+    setBudgetData,
+  } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const router = useRouter();
@@ -46,28 +50,26 @@ export default function UpdateBudget() {
 
   useEffect(() => {
     setIsLoading(true);
-    async function fetchData() {
-      const data = await getSingleBudget(id.toString());
-      if (data && data.budget) {
-        setBudgetData(data.budget);
-        setFormData({
-          organization: data.budget.organization || currentOrganization?._id,
-          title: data.budget.title || '',
-          date:
-            data.budget.date ||
-            `${
-              nowDate.getMonth() + 1
-            }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
-          items: data.budget.items || [{ name: '', amount: '' }],
-        });
-        setIsLoading(false);
-      } else {
-        setBudgetData(undefined);
-        setIsLoading(false);
-      }
+    const data = budgetData?.find((item) => item._id === id);
+    if (data) {
+      setFormData({
+        organization: data.organization || currentOrganization?._id,
+        title: data.title || '',
+        date:
+          data.date ||
+          `${
+            nowDate.getMonth() + 1
+          }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+        items: data.items.map((item) => ({
+          name: item.name,
+          amount: item.amount.toString(),
+        })) || [{ name: '', amount: '' }],
+      });
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
     }
-    fetchData();
-  }, [id, currentOrganization]);
+  }, [id, budgetData, currentOrganization]);
 
   const [total, setTotal] = useState(0);
 
@@ -131,20 +133,14 @@ export default function UpdateBudget() {
   };
 
   const handleSubmit = async () => {
-    const res = await updateBudget(formData, budgetData._id);
+    const res = await updateBudget(formData, id.toString());
     if (res) {
       toast.success('Budget updated successfully');
+      const prevData = budgetData.filter((item) => item._id !== id);
+      setBudgetData([...prevData, res.budget]);
+      
+      router.back();
     }
-    // clear form data
-    setFormData({
-      organization: currentOrganization?._id,
-      title: '',
-      date: `${
-        nowDate.getMonth() + 1
-      }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
-      items: [{ name: '', amount: '' }],
-    });
-    router.back();
   };
 
   if (isLoading) {

@@ -12,4 +12,7 @@ export const GlobalContextInitialValues = {
   currentOrganization: null,
   setCurrentOrganizationData: () => {},
   getCurrentOrganization: () => Promise<void>,
+  fetchBudgets: () => Promise<void>,
+  budgetData: [],
+  setBudgetData: () => {},
 };

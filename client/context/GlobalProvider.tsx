@@ -1,13 +1,11 @@
 'use client';
 
-import { getUserOrg } from '@/query/api';
+import { getAllBudgets, getUserOrg } from '@/query/api';
 import { GlobalContextProps } from '@/types';
 import { GlobalContextInitialValues } from '@/types/initialValues';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-export const GlobalContext = createContext<GlobalContextProps>({
-  ...GlobalContextInitialValues,
-});
+ const GlobalContext = createContext<GlobalContextProps>(GlobalContextInitialValues);
 
 export default function GlobalProvider({
   children,
@@ -19,6 +17,7 @@ export default function GlobalProvider({
   const [session, setSession] = useState();
   const [organization, setOrganization] = useState([]);
   const [currentOrganization, setCurrentOrganization] = useState();
+  const [budgetData, setBudgetData] = useState([]);
 
   async function deleteSession() {
     localStorage.removeItem('user');
@@ -90,7 +89,7 @@ export default function GlobalProvider({
 
   // set current organization
   async function setCurrentOrganizationData(data: any) {
-   localStorage.setItem('currentOrganization', JSON.stringify(data));
+    localStorage.setItem('currentOrganization', JSON.stringify(data));
     setCurrentOrganization(data);
   }
 
@@ -99,6 +98,18 @@ export default function GlobalProvider({
     await localStorage.removeItem('organization');
     setOrganization(null);
   }
+
+  const fetchBudgets = async () => {
+    const data = await getAllBudgets();
+
+    if (data && data.budgets) {
+      setBudgetData(data.budgets);
+      console.log('budget from g', data);
+    } else {
+      setBudgetData([]);
+      console.log('budget from null');
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,6 +129,7 @@ export default function GlobalProvider({
     getSession();
     getOrganization();
     getCurrentOrganization();
+    fetchBudgets();
   }, []);
   return (
     <GlobalContext.Provider
@@ -135,6 +147,9 @@ export default function GlobalProvider({
         setUserOrganization,
         currentOrganization,
         setCurrentOrganizationData,
+        fetchBudgets,
+        budgetData,
+        setBudgetData,
       }}
     >
       {children}

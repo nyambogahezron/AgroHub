@@ -8,22 +8,12 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PlusIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
 import BudgetTable from '@/components/dashboard/budget/budget-table';
-import { budgetData } from '@/data';
-import { BudgetProps} from '@/types';
 import AddBudgetDialog from '@/components/dashboard/budget/add-budget';
 
 export default function Page(): React.JSX.Element {
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleModelClose = () => setOpen(false);
-
-  const page = 0;
-  const rowsPerPage = 5;
-
-  const paginatedBudget = applyPagination(budgetData, page, rowsPerPage);
 
   return (
     <Stack spacing={3} className='px-3 m-auto w-full'>
@@ -51,24 +41,8 @@ export default function Page(): React.JSX.Element {
           </Button>
         </div>
       </Stack>
-      <BudgetTable
-        count={paginatedBudget.length}
-        page={page}
-        rows={paginatedBudget}
-        rowsPerPage={rowsPerPage}
-      />
-      <AddBudgetDialog
-        open={open}
-        handleModelClose={handleModelClose}
-      />
+      <BudgetTable />
+      <AddBudgetDialog open={open} handleModelClose={handleModelClose} />
     </Stack>
   );
-}
-
-function applyPagination(
-  rows: BudgetProps[],
-  page: number,
-  rowsPerPage: number
-): any {
-  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 }

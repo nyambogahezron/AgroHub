@@ -71,6 +71,10 @@ export type GlobalContextProps = {
   currentOrganization: any;
   setCurrentOrganizationData: (data: any) => void;
   getCurrentOrganization: () => void;
+  fetchBudgets: () => void;
+  budgetData: BudgetProps[];
+  setBudgetData: React.Dispatch<SetStateAction<any>>;
+  
 };
 
 export interface OrganizationDialogProps {
