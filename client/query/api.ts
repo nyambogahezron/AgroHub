@@ -54,3 +54,18 @@ export async function getAllBudgets() {
 export async function getSingleBudget(id: string) {
   return await apiCall(`/api/v1/budget/${id}`, '', 'GET');
 }
+
+export async function getBudgetTotal(budgetData: any) {
+  const currentYear = new Date().getFullYear();
+
+  const currentYearBudget = budgetData.filter((budget) => {
+    const budgetYear = new Date(budget.date).getFullYear();
+    return budgetYear === currentYear;
+  });
+
+  const totalBudget = currentYearBudget.reduce((acc, budget: any) => {
+    return acc + budget.total;
+  }, 0);
+
+  return totalBudget;
+}

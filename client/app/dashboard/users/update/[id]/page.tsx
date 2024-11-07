@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import {
-  Dialog,
   AppBar,
   Toolbar,
   IconButton,
@@ -15,34 +16,72 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Stack,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import { createBudget } from '@/query/api';
+import { updateBudget } from '@/query/api';
 import { toast } from 'react-toastify';
 import PreLoading from '@/components/Loading';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
-export default function AddBudget({ open, handleModelClose }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+export default function UpdateBudget() {
   const {
     organization: org,
     currentOrganization,
-    setBudgetData,
     budgetData,
+    setBudgetData,
   } = useGlobalContext();
-  const nowDate = new Date();
+  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
   const router = useRouter();
+  const nowDate = new Date();
 
   const [formData, setFormData] = useState({
-    organization: currentOrganization?._id,
+    organization: '',
     title: '',
-    date: `${nowDate.getMonth()}/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+    date: `${
+      nowDate.getMonth() + 1
+    }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
     items: [{ name: '', amount: '' }],
   });
+
+  useEffect(() => {
+    setIsLoading(true);
+    const data = budgetData?.find((item) => item._id === id);
+    if (data) {
+      setFormData({
+        organization: data.organization || currentOrganization?._id,
+        title: data.title || '',
+        date:
+          data.date ||
+          `${
+            nowDate.getMonth() + 1
+          }/${nowDate.getDate()}/${nowDate.getFullYear()}`,
+        items: data.items.map((item) => ({
+          name: item.name,
+          amount: item.amount.toString(),
+        })) || [{ name: '', amount: '' }],
+      });
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, [id, budgetData, currentOrganization]);
+
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    // Calculate initial total
+    let initialTotal = 0;
+    formData.items.forEach((item) => {
+      initialTotal += parseInt(item.amount);
+    });
+    setTotal(initialTotal);
+  }, [formData.items]);
+
   const handleInputChange = (e, index: number) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -94,40 +133,35 @@ export default function AddBudget({ open, handleModelClose }) {
   };
 
   const handleSubmit = async () => {
-    const res = await createBudget(formData);
-
+    const res = await updateBudget(formData, id.toString());
     if (res) {
-      toast.success('Budget created successfully');
-      setBudgetData([...budgetData, res.budget]);
+      toast.success('Budget updated successfully');
+      const prevData = budgetData.filter((item) => item._id !== id);
+      setBudgetData([...prevData, res.budget]);
+      
+      router.back();
     }
-
-    // clear form data
-    setFormData({
-      organization: currentOrganization?._id,
-      title: '',
-      date: `${nowDate.getMonth()}/${nowDate.getDate()}/${nowDate.getFullYear()}`,
-      items: [{ name: '', amount: '' }],
-    });
-    setTotal(0);
-    handleModelClose();
   };
 
+  if (isLoading) {
+    return <PreLoading />;
+  }
+
   return (
-    <Dialog fullScreen open={open} onClose={handleModelClose}>
-      {isLoaded && <PreLoading />}
-      <AppBar sx={{ position: 'fixed', marginBottom: 3 }}>
+    <Stack>
+      <AppBar position='relative' sx={{ top: 0, width: '100%' }}>
         {/* header */}
         <Toolbar>
           <IconButton
             edge='start'
             color='inherit'
-            onClick={handleModelClose}
+            onClick={() => router.back()}
             aria-label='close'
           >
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant='h6' component='div'>
-            Add Budget
+            Update Budget
           </Typography>
           <Typography sx={{ mr: 2 }} variant='h6' component='div'>
             Total: {total || 0}
@@ -221,23 +255,15 @@ export default function AddBudget({ open, handleModelClose }) {
             {/* <Divider /> */}
           </React.Fragment>
         ))}
-        <ListItem>
-          <Grid container spacing={2} sx={{ alignItems: 'center' }}>
-            <Grid item xs={6}></Grid>
-            <Grid item xs={4}></Grid>
-            <Grid item xs={2} sm={12}>
-              <ListItem >
-                <Button color='success' onClick={handleAddItem}>
-                  <AddIcon sx={{ color: 'green' }} /> Add Item
-                </Button>
-                <Button color='warning' onClick={handleClearAll}>
-                  <CloseIcon sx={{ color: 'red' }} /> Clear All
-                </Button>
-              </ListItem>
-            </Grid>
-          </Grid>
+        <ListItem sx={{ justifyContent: 'end' }}>
+          <Button color='success' onClick={handleAddItem}>
+            <AddIcon sx={{ color: 'green' }} /> Add Item
+          </Button>
+          <Button color='warning' onClick={handleClearAll}>
+            <CloseIcon sx={{ color: 'red' }} /> Clear All
+          </Button>
         </ListItem>
       </List>
-    </Dialog>
+    </Stack>
   );
 }

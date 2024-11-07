@@ -18,6 +18,7 @@ const organizationRouters = require('./routes/organizationRoutes');
 const budgetRouters = require('./routes/budgetRoutes');
 const transactionRouters = require('./routes/transactionRoutes');
 const subscriptionRouters = require('./routes/subscriptionRoutes');
+const organizationUserRoutes = require('./routes/organizationUserRoutes');
 
 // middlewares
 const notFoundMiddleware = require('./middleware/notFound');
@@ -30,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.JWT_SECRET));
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // allow to server to accept request from different origin
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200,
   credentials: true,
 };
@@ -43,6 +44,7 @@ app.use('/api/v1/org', organizationRouters);
 app.use('/api/v1/budget', budgetRouters);
 app.use('/api/v1/transaction', transactionRouters);
 app.use('/api/v1/sub', subscriptionRouters);
+app.use('/api/v1/org-user', organizationUserRoutes);
 
 // Error handling middleware
 app.use(notFoundMiddleware);

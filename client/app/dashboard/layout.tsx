@@ -11,6 +11,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
  
+ const metadata = {
+    title: `Overview | Dashboard `,
+  };
   return (
     <ThemeProviderWrapper>
       <ThemedBox>

@@ -12,6 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '@/hooks/use-selection';
+import { BudgetProps, BudgetTableProps } from '@/types';
 import {
   Box,
   Button,
@@ -22,7 +23,7 @@ import {
   DialogTitle,
   IconButton,
 } from '@mui/material';
-import { deleteBudget } from '@/query/api';
+import { deleteBudget, getAllBudgets } from '@/query/api';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -30,12 +31,14 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export default function BudgetTable() {
+export default function UsersTable() {
+  const [isLoaded, setIsLoaded] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   const [selectedBudgetId, setSelectedBudgetId] = React.useState<string | null>(
     null
   );
-  const { organization, budgetData, setBudgetData } = useGlobalContext();
+  const { organization, fetchBudgets, budgetData, setBudgetData } =
+    useGlobalContext();
   const router = useRouter();
 
   const handleClose = () => {
@@ -66,6 +69,7 @@ export default function BudgetTable() {
     }
   };
 
+ 
   const rowIds = React.useMemo(() => {
     return budgetData?.map((budgetData) => budgetData._id);
   }, [budgetData]);
