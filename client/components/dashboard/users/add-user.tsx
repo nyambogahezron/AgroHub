@@ -11,19 +11,23 @@ import {
   List,
   ListItem,
   Divider,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { createUser } from '@/query/api';
 import { toast } from 'react-toastify';
 import PreLoading from '@/components/Loading';
-import { useRouter } from 'next/navigation';
+import { event } from '@/types';
 
 export default function AddUser({ open, handleModelClose }) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { setUserData, userData } = useGlobalContext();
+  const { users, setUsers, organization, currentOrganization } =
+    useGlobalContext();
   const nowDate = new Date();
-  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -34,9 +38,11 @@ export default function AddUser({ open, handleModelClose }) {
       2,
       '0'
     )}-${String(nowDate.getDate()).padStart(2, '0')}`,
+    organization: '',
+    role: '',
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: event) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -46,21 +52,23 @@ export default function AddUser({ open, handleModelClose }) {
 
     if (res) {
       toast.success('User created successfully');
-      setUserData([...userData, res.user]);
-    }
-
-    // clear form data
-    setFormData({
-      name: '',
-      email: '',
-      location: '',
-      phone: '',
-      date: `${nowDate.getFullYear()}-${String(nowDate.getMonth() + 1).padStart(
-        2,
-        '0'
+      setUsers([...users, res.data]);
+      
+      // clear form data
+      setFormData({
+        name: '',
+        email: '',
+        location: '',
+        phone: '',
+        date: `${nowDate.getFullYear()}-${String(nowDate.getMonth() + 1).padStart(
+          2,
+          '0'
       )}-${String(nowDate.getDate()).padStart(2, '0')}`,
+      organization: '',
+      role: '',
     });
     handleModelClose();
+  }
   };
 
   return (
@@ -123,6 +131,46 @@ export default function AddUser({ open, handleModelClose }) {
               onChange={handleInputChange}
             />
           </Grid>
+                   <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel id='role-label'>Role</InputLabel>
+              <Select
+                labelId='role-label'
+                value={formData.role}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
+                label='Organization'
+              >
+                {['admin', 'member'].map((item: string, index: number) => (
+                  <MenuItem key={index} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel id='organization-label'>Organization</InputLabel>
+              <Select
+                labelId='organization-label'
+                value={formData.organization}
+                onChange={(e) =>
+                  setFormData({ ...formData, organization: e.target.value })
+                }
+                label='Organization'
+              >
+                {organization.map((org) => (
+                  <MenuItem key={org._id} value={org._id}>
+                    {org.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          
           <Grid item xs={12} sm={6} md={4}>
             <TextField
               label='Date'

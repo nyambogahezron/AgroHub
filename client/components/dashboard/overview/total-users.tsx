@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
@@ -5,8 +7,10 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import PersonIcon from '@mui/icons-material/Person';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
-export function TotalUsers({ value }) {
+export function TotalUsers() {
+  const {users}= useGlobalContext();
   return (
     <Card sx={{ height: '100%' }}>
       <CardContent>
@@ -20,7 +24,7 @@ export function TotalUsers({ value }) {
               <Typography color='text.secondary' variant='overline'>
                 Total Users
               </Typography>
-              <Typography variant='h4'>{value}</Typography>
+              <Typography variant='h4'>{users?.length | 0}</Typography>
             </Stack>
             <Avatar
               sx={{

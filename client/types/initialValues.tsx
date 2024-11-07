@@ -15,4 +15,7 @@ export const GlobalContextInitialValues = {
   fetchBudgets: () => Promise<void>,
   budgetData: [],
   setBudgetData: () => {},
+  users: [],
+  fetchUsers: () => Promise<void>,
+  setUsers: () => {},
 };

@@ -12,7 +12,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '@/hooks/use-selection';
-import { BudgetProps, BudgetTableProps } from '@/types';
 import {
   Box,
   Button,
@@ -23,7 +22,7 @@ import {
   DialogTitle,
   IconButton,
 } from '@mui/material';
-import { deleteBudget, getAllBudgets } from '@/query/api';
+import { deleteUser } from '@/query/api';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -32,55 +31,54 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 export default function UsersTable() {
-  const [isLoaded, setIsLoaded] = React.useState(true);
   const [open, setOpen] = React.useState(false);
-  const [selectedBudgetId, setSelectedBudgetId] = React.useState<string | null>(
+  const [selectedUserId, setSelectedUserId] = React.useState<string | null>(
     null
   );
-  const { organization, fetchBudgets, budgetData, setBudgetData } =
-    useGlobalContext();
+  const {
+    organization,
+    users,
+    setUsers,
+  } = useGlobalContext();
   const router = useRouter();
 
   const handleClose = () => {
     setOpen(false);
-    setSelectedBudgetId(null);
+    setSelectedUserId(null);
   };
 
   const handleModelOpen = (id: string) => {
-    setSelectedBudgetId(id);
+    setSelectedUserId(id);
     setOpen(true);
   };
 
   const handleDelete = async () => {
-    if (selectedBudgetId) {
-      const data = await deleteBudget(selectedBudgetId);
+    if (selectedUserId) {
+      const data = await deleteUser(selectedUserId);
 
       if (data) {
-        const newData = budgetData.filter(
-          (budget) => budget._id !== selectedBudgetId
+        const newData = users.filter(
+          (user) => user._id !== selectedUserId
         );
-        setBudgetData(newData);
+        setUsers(newData);
 
-        toast.success('Budget deleted successfully');
+        toast.success('User deleted successfully');
       }
       setOpen(false);
-      router.refresh();
-      setSelectedBudgetId(null);
+      setSelectedUserId(null);
     }
   };
 
- 
   const rowIds = React.useMemo(() => {
-    return budgetData?.map((budgetData) => budgetData._id);
-  }, [budgetData]);
+    return users?.map((users) => users._id);
+  }, [users]);
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } =
     useSelection(rowIds);
 
   const selectedSome =
-    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < budgetData?.length;
-  const selectedAll =
-    budgetData?.length > 0 && selected?.size === budgetData?.length;
+    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < users?.length;
+  const selectedAll = users?.length > 0 && selected?.size === users?.length;
 
   return (
     <Card>
@@ -101,16 +99,19 @@ export default function UsersTable() {
                   }}
                 />
               </TableCell>
-              <TableCell>Title</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
               <TableCell>Organization</TableCell>
-              <TableCell>Amount</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Location</TableCell>
+              <TableCell>Phone</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {budgetData &&
-              budgetData.map((row) => {
+            {users &&
+              users.map((row) => {
                 const isSelected = selected?.has(row._id);
 
                 return (
@@ -133,7 +134,16 @@ export default function UsersTable() {
                         direction='row'
                         spacing={2}
                       >
-                        <Typography variant='subtitle2'>{row.title}</Typography>
+                        <Typography variant='subtitle2'>{row.name}</Typography>
+                      </Stack>
+                    </TableCell>
+                    <TableCell>
+                      <Stack
+                        sx={{ alignItems: 'center' }}
+                        direction='row'
+                        spacing={2}
+                      >
+                        <Typography variant='subtitle2'>{row.email}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
@@ -151,7 +161,9 @@ export default function UsersTable() {
                         </Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.role}</TableCell>
+                    <TableCell>{row.location}</TableCell>
+                    <TableCell>{row.phone}</TableCell>
                     <TableCell>{row.date}</TableCell>
                     <TableCell>
                       <Stack
@@ -162,7 +174,7 @@ export default function UsersTable() {
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
                             onClick={() =>
-                              router.push(`/dashboard/budget/update/${row._id}`)
+                              router.push(`/dashboard/users/update/${row._id}`)
                             }
                             size='small'
                             color='primary'
@@ -185,11 +197,11 @@ export default function UsersTable() {
                             aria-describedby='alert-dialog-description'
                           >
                             <DialogTitle id='alert-dialog-title'>
-                              {'Delete Budget'}
+                              {'Delete User'}
                             </DialogTitle>
                             <DialogContent>
                               <DialogContentText id='alert-dialog-description'>
-                                You are about to delete this budget, are you
+                                You are about to delete this user, are you
                                 sure?
                               </DialogContentText>
                             </DialogContent>
@@ -204,7 +216,7 @@ export default function UsersTable() {
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
                             onClick={() =>
-                              router.push(`/dashboard/budget/${row._id}`)
+                              router.push(`/dashboard/users/${row._id}`)
                             }
                             size='small'
                             color='primary'

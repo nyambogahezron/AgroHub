@@ -2,6 +2,10 @@ import { SvgIconTypeMap, SxProps } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import React, { SetStateAction } from 'react';
 
+export type event = React.ChangeEvent<
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+>;
+
 export type HomeNavDataProps = {
   id: number;
   name: string;
@@ -74,7 +78,9 @@ export type GlobalContextProps = {
   fetchBudgets: () => void;
   budgetData: BudgetProps[];
   setBudgetData: React.Dispatch<SetStateAction<any>>;
-  
+  users: User[];
+  fetchUsers: () => void;
+  setUsers: React.Dispatch<SetStateAction<User[]>>;
 };
 
 export interface OrganizationDialogProps {
@@ -119,4 +125,19 @@ export interface BudgetTableProps {
   page?: number;
   rows?: BudgetProps[];
   rowsPerPage?: number;
+}
+
+export interface User {
+  _id?: string;
+  name: string;
+  email: string;
+  location: string;
+  phone: string;
+  date: string;
+  organization: string;
+  role: 'admin' | 'member';
+  user?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }

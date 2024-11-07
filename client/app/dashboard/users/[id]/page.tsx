@@ -1,50 +1,73 @@
 'use client';
 
-import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Grid,
-  List,
-  ListItem,
-  Divider,
-  Stack,
-  Box,
-} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Stack from '@mui/material/Stack';
 import CloseIcon from '@mui/icons-material/Close';
 import { useGlobalContext } from '@/context/GlobalProvider';
-import PreLoading from '@/components/Loading';
-import { getSingleBudget } from '@/query/api';
+import { User } from '@/types';
 import { useParams, useRouter } from 'next/navigation';
-import { BudgetProps } from '@/types';
 
-export default function ViewBudget() {
-  const { organization: org } = useGlobalContext();
-  const [budgetData, setBudgetData] = React.useState<BudgetProps>();
-  const [isLoading, setIsLoading] = React.useState(true);
+export default function ViewUser() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [currentUserData, setCurrentUserData] = useState<User>({
+    _id: '',
+    name: '',
+    email: '',
+    location: '',
+    phone: '',
+    date: '',
+    organization: '',
+    role: 'member',
+  });
+  const { users, organization } = useGlobalContext();
   const { id } = useParams();
   const router = useRouter();
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    async function fetchData() {
-      const data = await getSingleBudget(id.toString());
-      if (data && data.budget) {
-        setBudgetData(data.budget);
-        setIsLoading(false);
-      } else {
-        setBudgetData(undefined);
-        setIsLoading(false);
-      }
+  useEffect(() => {
+    const user = users.find((user) => user._id === id);
+    if (user) {
+      setCurrentUserData(user);
+      setIsLoaded(true);
     }
-    fetchData();
-  }, [id]);
+  }, [id, users]);
 
-  if (isLoading) {
-    return <PreLoading />;
-  }
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    location: '',
+    phone: '',
+    date: '',
+    organization: '',
+    role: 'member',
+  });
+
+  useEffect(() => {
+    if (currentUserData._id) {
+      setFormData({
+        name: currentUserData.name,
+        email: currentUserData.email,
+        location: currentUserData.location,
+        phone: currentUserData.phone,
+        date: currentUserData.date,
+        organization: currentUserData.organization,
+        role: currentUserData.role,
+      });
+    }
+  }, [currentUserData]);
+
   return (
     <Stack>
       <AppBar position='static'>
@@ -57,85 +80,96 @@ export default function ViewBudget() {
           >
             <CloseIcon />
           </IconButton>
-          <Typography sx={{ ml: 5, flex: 1 }} variant='h6' component='div'>
-            {budgetData?.title} Budget Info
-          </Typography>
-          <Typography sx={{ mr: 2 }} variant='h6' component='div'>
-            Total: {budgetData?.amount || 0}
+          <Typography sx={{ ml: 2, flex: 1 }} variant='h6' component='div'>
+            User Info
           </Typography>
         </Toolbar>
       </AppBar>
       <List sx={{ mt: 5, px: 2 }}>
         <Grid container spacing={2} sx={{ marginY: 2, paddingX: 2 }}>
           <Grid item xs={12} sm={6} md={4}>
-            <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
-              Organization
-            </Typography>
-            <Typography variant='body1'>
-              {org.find((o) => o._id === budgetData?.organization)?.name ||
-                'N/A'}
-            </Typography>
+            <TextField
+              label='Name'
+              name='name'
+              fullWidth
+              value={formData.name}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
-              Title
-            </Typography>
-            <Typography variant='body1'>{budgetData?.title}</Typography>
+            <TextField
+              label='Email'
+              name='email'
+              fullWidth
+              value={formData.email}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
-              Date
-            </Typography>
-            <Typography variant='body1'>{budgetData?.date}</Typography>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              label='Location'
+              name='location'
+              fullWidth
+              value={formData.location}
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              label='Phone'
+              name='phone'
+              fullWidth
+              value={formData.phone}
+              InputProps={{ readOnly: true }}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel id='role-label'>Role</InputLabel>
+              <Select
+                labelId='role-label'
+                value={formData.role}
+                label='Role'
+                inputProps={{ readOnly: true }}
+              >
+                {['admin', 'member'].map((item: string, index: number) => (
+                  <MenuItem key={index} value={item}>
+                    {item}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel id='organization-label'>Organization</InputLabel>
+              <Select
+                labelId='organization-label'
+                value={formData.organization}
+                label='Organization'
+                inputProps={{ readOnly: true }}
+              >
+                {organization.map((org) => (
+                  <MenuItem key={org._id} value={org._id}>
+                    {org.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              label='Date'
+              name='date'
+              type='date'
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={formData.date}
+              InputProps={{ readOnly: true }}
+            />
           </Grid>
         </Grid>
         <Divider />
-        <ListItem sx={{ my: 2 }}>
-          <Grid container spacing={2} sx={{ alignItems: 'center' }}>
-            <Grid item xs={6}>
-              <Typography sx={{ fontWeight: 'bold' }} variant='subtitle1'>
-                Item Name
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography sx={{ fontWeight: 'bold' }} variant='subtitle1'>
-                Amount
-              </Typography>
-            </Grid>
-          </Grid>
-        </ListItem>
-        <Divider />
-
-        {budgetData &&
-          budgetData?.items.map((item, index) => (
-            <React.Fragment key={index}>
-              <ListItem>
-                <Grid container spacing={2} sx={{ alignItems: 'center' }}>
-                  <Grid item xs={6}>
-                    <Typography variant='body1'>{item.name}</Typography>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Typography variant='body1'>{item.amount}</Typography>
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          ))}
-        <ListItem>
-          <Grid container spacing={2} sx={{ alignItems: 'center' }}>
-            <Grid item xs={6}>
-              <Typography sx={{ fontWeight: 'bold' }} variant='subtitle1'>
-                Total Items {budgetData?.items.length}
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography sx={{ fontWeight: 'bold' }} variant='subtitle1'>
-                Total Amount : {budgetData?.amount}
-              </Typography>
-            </Grid>
-          </Grid>
-        </ListItem>
       </List>
     </Stack>
   );

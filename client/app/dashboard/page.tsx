@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import type { Metadata } from 'next';
 import Grid from '@mui/material/Unstable_Grid2';
 import dayjs from 'dayjs';
 import { Budget } from '@/components/dashboard/overview/budget';
@@ -12,21 +11,15 @@ import { TasksProgress } from '@/components/dashboard/overview/tasks-progress';
 import { TotalUsers } from '@/components/dashboard/overview/total-users';
 import { TotalProfit } from '@/components/dashboard/overview/total-profit';
 import { Traffic } from '@/components/dashboard/overview/traffic';
-import { useGlobalContext } from '@/context/GlobalProvider';
-
-
 
 export default function Page(): React.JSX.Element {
-  const { budgetData } = useGlobalContext();
-
-
   return (
     <Grid container spacing={3} className='px-3 py-2'>
       <Grid lg={3} sm={6} xs={12}>
         <Budget value='$24k' />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalUsers value='1.6k' />
+        <TotalUsers />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
         <TasksProgress sx={{ height: '100%' }} value={75.5} />

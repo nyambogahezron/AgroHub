@@ -69,3 +69,24 @@ export async function getBudgetTotal(budgetData: any) {
 
   return totalBudget;
 }
+
+
+// create user
+export async function createUser(data: any) {
+  return await apiCall(`/api/v1/org-user/`, '', 'POST', data);
+}
+
+// update user  
+export async function updateUser(data: any, id: string) {
+  return await apiCall(`/api/v1/org-user/${id}`, '', 'PATCH', data);
+}
+
+// delete user
+export async function deleteUser(id: string) {
+  return await apiCall(`/api/v1/org-user/${id}`, '', 'DELETE');
+}
+
+// get all users
+export async function getAllUsers() {
+  return await apiCall(`/api/v1/org-user/`, '', 'GET');
+}

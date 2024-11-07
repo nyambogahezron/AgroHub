@@ -1,11 +1,13 @@
 'use client';
 
-import { getAllBudgets, getUserOrg } from '@/query/api';
-import { GlobalContextProps } from '@/types';
+import { getAllBudgets, getAllUsers, getUserOrg } from '@/query/api';
+import { GlobalContextProps, User } from '@/types';
 import { GlobalContextInitialValues } from '@/types/initialValues';
 import { createContext, useContext, useEffect, useState } from 'react';
 
- const GlobalContext = createContext<GlobalContextProps>(GlobalContextInitialValues);
+const GlobalContext = createContext<GlobalContextProps>(
+  GlobalContextInitialValues
+);
 
 export default function GlobalProvider({
   children,
@@ -18,6 +20,7 @@ export default function GlobalProvider({
   const [organization, setOrganization] = useState([]);
   const [currentOrganization, setCurrentOrganization] = useState();
   const [budgetData, setBudgetData] = useState([]);
+  const [users, setUsers] = useState < User[]>([]);
 
   async function deleteSession() {
     localStorage.removeItem('user');
@@ -99,6 +102,7 @@ export default function GlobalProvider({
     setOrganization(null);
   }
 
+  // *********  Budget functionality *********
   const fetchBudgets = async () => {
     const data = await getAllBudgets();
 
@@ -110,6 +114,19 @@ export default function GlobalProvider({
       console.log('budget from null');
     }
   };
+
+  // *********  Users functionality *********
+
+  // fetch users
+  async function fetchUsers() {
+    const data = await getAllUsers();
+
+    if (data && data.users) {
+      setUsers(data.users);
+    } else {
+      setUsers([]);
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -130,6 +147,7 @@ export default function GlobalProvider({
     getOrganization();
     getCurrentOrganization();
     fetchBudgets();
+    fetchUsers();
   }, []);
   return (
     <GlobalContext.Provider
@@ -150,6 +168,9 @@ export default function GlobalProvider({
         fetchBudgets,
         budgetData,
         setBudgetData,
+        users,
+        fetchUsers,
+        setUsers,
       }}
     >
       {children}
