@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateUser } = require('../middleware/authentication');
 
 const {
   createTransaction,
@@ -8,7 +9,13 @@ const {
   deleteTransaction,
 } = require('../controllers/transactionControllers');
 
-router.route('/').post(createTransaction).get(getUserTransactions);
-router.route('/:id').put(updateTransaction).delete(deleteTransaction);
+router
+  .route('/')
+  .post(authenticateUser, createTransaction)
+  .get(authenticateUser, getUserTransactions);
+router
+  .route('/:id')
+  .put(authenticateUser, updateTransaction)
+  .delete(authenticateUser, deleteTransaction);
 
 module.exports = router;

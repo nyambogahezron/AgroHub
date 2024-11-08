@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const transactionSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,42 +12,34 @@ const transactionSchema = new mongoose.Schema(
       ref: 'Organization',
       required: true,
     },
-    budget: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Budget',
-      required: true,
-    },
-    title: {
+    name: {
       type: String,
       required: true,
     },
-    amount: {
+    price: {
       type: Number,
-      required: true,
-    },
-    category: {
-      type: String,
-      enum: ['sales', 'expense'],
       required: true,
     },
     description: {
       type: String,
       required: true,
     },
-    transaction_date: {
-      type: Date,
+    category: {
+      type: String,
       required: true,
     },
-    receipt: {
+    stock: {
+      type: Number,
+      required: true,
+    },
+    imageUrl: {
       type: String,
-      default: 'default-receipt.jpg',
+      default: 'https://via.placeholder.com/150',
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+const Product = mongoose.model('Product', productSchema);
 
-module.exports = Transaction;
+module.exports = Product;
