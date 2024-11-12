@@ -35,6 +35,8 @@ export async function createBudget(data: any) {
   return await apiCall(`/api/v1/budget/`, '', 'POST', data);
 }
 
+// ******* budget api calls ********
+
 // update budget
 export async function updateBudget(data: any, id: string) {
   return await apiCall(`/api/v1/budget/${id}`, '', 'PATCH', data);
@@ -70,13 +72,14 @@ export async function getBudgetTotal(budgetData: any) {
   return totalBudget;
 }
 
+// ******* users api calls ********
 
 // create user
 export async function createUser(data: any) {
   return await apiCall(`/api/v1/org-user/`, '', 'POST', data);
 }
 
-// update user  
+// update user
 export async function updateUser(data: any, id: string) {
   return await apiCall(`/api/v1/org-user/${id}`, '', 'PATCH', data);
 }
@@ -89,4 +92,64 @@ export async function deleteUser(id: string) {
 // get all users
 export async function getAllUsers() {
   return await apiCall(`/api/v1/org-user/`, '', 'GET');
+}
+
+// ******* transactions api calls ********
+
+// create transaction
+
+export async function createTransaction(data: any) {
+  return await apiCall(`/api/v1/transaction/`, '', 'POST', data);
+}
+
+// update transaction
+export async function updateTransaction(data: any, id: string) {
+  return await apiCall(`/api/v1/transaction/${id}`, '', 'PUT', data);
+}
+
+// delete transaction
+export async function deleteTransaction(id: string) {
+  return await apiCall(`/api/v1/transaction/${id}`, '', 'DELETE');
+}
+
+// get all transactions
+export async function getAllTransactions() {
+  return await apiCall(`/api/v1/transaction/`, '', 'GET');
+}
+
+// get single transaction
+export async function getSingleTransaction(id: string) {
+  return await apiCall(`/api/v1/transaction/${id}`, '', 'GET');
+}
+
+// ******* products api calls ********
+
+// create product
+export async function createProduct(data: any) {
+  return await apiCall(`/api/v1/product/`, '', 'POST', data);
+}
+
+// update product
+export async function updateProduct(data: any, id: string) {
+  return await apiCall(`/api/v1/product/${id}`, '', 'PATCH', data);
+}
+
+// delete product
+export async function deleteProduct(id: string) {
+  return await apiCall(`/api/v1/product/${id}`, '', 'DELETE');
+}
+
+// get all products
+export async function getAllProducts() {
+  return await apiCall(`/api/v1/product/`, '', 'GET');
+}
+
+// get single product
+export async function getSingleProduct(id: string) {
+  return await apiCall(`/api/v1/product/${id}`, '', 'GET');
+}
+
+//get user products
+export async function getUserProducts() {
+  return await apiCall(`/api/v1/product/user`, '', 'GET');
 }

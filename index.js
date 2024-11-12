@@ -1,5 +1,3 @@
-'use strict';
-
 require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
@@ -7,6 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // database
 const connectDB = require('./config/connectDB');
@@ -26,9 +26,9 @@ const notFoundMiddleware = require('./middleware/notFound');
 const errorHandlerMiddleware = require('./middleware/errorHandler');
 const asyncHandlerMiddleware = require('./middleware/asyncHandler');
 
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true })); // allow form data
+app.use(express.json()); // allow json data
 app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.JWT_SECRET));
 
 const corsOptions = {

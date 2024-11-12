@@ -7,9 +7,8 @@ import Typography from '@mui/material/Typography';
 import DownloadIcon from '@mui/icons-material/Download';
 import PlusIcon from '@mui/icons-material/Add';
 import UploadIcon from '@mui/icons-material/Upload';
-import UsersTable from '@/components/dashboard/users/users-table';
-import AddUser from '@/components/dashboard/users/add-user';
-
+import TransactionsTable from '@/components/dashboard/transactions/transactions-table';
+import AddTransaction from '@/components/dashboard/transactions/add-transaction';
 
 export default function Page(): React.JSX.Element {
   const [open, setOpen] = React.useState(false);
@@ -21,7 +20,7 @@ export default function Page(): React.JSX.Element {
       <Stack className='flex flex-row items-baseline justify-between'>
         <Stack spacing={1} sx={{ flex: '1 1 auto', mt: 4 }}>
           <Typography color='primary' variant='h4'>
-            Users
+            Transaction
           </Typography>
           <Stack direction='row' spacing={1} sx={{ alignItems: 'center' }}>
             <Button color='primary' startIcon={<UploadIcon />}>
@@ -38,12 +37,12 @@ export default function Page(): React.JSX.Element {
             variant='contained'
             onClick={() => setOpen(true)}
           >
-            Add
+            Add Transaction
           </Button>
         </div>
       </Stack>
-      <UsersTable />
-      <AddUser open={open} handleModelClose={handleModelClose} />
+      <TransactionsTable />
+      <AddTransaction open={open} handleModelClose={handleModelClose} />
     </Stack>
   );
 }

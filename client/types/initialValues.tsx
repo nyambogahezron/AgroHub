@@ -18,4 +18,8 @@ export const GlobalContextInitialValues = {
   users: [],
   fetchUsers: () => Promise<void>,
   setUsers: () => {},
+  setTransactions: () => {},
+  transactions: null,
+  setProducts: () => {},
+  products: [],
 };

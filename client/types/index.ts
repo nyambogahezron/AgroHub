@@ -81,6 +81,10 @@ export type GlobalContextProps = {
   users: User[];
   fetchUsers: () => void;
   setUsers: React.Dispatch<SetStateAction<User[]>>;
+  setTransactions: React.Dispatch<SetStateAction<Transaction[]>>;
+  transactions: Transaction[];
+  setProducts: React.Dispatch<SetStateAction<any>>;
+  products: any[];
 };
 
 export interface OrganizationDialogProps {
@@ -137,6 +141,22 @@ export interface User {
   organization: string;
   role: 'admin' | 'member';
   user?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+export interface Transaction {
+  user?: string;
+  organization: string;
+  budget: string;
+  title: string;
+  amount: number;
+  category: string;
+  description: string;
+  transaction_date: string;
+  receipt: string;
+  _id?: string;
   createdAt?: string;
   updatedAt?: string;
   __v?: number;

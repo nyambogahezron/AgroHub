@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 
 export const metadata = {
-  title: `Dashboard | Users`,
+  title: `Dashboard | Transactions`,
 } satisfies Metadata;
 
 export default function BudgetLayout({

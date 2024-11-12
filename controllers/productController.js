@@ -21,6 +21,18 @@ exports.createProduct = asyncHandler(async (req, res) => {
       `No organization with id : ${organization}`
     );
   }
+  // upload image
+  if (req.files) {
+    const file = req.files.file;
+    const fileName = file.name;
+    const uploadPath = `uploads/${fileName}`;
+    file.mv(uploadPath, async (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send;
+      }
+    });
+  }
 
   const product = new Product({
     user,

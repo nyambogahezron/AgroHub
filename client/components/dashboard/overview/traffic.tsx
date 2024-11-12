@@ -16,7 +16,11 @@ import type { ApexOptions } from 'apexcharts';
 
 import { Chart } from '@/components/core/chart';
 
-const iconMapping = { Desktop: DesktopIcon, Tablet: DeviceTabletIcon, Phone: PhoneIcon } as Record<string, Icon>;
+const iconMapping = {
+  Desktop: DesktopIcon,
+  Tablet: DeviceTabletIcon,
+  Phone: PhoneIcon,
+} as Record<string, Icon>;
 
 export interface TrafficProps {
   chartSeries: number[];
@@ -24,25 +28,39 @@ export interface TrafficProps {
   sx?: SxProps;
 }
 
-export function Traffic({ chartSeries, labels, sx }: TrafficProps): React.JSX.Element {
+export function Traffic({
+  chartSeries,
+  labels,
+  sx,
+}: TrafficProps): React.JSX.Element {
   const chartOptions = useChartOptions(labels);
 
   return (
     <Card sx={sx}>
-      <CardHeader title="Traffic source" />
+      <CardHeader title='Transaction Overview' />
       <CardContent>
         <Stack spacing={2}>
-          <Chart height={300} options={chartOptions} series={chartSeries} type="donut" width="100%" />
-          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Chart
+            height={300}
+            options={chartOptions}
+            series={chartSeries}
+            type='donut'
+            width='100%'
+          />
+          <Stack
+            direction='row'
+            spacing={2}
+            sx={{ alignItems: 'center', justifyContent: 'center' }}
+          >
             {chartSeries.map((item, index) => {
               const label = labels[index];
               const Icon = iconMapping[label];
 
               return (
                 <Stack key={label} spacing={1} sx={{ alignItems: 'center' }}>
-                  {Icon ? <Icon fontSize="var(--icon-fontSize-lg)" /> : null}
-                  <Typography variant="h6">{label}</Typography>
-                  <Typography color="text.secondary" variant="subtitle2">
+                  {Icon ? <Icon fontSize='var(--icon-fontSize-lg)' /> : null}
+                  <Typography variant='h6'>{label}</Typography>
+                  <Typography color='text.secondary' variant='subtitle2'>
                     {item}%
                   </Typography>
                 </Stack>
@@ -60,12 +78,19 @@ function useChartOptions(labels: string[]): ApexOptions {
 
   return {
     chart: { background: 'transparent' },
-    colors: [theme.palette.primary.main, theme.palette.success.main, theme.palette.warning.main],
+    colors: [
+      theme.palette.primary.main,
+      theme.palette.success.main,
+      theme.palette.warning.main,
+    ],
     dataLabels: { enabled: false },
     labels,
     legend: { show: false },
     plotOptions: { pie: { expandOnClick: false } },
-    states: { active: { filter: { type: 'none' } }, hover: { filter: { type: 'none' } } },
+    states: {
+      active: { filter: { type: 'none' } },
+      hover: { filter: { type: 'none' } },
+    },
     stroke: { width: 0 },
     theme: { mode: theme.palette.mode },
     tooltip: { fillSeriesColor: false },

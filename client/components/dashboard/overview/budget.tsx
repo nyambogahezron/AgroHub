@@ -10,7 +10,7 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { Icon } from '@mui/material';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
-export function Budget({ value }) {
+export function Budget(): React.JSX.Element {
   const { budgetData } = useGlobalContext();
   const [total, setTotal] = React.useState('');
 
@@ -23,8 +23,6 @@ export function Budget({ value }) {
 
     setTotal(formattedTotal);
   }, [budgetData]);
-
-
 
   return (
     <Card sx={{ height: '100%' }}>

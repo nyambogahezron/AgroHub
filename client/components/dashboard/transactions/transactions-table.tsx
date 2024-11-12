@@ -12,17 +12,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { useSelection } from '@/hooks/use-selection';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-} from '@mui/material';
-import { deleteUser } from '@/query/api';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import { deleteTransaction } from '@/query/api';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -30,55 +28,52 @@ import { useGlobalContext } from '@/context/GlobalProvider';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-export default function UsersTable() {
+export default function TransactionsTable() {
   const [open, setOpen] = React.useState(false);
-  const [selectedUserId, setSelectedUserId] = React.useState<string | null>(
-    null
-  );
-  const {
-    organization,
-    users,
-    setUsers,
-  } = useGlobalContext();
+  const [selectedTransactionId, setSelectedTransactionId] = React.useState<
+    string | null
+  >(null);
+  const { transactions, setTransactions } = useGlobalContext();
   const router = useRouter();
 
   const handleClose = () => {
     setOpen(false);
-    setSelectedUserId(null);
+    setSelectedTransactionId(null);
   };
 
   const handleModelOpen = (id: string) => {
-    setSelectedUserId(id);
+    setSelectedTransactionId(id);
     setOpen(true);
   };
 
   const handleDelete = async () => {
-    if (selectedUserId) {
-      const data = await deleteUser(selectedUserId);
+    if (selectedTransactionId) {
+      const data = await deleteTransaction(selectedTransactionId);
 
       if (data) {
-        const newData = users.filter(
-          (user) => user._id !== selectedUserId
+        const newData = transactions.filter(
+          (transaction) => transaction._id !== selectedTransactionId
         );
-        setUsers(newData);
+        setTransactions(newData);
 
-        toast.success('User deleted successfully');
+        toast.success('Transaction deleted successfully');
       }
       setOpen(false);
-      setSelectedUserId(null);
+      setSelectedTransactionId(null);
     }
   };
 
   const rowIds = React.useMemo(() => {
-    return users?.map((users) => users._id);
-  }, [users]);
+    return transactions?.map((transaction) => transaction._id);
+  }, [transactions]);
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } =
     useSelection(rowIds);
 
   const selectedSome =
-    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < users?.length;
-  const selectedAll = users?.length > 0 && selected?.size === users?.length;
+    (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < transactions?.length;
+  const selectedAll =
+    transactions?.length > 0 && selected?.size === transactions?.length;
 
   return (
     <Card>
@@ -99,19 +94,17 @@ export default function UsersTable() {
                   }}
                 />
               </TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Organization</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Amount</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Transaction Date</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users &&
-              users.map((row) => {
+            {transactions &&
+              transactions.map((row) => {
                 const isSelected = selected?.has(row._id);
 
                 return (
@@ -134,37 +127,15 @@ export default function UsersTable() {
                         direction='row'
                         spacing={2}
                       >
-                        <Typography variant='subtitle2'>{row.name}</Typography>
+                        <Typography variant='subtitle2'>{row.title}</Typography>
                       </Stack>
                     </TableCell>
+                    <TableCell>{row.amount}</TableCell>
+                    <TableCell>{row.category}</TableCell>
+                    <TableCell>{row.description}</TableCell>
                     <TableCell>
-                      <Stack
-                        sx={{ alignItems: 'center' }}
-                        direction='row'
-                        spacing={2}
-                      >
-                        <Typography variant='subtitle2'>{row.email}</Typography>
-                      </Stack>
+                      {new Date(row.transaction_date).toLocaleDateString()}
                     </TableCell>
-                    <TableCell>
-                      <Stack
-                        sx={{ alignItems: 'center' }}
-                        direction='row'
-                        spacing={2}
-                      >
-                        <Typography variant='subtitle2'>
-                          {organization
-                            ? organization.find(
-                                (org) => org._id === row.organization
-                              )?.name || 'N/A'
-                            : 'N/A'}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell>{row.role}</TableCell>
-                    <TableCell>{row.location}</TableCell>
-                    <TableCell>{row.phone}</TableCell>
-                    <TableCell>{row.date}</TableCell>
                     <TableCell>
                       <Stack
                         sx={{ alignItems: 'center' }}
@@ -174,7 +145,9 @@ export default function UsersTable() {
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
                             onClick={() =>
-                              router.push(`/dashboard/users/update/${row._id}`)
+                              router.push(
+                                `/dashboard/transactions/update/${row._id}`
+                              )
                             }
                             size='small'
                             color='primary'
@@ -197,12 +170,12 @@ export default function UsersTable() {
                             aria-describedby='alert-dialog-description'
                           >
                             <DialogTitle id='alert-dialog-title'>
-                              {'Delete User'}
+                              {'Delete Transaction'}
                             </DialogTitle>
                             <DialogContent>
                               <DialogContentText id='alert-dialog-description'>
-                                You are about to delete this user, are you
-                                sure?
+                                You are about to delete this transaction, are
+                                you sure?
                               </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -216,7 +189,7 @@ export default function UsersTable() {
                         <Stack direction='row' spacing={2} alignItems='center'>
                           <IconButton
                             onClick={() =>
-                              router.push(`/dashboard/users/${row._id}`)
+                              router.push(`/dashboard/transactions/${row._id}`)
                             }
                             size='small'
                             color='primary'

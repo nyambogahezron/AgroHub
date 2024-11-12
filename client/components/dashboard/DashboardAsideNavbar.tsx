@@ -1,20 +1,18 @@
 'use client';
 import React, { useState } from 'react';
-import {
-  Toolbar,
-  IconButton,
-  Typography,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Avatar,
-  Box,
-  Drawer,
-  Tooltip,
-  Icon,
-} from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Tooltip from '@mui/material/Tooltip';
+import Icon from '@mui/material/Icon';
 import {
   Menu as MenuIcon,
   ExitToApp as ExitToAppIcon,
@@ -41,7 +39,6 @@ export default function DashboardAsideNavbar() {
 
   const handleOnLogout = () => {
     deleteSession();
-
     // Redirect to home
     router.replace('/');
   };

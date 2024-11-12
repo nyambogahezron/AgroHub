@@ -1,7 +1,13 @@
 'use client';
 
-import { getAllBudgets, getAllUsers, getUserOrg } from '@/query/api';
-import { GlobalContextProps, User } from '@/types';
+import {
+  getAllBudgets,
+  getAllProducts,
+  getAllTransactions,
+  getAllUsers,
+  getUserOrg,
+} from '@/query/api';
+import { BudgetProps, GlobalContextProps, Transaction, User } from '@/types';
 import { GlobalContextInitialValues } from '@/types/initialValues';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -19,8 +25,10 @@ export default function GlobalProvider({
   const [session, setSession] = useState();
   const [organization, setOrganization] = useState([]);
   const [currentOrganization, setCurrentOrganization] = useState();
-  const [budgetData, setBudgetData] = useState([]);
-  const [users, setUsers] = useState < User[]>([]);
+  const [budgetData, setBudgetData] = useState<BudgetProps[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [products, setProducts] = useState([]);
 
   async function deleteSession() {
     localStorage.removeItem('user');
@@ -128,6 +136,28 @@ export default function GlobalProvider({
     }
   }
 
+  // fetch user transactions
+  async function fetchTransactions() {
+    const data = await getAllTransactions();
+
+    if (data && data.transactions) {
+      setTransactions(data.transactions);
+    } else {
+      setTransactions([]);
+    }
+  }
+
+  // fetch user products
+  async function fetchUserProducts() {
+    const data = await getAllProducts();
+
+    if (data && data.products) {
+      setProducts(data.products);
+    } else {
+      setProducts([]);
+    }
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await getUserOrg();
@@ -148,6 +178,7 @@ export default function GlobalProvider({
     getCurrentOrganization();
     fetchBudgets();
     fetchUsers();
+    fetchTransactions();
   }, []);
   return (
     <GlobalContext.Provider
@@ -171,6 +202,10 @@ export default function GlobalProvider({
         users,
         fetchUsers,
         setUsers,
+        setTransactions,
+        transactions,
+        setProducts,
+        products,
       }}
     >
       {children}

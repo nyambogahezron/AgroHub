@@ -6,8 +6,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { BudgetProps } from '@/types';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ReceiptIcon from '@mui/icons-material/Receipt';
 export { FeaturesItem, HomeNavData };
 
 export const priceTiers = [
@@ -100,12 +101,19 @@ export const DashboardMenuItem = [
   { text: 'User', icon: PersonIcon, link: '/dashboard/users' },
   { text: 'Budget', icon: AttachMoneyIcon, link: '/dashboard/budget' },
   {
+    text: 'Transaction',
+    icon: ReceiptIcon,
+    link: '/dashboard/transactions',
+  },
+  {
+    text: 'Products',
+    icon: ProductionQuantityLimitsIcon,
+    link: '/dashboard/products',
+  },
+  {
     text: 'Notifications',
     icon: ChatIcon,
     link: '/dashboard/notifications',
   },
   { text: 'Settings', icon: SettingsIcon, link: '/dashboard/settings' },
 ];
-
-export const budgetData = []
-     
