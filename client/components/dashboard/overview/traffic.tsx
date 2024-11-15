@@ -15,6 +15,7 @@ import { Phone as PhoneIcon } from '@phosphor-icons/react/dist/ssr/Phone';
 import type { ApexOptions } from 'apexcharts';
 
 import { Chart } from '@/components/core/chart';
+import { currencyFormatter } from '@/utils/currency-formatter';
 
 const iconMapping = {
   Desktop: DesktopIcon,
@@ -61,7 +62,7 @@ export function Traffic({
                   {Icon ? <Icon fontSize='var(--icon-fontSize-lg)' /> : null}
                   <Typography variant='h6'>{label}</Typography>
                   <Typography color='text.secondary' variant='subtitle2'>
-                    {item}%
+                    {currencyFormatter(item)}
                   </Typography>
                 </Stack>
               );
@@ -75,7 +76,6 @@ export function Traffic({
 
 function useChartOptions(labels: string[]): ApexOptions {
   const theme = useTheme();
-
   return {
     chart: { background: 'transparent' },
     colors: [

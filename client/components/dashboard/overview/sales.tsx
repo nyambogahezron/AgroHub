@@ -14,31 +14,79 @@ import { ArrowRight as ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/Arr
 import type { ApexOptions } from 'apexcharts';
 
 import { Chart } from '@/components/core/chart';
+import { useGlobalContext } from '@/context/GlobalProvider';
+import { Transaction } from '@/types';
+import { currencyFormatter } from '@/utils/currency-formatter';
 
 export interface SalesProps {
-  chartSeries: { name: string; data: number[] }[];
   sx?: SxProps;
 }
 
-export function Sales({ chartSeries, sx }: SalesProps): React.JSX.Element {
+export function Sales({ sx }: SalesProps): React.JSX.Element {
+  const { transactions, budgetData } = useGlobalContext();
+
   const chartOptions = useChartOptions();
+  const getTransactionChartData = (transactions: Transaction[]) => {
+    const salesData: number[] = [];
+    const expensesData: number[] = [];
+
+    transactions.forEach((transaction) => {
+      if (transaction.category === 'sales') {
+        salesData.push(transaction.amount);
+      } else if (transaction.category === 'expense') {
+        expensesData.push(transaction.amount);
+      }
+    });
+
+    return {
+      chartSeries: [
+        {
+          name: 'Sales',
+          data: salesData,
+        },
+        {
+          name: 'Expenses',
+          data: expensesData,
+        },
+      ],
+    };
+  };
+
+  const chartSeries = getTransactionChartData(transactions).chartSeries;
+  console.log('chat', chartSeries);
 
   return (
     <Card sx={sx}>
       <CardHeader
         action={
-          <Button color="inherit" size="small" startIcon={<ArrowClockwiseIcon fontSize="var(--icon-fontSize-md)" />}>
+          <Button
+            color='inherit'
+            size='small'
+            startIcon={
+              <ArrowClockwiseIcon fontSize='var(--icon-fontSize-md)' />
+            }
+          >
             Sync
           </Button>
         }
-        title="Sales"
+        title='Sales'
       />
       <CardContent>
-        <Chart height={350} options={chartOptions} series={chartSeries} type="bar" width="100%" />
+        <Chart
+          height={350}
+          options={chartOptions}
+          series={chartSeries}
+          type='bar'
+          width='100%'
+        />
       </CardContent>
       <Divider />
       <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button color="inherit" endIcon={<ArrowRightIcon fontSize="var(--icon-fontSize-md)" />} size="small">
+        <Button
+          color='inherit'
+          endIcon={<ArrowRightIcon fontSize='var(--icon-fontSize-md)' />}
+          size='small'
+        >
           Overview
         </Button>
       </CardActions>
@@ -50,8 +98,15 @@ function useChartOptions(): ApexOptions {
   const theme = useTheme();
 
   return {
-    chart: { background: 'transparent', stacked: false, toolbar: { show: false } },
-    colors: [theme.palette.primary.main, alpha(theme.palette.primary.main, 0.25)],
+    chart: {
+      background: 'transparent',
+      stacked: false,
+      toolbar: { show: false },
+    },
+    colors: [
+      theme.palette.primary.main,
+      alpha(theme.palette.primary.main, 0.25),
+    ],
     dataLabels: { enabled: false },
     fill: { opacity: 1, type: 'solid' },
     grid: {
@@ -67,12 +122,25 @@ function useChartOptions(): ApexOptions {
     xaxis: {
       axisBorder: { color: theme.palette.divider, show: true },
       axisTicks: { color: theme.palette.divider, show: true },
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      categories: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ],
       labels: { offsetY: 5, style: { colors: theme.palette.text.secondary } },
     },
     yaxis: {
       labels: {
-        formatter: (value) => (value > 0 ? `${value}K` : `${value}`),
+        formatter: (value) => (value > 0 ? `${currencyFormatter(value)}` : `${currencyFormatter(value)}`),
         offsetX: -10,
         style: { colors: theme.palette.text.secondary },
       },

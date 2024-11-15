@@ -97,7 +97,7 @@ export const accordionData = [
 export const DashboardMenuItem = [
   { text: 'Dashboard', icon: DashboardIcon, link: '/dashboard' },
   { text: 'Analytics', icon: PieChartIcon, link: '/dashboard/analytics' },
-  { text: 'Market', icon: ShoppingCartIcon, link: '/dashboard/market' },
+  // { text: 'Market', icon: ShoppingCartIcon, link: '/dashboard/market' },
   { text: 'User', icon: PersonIcon, link: '/dashboard/users' },
   { text: 'Budget', icon: AttachMoneyIcon, link: '/dashboard/budget' },
   {
@@ -105,15 +105,15 @@ export const DashboardMenuItem = [
     icon: ReceiptIcon,
     link: '/dashboard/transactions',
   },
-  {
-    text: 'Products',
-    icon: ProductionQuantityLimitsIcon,
-    link: '/dashboard/products',
-  },
-  {
-    text: 'Notifications',
-    icon: ChatIcon,
-    link: '/dashboard/notifications',
-  },
+  // {
+  //   text: 'Products',
+  //   icon: ProductionQuantityLimitsIcon,
+  //   link: '/dashboard/products',
+  // },
+  // {
+  //   text: 'Notifications',
+  //   icon: ChatIcon,
+  //   link: '/dashboard/notifications',
+  // },
   { text: 'Settings', icon: SettingsIcon, link: '/dashboard/settings' },
 ];
