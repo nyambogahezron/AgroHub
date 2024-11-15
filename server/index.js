@@ -31,6 +31,10 @@ app.use(express.json()); // allow json data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
 
+app.get('/', (req, res) => {
+  res.send('API Running');
+});
+
 const corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200,
