@@ -5,7 +5,7 @@ import { AccountDetailsForm } from '@/components/dashboard/account/account-detai
 import AccountInfo from '@/components/dashboard/account/account-info';
 import ThemedBox from '@/components/theme/ThemedBox';
 import OrganizationInfo from '@/components/dashboard/account/organization-info';
-import {  Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 export const metadata = {
   title: `Dashboard | Accounts`,
@@ -20,9 +20,6 @@ export default function Page(): React.JSX.Element {
             <AccountInfo />
             <OrganizationInfo />
           </Grid>
-        </ThemedBox>
-        <ThemedBox>
-          <AccountDetailsForm />
         </ThemedBox>
         <ThemedBox>
           <AccountDetailsForm />

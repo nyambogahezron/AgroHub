@@ -59,10 +59,10 @@ export default function DashboardTopNavbar() {
       <MenuItem>
         <IconButton
           size='large'
-          aria-label='show 17 new notifications'
+          aria-label='show 0 new notifications'
           color='inherit'
         >
-          <Badge badgeContent={17} color='error'>
+          <Badge badgeContent={0} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -95,7 +95,7 @@ export default function DashboardTopNavbar() {
               aria-label='show 17 new notifications'
               color='inherit'
             >
-              <Badge badgeContent={17} color='error'>
+              <Badge badgeContent={0} color='error'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>

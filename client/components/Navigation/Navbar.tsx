@@ -102,7 +102,7 @@ function Navbar() {
                     Dashboard
                   </Button>
                 </Link>
-                <Link href='/profile'>
+                <Link href='/dashboard/account'>
                   <Box className='flex items-center justify-center h-10 w-10 rounded-full border-2 border-gray-200 ml-2'>
                     <Box
                       sx={(theme) => ({

@@ -9,7 +9,6 @@ const sendVerificationEmail = async ({ name, email, verificationToken }) => {
       pass: process.env.pass,
     },
   };
-
   const transporter = nodemailer.createTransport(nodemailerConfig);
 
   let MailGenerator = new Mailgen({
