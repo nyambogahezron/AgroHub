@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { Sales } from '@/components/dashboard/overview/sales';
-import { TotalProfit } from '@/components/dashboard/overview/total-profit';
 import { Traffic } from '@/components/dashboard/overview/traffic';
 import { useGlobalContext } from '@/context/GlobalProvider';
 import { currencyFormatter } from '@/utils/currency-formatter';
@@ -63,10 +62,10 @@ export default function Page(): React.JSX.Element {
         new Date(user.date).toLocaleDateString(),
       ]),
       startY: startY + 10,
-      margin: { top: 10 },
+      margin: { top: 10, bottom: 10 },
+      theme: 'striped',
+      styles: { fontSize: 10 },
     });
-
-    startY = doc.autoTable.previous.finalY + 30;
 
     budgetData.forEach((budget) => {
       doc.setFontSize(14);
@@ -84,21 +83,15 @@ export default function Page(): React.JSX.Element {
           currencyFormatter(item.amount),
         ]),
         startY: startY + 30,
-        margin: { top: 10 },
+        margin: { top: 10, bottom: 10 },
       });
 
       const totalBudgetAmount = currencyFormatter(budget.amount);
-      doc.setFontSize(12);
-      doc.text(
-        `Total Budget Amount: ${totalBudgetAmount}`,
-        10,
-        doc.autoTable.previous.finalY + 10
-      );
 
-      startY = doc.autoTable.previous.finalY + 30;
+      doc.setFontSize(12);
+      doc.text(`Total Budget Amount: ${totalBudgetAmount}`, 10, startY);
     });
 
-    startY = doc.autoTable.previous.finalY + 30;
     doc.setFontSize(14);
     doc.text('Transactions:', 10, startY);
 
@@ -130,11 +123,16 @@ export default function Page(): React.JSX.Element {
       margin: { top: 10 },
     });
 
-    startY = doc.autoTable.previous.finalY + 30;
+    autoTable(doc, {
+      head: [['Name', 'ID']],
+      body: organizations.map((org) => [org.name, org._id]),
+      startY: startY + 10,
+      margin: { top: 10 },
+    });
     doc.setFontSize(14);
     doc.text('Organizations:', 10, startY);
 
-    doc.autoTable({
+    autoTable(doc, {
       head: [['Name', 'ID']],
       body: organizations.map((org) => [org.name, org._id]),
       startY: startY + 10,
