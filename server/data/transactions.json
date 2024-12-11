@@ -1,0 +1,222 @@
+[
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Seed Purchase for Corn",
+        "amount": 150,
+        "category": "expense",
+        "description": "Purchase of 500kg of corn seeds for the upcoming planting season.",
+        "transaction_date": "2023-01-01T00:00:00Z",
+        "receipt": "corn-seed-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Fertilizer Purchase",
+        "amount": 250,
+        "category": "expense",
+        "description": "Acquisition of 1 ton of organic fertilizer for soil enrichment.",
+        "transaction_date": "2023-01-02T00:00:00Z",
+        "receipt": "fertilizer-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Farm Equipment Rental",
+        "amount": 300,
+        "category": "expense",
+        "description": "Renting a tractor and plow for field preparation.",
+        "transaction_date": "2023-01-03T00:00:00Z",
+        "receipt": "equipment-rental-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Water Pump Purchase",
+        "amount": 500,
+        "category": "expense",
+        "description": "Purchase of a new water pump for irrigation systems.",
+        "transaction_date": "2023-01-04T00:00:00Z",
+        "receipt": "water-pump-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Labor Costs for Harvesting",
+        "amount": 350,
+        "category": "expense",
+        "description": "Labor costs for harvesting corn on the farm.",
+        "transaction_date": "2023-01-05T00:00:00Z",
+        "receipt": "harvesting-labor-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Sales of Organic Corn",
+        "amount": 700,
+        "category": "sales",
+        "description": "Sale of 1,000kg of organic corn to a local wholesaler.",
+        "transaction_date": "2023-01-06T00:00:00Z",
+        "receipt": "organic-corn-sale-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Herbicide Purchase",
+        "amount": 150,
+        "category": "expense",
+        "description": "Purchase of herbicide for weed control in the fields.",
+        "transaction_date": "2023-01-07T00:00:00Z",
+        "receipt": "herbicide-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Farming Tools Purchase",
+        "amount": 200,
+        "category": "expense",
+        "description": "Purchase of new hand tools including hoes and spades.",
+        "transaction_date": "2023-01-08T00:00:00Z",
+        "receipt": "tools-purchase-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Animal Feed Purchase",
+        "amount": 400,
+        "category": "expense",
+        "description": "Purchase of animal feed for livestock on the farm.",
+        "transaction_date": "2023-01-09T00:00:00Z",
+        "receipt": "animal-feed-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Sales of Eggs",
+        "amount": 550,
+        "category": "sales",
+        "description": "Sale of 1,500 eggs from farm chickens.",
+        "transaction_date": "2023-01-10T00:00:00Z",
+        "receipt": "egg-sale-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Purchase of Irrigation Pipes",
+        "amount": 250,
+        "category": "expense",
+        "description": "Purchase of new irrigation pipes for the farm's watering system.",
+        "transaction_date": "2023-01-11T00:00:00Z",
+        "receipt": "irrigation-pipes-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Chicken Coop Construction",
+        "amount": 800,
+        "category": "expense",
+        "description": "Construction of a new chicken coop to house additional poultry.",
+        "transaction_date": "2023-01-12T00:00:00Z",
+        "receipt": "chicken-coop-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Sales of Livestock",
+        "amount": 1200,
+        "category": "sales",
+        "description": "Sale of 10 goats to a local meat processing company.",
+        "transaction_date": "2023-01-13T00:00:00Z",
+        "receipt": "livestock-sale-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Pesticide Purchase",
+        "amount": 180,
+        "category": "expense",
+        "description": "Purchase of pesticide for insect control in crops.",
+        "transaction_date": "2023-01-14T00:00:00Z",
+        "receipt": "pesticide-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Harvesting Equipment Maintenance",
+        "amount": 400,
+        "category": "expense",
+        "description": "Maintenance and repair of harvesting machinery.",
+        "transaction_date": "2023-01-15T00:00:00Z",
+        "receipt": "harvest-equipment-repair-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Sales of Honey",
+        "amount": 900,
+        "category": "sales",
+        "description": "Sale of 100kg of organic honey to local markets.",
+        "transaction_date": "2023-01-16T00:00:00Z",
+        "receipt": "honey-sale-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Livestock Vaccination",
+        "amount": 350,
+        "category": "expense",
+        "description": "Vaccination of farm cattle to prevent diseases.",
+        "transaction_date": "2023-01-17T00:00:00Z",
+        "receipt": "vaccination-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Grain Storage Purchase",
+        "amount": 600,
+        "category": "expense",
+        "description": "Purchase of 2 grain silos for proper storage of harvested crops.",
+        "transaction_date": "2023-01-18T00:00:00Z",
+        "receipt": "grain-storage-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Farmers' Market Stall Fee",
+        "amount": 100,
+        "category": "expense",
+        "description": "Payment for stall space at the local farmers' market to sell produce.",
+        "transaction_date": "2023-01-19T00:00:00Z",
+        "receipt": "market-stall-fee-receipt.jpg"
+    },
+    {
+        "user": "6720740d9ebba35eb744bb75",
+        "organization": "67207bf4bf207c0ed1f7bbc3",
+        "budget": "6720a6009543d348e43f9663",
+        "title": "Sales of Dairy Products",
+        "amount": 750,
+        "category": "sales",
+        "description": "Sale of 200 liters of fresh milk and yogurt to a local dairy processing plant.",
+        "transaction_date": "2023-01-20T00:00:00Z",
+        "receipt": "dairy-products-sale-receipt.jpg"
+    }
+]

@@ -16,20 +16,12 @@ import { currencyFormatter } from '@/utils/currency-formatter';
 export default function Page(): React.JSX.Element {
   const { transactions, budgetData } = useGlobalContext();
 
-  const currentYear = new Date().getFullYear();
+
   const totalExpenses = transactions
-    .filter(
-      (transaction) =>
-        transaction.category === 'expense' &&
-        new Date(transaction.transaction_date).getFullYear() === currentYear
-    )
+    .filter((transaction) => transaction.category === 'expense')
     .reduce((acc, transaction) => acc + transaction.amount, 0);
   const totalSales = transactions
-    .filter(
-      (transaction) =>
-        transaction.category === 'sales' &&
-        new Date(transaction.transaction_date).getFullYear() === currentYear
-    )
+    .filter((transaction) => transaction.category === 'sales')
     .reduce((acc, transaction) => acc + transaction.amount, 0);
 
   const totalProfit = currencyFormatter(totalSales - totalExpenses).toString();

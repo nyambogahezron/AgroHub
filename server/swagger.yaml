@@ -1,0 +1,650 @@
+openapi: 3.0.3
+info:
+  title: AGROHUB API
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: '{{auth-uri}}'
+  - url: '{{user-uri}}'
+  - url: '{{org}}'
+  - url: '{{budget}}'
+  - url: '{{sub}}'
+  - url: '{{transaction}}'
+  - url: '{{org-user}}'
+  - url: '{{product}}'
+paths:
+  /register:
+    post:
+      summary: Register User
+      description: Register User
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: hezron@gmail.com
+                name:
+                  type: string
+                  example: hezron
+                password:
+                  type: string
+                  example: '123456'
+            examples:
+              Register User:
+                value:
+                  email: hezron@gmail.com
+                  name: hezron
+                  password: '123456'
+      responses:
+        '200':
+          description: ''
+  /verify-email:
+    post:
+      summary: Verify-email
+      description: Verify-email
+      operationId: verifyEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: h@gmail.com
+                verificationToken:
+                  type: string
+                  example: '159030'
+            examples:
+              Send Email:
+                value:
+                  email: h@gmail.com
+                  verificationToken: '159030'
+              Verify-email:
+                value:
+                  email: h@gmail.com
+                  verificationToken: '159030'
+      responses:
+        '200':
+          description: ''
+  /login:
+    post:
+      summary: Login user
+      description: Login user
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: h@gmail.com
+                password:
+                  type: string
+                  example: '123456'
+            examples:
+              Login user:
+                value:
+                  email: h@gmail.com
+                  password: '123456'
+      responses:
+        '200':
+          description: ''
+  /logout:
+    delete:
+      summary: Logout
+      description: Logout
+      operationId: logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: 65a9192851ba18d53e60e781
+            examples:
+              Logout:
+                value:
+                  userId: 65a9192851ba18d53e60e781
+      responses:
+        '200':
+          description: ''
+  /forgot-password:
+    post:
+      summary: Forgot-password
+      description: Forgot-password
+      operationId: forgotPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: hezronnyamboga6@gmail.com
+            examples:
+              Forgot-password:
+                value:
+                  email: hezronnyamboga6@gmail.com
+      responses:
+        '200':
+          description: ''
+  /reset-password:
+    post:
+      summary: Reset-password
+      description: Reset-password
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: hezronnyamboga6@gmail.com
+                password:
+                  type: string
+                  example: '12345678'
+                token:
+                  type: string
+                  example: '790852'
+            examples:
+              Reset-password:
+                value:
+                  email: hezronnyamboga6@gmail.com
+                  password: '12345678'
+                  token: '790852'
+      responses:
+        '200':
+          description: ''
+  /updateUserPassword:
+    patch:
+      summary: Upade password
+      description: Upade password
+      operationId: upadePassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+                  example: '123456'
+                oldPassword:
+                  type: string
+                  example: '12345678'
+            examples:
+              Upade password:
+                value:
+                  newPassword: '123456'
+                  oldPassword: '12345678'
+      responses:
+        '200':
+          description: ''
+  /65a9192851ba18d53e60e781:
+    get:
+      summary: Get Single user
+      description: Get Single user
+      operationId: getSingleUser
+      parameters:
+        - name: ''
+          in: header
+          schema:
+            type: string
+            example: ''
+      responses:
+        '200':
+          description: ''
+  /updateUser:
+    patch:
+      summary: Update Use
+      description: Update Use
+      operationId: updateUse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: hezzyn1@gmail.com
+                name:
+                  type: string
+                  example: junior
+            examples:
+              Update Use:
+                value:
+                  email: hezzyn1@gmail.com
+                  name: junior
+      responses:
+        '200':
+          description: ''
+  /showMe:
+    get:
+      summary: Show Currect User
+      description: Show Currect User
+      operationId: showCurrectUser
+      responses:
+        '200':
+          description: ''
+  /:
+    get:
+      summary: GetUserOrganization
+      description: GetUserOrganization
+      operationId: getuserorganization
+      responses:
+        '200':
+          description: ''
+    post:
+      summary: createOrganization
+      description: createOrganization
+      operationId: createorganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: '2023-10-01T00:00:00.000Z'
+                email:
+                  type: string
+                  example: john.doe@example.com
+                location:
+                  type: string
+                  example: New York, USA
+                name:
+                  type: string
+                  example: John Jr
+                organization:
+                  type: string
+                  example: 672cc9fc532d01badb7c25e1
+                phone:
+                  type: string
+                  example: '+1234567890'
+                role:
+                  type: string
+                  example: admin
+            examples:
+              Create Organization User:
+                value:
+                  date: '2023-10-01T00:00:00.000Z'
+                  email: john.doe@example.com
+                  location: New York, USA
+                  name: John Jr
+                  organization: 672cc9fc532d01badb7c25e1
+                  phone: '+1234567890'
+                  role: admin
+              Create Transaction:
+                value:
+                  amount: 58900
+                  budget: 6720a6009543d348e43f9663
+                  category: expense
+                  description: Sale of agricultural products
+                  organization: 67207bf4bf207c0ed1f7bbc3
+                  receipt: receipt12345.png
+                  title: 'This is a 3 '
+                  transaction_date: '2023-10-01T00:00:00.000Z'
+              CreateBudget:
+                value:
+                  date: '2023-01-01T00:00:00.000Z'
+                  items:
+                    - amount: 5000
+                      name: Office Supplies
+                    - amount: 8000
+                      name: Marketing
+                    - amount: 25000
+                      name: Salaries
+                    - amount: 3000
+                      name: Utilities
+                    - amount: 7000
+                      name: Miscellaneous
+                    - amount: 7000
+                      name: transport
+                  organization: 67207bf4bf207c0ed1f7bbc3
+                  title: Annual Budget for 2024
+              createOrganization:
+                value:
+                  address: limuru 200 street
+                  email: limuru5@gmail.com
+                  name: Limuru farm
+                  phone: '078800000000'
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                  example: Fruits
+                description:
+                  type: string
+                  example: Fresh organic apples from local farms.
+                name:
+                  type: string
+                  example: Organic Apples
+                organization:
+                  type: string
+                  example: 672cc9fc532d01badb7c25e1
+                photo:
+                  type: string
+                  format: binary
+                price:
+                  type: string
+                  example: '3.99'
+                stock:
+                  type: string
+                  example: '150'
+      responses:
+        '200':
+          description: ''
+  /67207bf4bf207c0ed1f7bbc3:
+    get:
+      summary: GetUSingleOrganization
+      description: GetUSingleOrganization
+      operationId: getusingleorganization
+      responses:
+        '200':
+          description: ''
+    patch:
+      summary: UpdateUserOrganization
+      description: UpdateUserOrganization
+      operationId: updateuserorganization
+      requestBody:
+        content:
+          application/json:
+            examples:
+              UpdateUserOrganization:
+                value: |-
+                  {
+                      "name": "Limuru farm Org",
+                      // "email": "limuru6@gmail.com",
+                      "phone": "078800000000",
+                      "address" :"limuru 200 street"
+                  }
+      responses:
+        '200':
+          description: ''
+  /67207c87bf207c0ed1f7bbca:
+    delete:
+      summary: DeleteUserOrganization
+      description: DeleteUserOrganization
+      operationId: deleteuserorganization
+      responses:
+        '200':
+          description: ''
+  /org/67207bf4bf207c0ed1f7bbc3:
+    get:
+      summary: GetUserOrgBudgets
+      description: GetUserOrgBudgets
+      operationId: getuserorgbudgets
+      responses:
+        '200':
+          description: ''
+  /6720a6009543d348e43f9663:
+    get:
+      summary: GetUserSingleBudget
+      description: GetUserSingleBudget
+      operationId: getusersinglebudget
+      responses:
+        '200':
+          description: ''
+    patch:
+      summary: UpdateBudget
+      description: UpdateBudget
+      operationId: updatebudget
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: '2023-01-01T00:00:00.000Z'
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        example: 55007
+                      name:
+                        type: string
+                        example: Office Supplies
+                  example:
+                    - amount: 55007
+                      name: Office Supplies
+                    - amount: 8000
+                      name: Marketing
+                    - amount: 25000
+                      name: Salaries
+                    - amount: 3000
+                      name: Utilities
+                    - amount: 7000
+                      name: Miscellaneous
+                    - amount: 7000
+                      name: transport
+                organization:
+                  type: string
+                  example: 67207bf4bf207c0ed1f7bbc3
+                title:
+                  type: string
+                  example: Annual Budget for 2023
+            examples:
+              UpdateBudget:
+                value:
+                  date: '2023-01-01T00:00:00.000Z'
+                  items:
+                    - amount: 55007
+                      name: Office Supplies
+                    - amount: 8000
+                      name: Marketing
+                    - amount: 25000
+                      name: Salaries
+                    - amount: 3000
+                      name: Utilities
+                    - amount: 7000
+                      name: Miscellaneous
+                    - amount: 7000
+                      name: transport
+                  organization: 67207bf4bf207c0ed1f7bbc3
+                  title: Annual Budget for 2023
+      responses:
+        '200':
+          description: ''
+  /6720a5c19543d348e43f965b:
+    delete:
+      summary: DeleteBudget
+      description: DeleteBudget
+      operationId: deletebudget
+      responses:
+        '200':
+          description: ''
+  /1:
+    delete:
+      summary: Delete Subscription
+      description: Delete Subscription
+      operationId: deleteSubscription
+      responses:
+        '200':
+          description: ''
+    patch:
+      summary: Update Subscription
+      description: Update Subscription
+      operationId: updateSubscription
+      responses:
+        '200':
+          description: ''
+  /672d40db7cb266d455d2490f:
+    put:
+      summary: Update Transaction
+      description: Update Transaction
+      operationId: updateTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  example: 15000
+                budget:
+                  type: string
+                  example: 6720a6009543d348e43f9663
+                category:
+                  type: string
+                  example: expense
+                description:
+                  type: string
+                  example: Sale of agricultural products
+                organization:
+                  type: string
+                  example: 67207bf4bf207c0ed1f7bbc3
+                receipt:
+                  type: string
+                  example: default-recept.png
+                title:
+                  type: string
+                  example: farm inputs expess for 2024
+                transaction_date:
+                  type: string
+                  example: '2023-10-01'
+            examples:
+              Update Transaction:
+                value:
+                  amount: 15000
+                  budget: 6720a6009543d348e43f9663
+                  category: expense
+                  description: Sale of agricultural products
+                  organization: 67207bf4bf207c0ed1f7bbc3
+                  receipt: default-recept.png
+                  title: farm inputs expess for 2024
+                  transaction_date: '2023-10-01'
+      responses:
+        '200':
+          description: ''
+  /672cd83d37b6c636e280ac31:
+    patch:
+      summary: Update Organization User
+      description: Update Organization User
+      operationId: updateOrganizationUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: '2023-10-01T00:00:00.000Z'
+                email:
+                  type: string
+                  example: john.doe@example.com
+                location:
+                  type: string
+                  example: Nairobi
+                name:
+                  type: string
+                  example: John Jr
+                organization:
+                  type: string
+                  example: 672cc9fc532d01badb7c25e1
+                phone:
+                  type: string
+                  example: '+1234567890'
+                role:
+                  type: string
+                  example: admin
+            examples:
+              Update Organization User:
+                value:
+                  date: '2023-10-01T00:00:00.000Z'
+                  email: john.doe@example.com
+                  location: Nairobi
+                  name: John Jr
+                  organization: 672cc9fc532d01badb7c25e1
+                  phone: '+1234567890'
+                  role: admin
+      responses:
+        '200':
+          description: ''
+  /672cd8da37b6c636e280ac34:
+    delete:
+      summary: Delete Organization User
+      description: Delete Organization User
+      operationId: deleteOrganizationUser
+      responses:
+        '200':
+          description: ''
+  /6733d119d6b0c02c1f20d6af:
+    delete:
+      summary: Delete Product
+      description: Delete Product
+      operationId: deleteProduct
+      responses:
+        '200':
+          description: ''
+    patch:
+      summary: Update Product
+      description: Update Product
+      operationId: updateProduct
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                  example: Fruits
+                description:
+                  type: string
+                  example: Fresh organic apples from local farms.
+                name:
+                  type: string
+                  example: Organic Apples
+                organization:
+                  type: string
+                  example: 672084365a374e6a754b695b
+                price:
+                  type: string
+                  example: '5.00'
+                stock:
+                  type: string
+                  example: '150'
+            examples:
+              Update Product:
+                value:
+                  category: Fruits
+                  description: Fresh organic apples from local farms.
+                  name: Organic Apples
+                  organization: 672084365a374e6a754b695b
+                  price: '5.00'
+                  stock: '150'
+      responses:
+        '200':
+          description: ''
+  /user:
+    get:
+      summary: Get All  User Product
+      description: Get All  User Product
+      operationId: getAllUserProduct
+      responses:
+        '200':
+          description: ''
+tags: []

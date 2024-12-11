@@ -60,7 +60,6 @@ BudgetScheme.pre('save', function (next) {
   next();
 });
 
-// The findOneAndUpdate method in Mongoose operates directly on the database and does not instantiate a full Mongoose document. This means that instance methods like calculateTotalAmount are not available in the context of findOneAndUpdate.
 BudgetScheme.pre('findOneAndUpdate', function (next) {
   if (this._update.items) {
     let total = 0;

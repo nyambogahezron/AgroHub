@@ -31,27 +31,6 @@ const userTestimonials = [
     testimonial:
       'The integrated marketplace feature makes it easy for me to sell my products and connect with buyers. I love how it helps me stay competitive by providing market trends and pricing insights.',
   },
-  {
-    avatar: <Avatar alt='Michael Adams' src='/static/images/avatar/4.jpg' />,
-    name: 'Michael Adams',
-    occupation: 'Investor',
-    testimonial:
-      'This platform offers valuable data that helps me evaluate farm performance before investing. It’s a great tool for anyone looking to invest in agriculture with confidence.',
-  },
-  {
-    avatar: <Avatar alt='Anna White' src='/static/images/avatar/5.jpg' />,
-    name: 'Anna White',
-    occupation: 'Organic Farmer',
-    testimonial:
-      "As an organic farmer, tracking my input costs and sales is crucial. This system has made it so much easier to manage my operations and improve my farm's profitability.",
-  },
-  {
-    avatar: <Avatar alt='James Miller' src='/static/images/avatar/6.jpg' />,
-    name: 'James Miller',
-    occupation: 'Farm Manager',
-    testimonial:
-      'The reporting tools have given me a whole new perspective on how to manage farm expenses. I can now confidently track costs and forecast profitability, which helps me plan better for the future.',
-  },
 ];
 
 export default function Testimonials() {

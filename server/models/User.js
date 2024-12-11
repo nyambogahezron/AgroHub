@@ -21,6 +21,18 @@ const UserSchema = new mongoose.Schema(
         message: 'Please provide valid email',
       },
     },
+    state: {
+      type: String,
+      default: null,
+    },
+    city: {
+      type: String,
+      default: null,
+    },
+    phone: {
+      type: String,
+      default: null,
+    },
     role: {
       type: String,
       enum: ['user', 'admin'],

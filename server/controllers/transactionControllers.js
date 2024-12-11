@@ -43,7 +43,7 @@ const createTransaction = asyncWrapper(async (req, res) => {
     );
   }
 
-  const transaction = await Transaction.create({
+  const transaction = new Transaction({
     user,
     organization,
     budget,
@@ -54,6 +54,8 @@ const createTransaction = asyncWrapper(async (req, res) => {
     transaction_date,
     receipt,
   });
+
+  await transaction.save();
 
   res.status(StatusCodes.CREATED).json({ transaction });
 });

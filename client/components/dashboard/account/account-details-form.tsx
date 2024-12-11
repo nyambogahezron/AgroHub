@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const states = [
   { value: 'alabama', label: 'Alabama' },
@@ -22,6 +23,10 @@ const states = [
 ] as const;
 
 export function AccountDetailsForm(): React.JSX.Element {
+  const { session } = useGlobalContext();
+
+  console.log(session);
+
   return (
     <form
       onSubmit={(event) => {

@@ -153,3 +153,15 @@ export async function getSingleProduct(id: string) {
 export async function getUserProducts() {
   return await apiCall(`/api/v1/product/user`, '', 'GET');
 }
+
+// update password
+
+export async function updatePassword(data: any) {
+  return await apiCall(`/api/v1/users/updateUserPassword`, '', 'PATCH', data);
+}
+
+// get user profile
+
+export async function getUserProfile() {
+  return await apiCall(`/api/v1/users/showMe`, '', 'GET', '');
+}

@@ -1,7 +1,14 @@
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
-const sendVerificationEmail = async ({ name, email, verificationToken }) => {
+async function sendAlertEmail({
+  email,
+  message,
+  title,
+  subject,
+  action,
+  name,
+}) {
   const nodemailerConfig = {
     service: 'gmail',
     auth: {
@@ -9,9 +16,8 @@ const sendVerificationEmail = async ({ name, email, verificationToken }) => {
       pass: process.env.pass,
     },
   };
-  const transporter = nodemailer.createTransport(nodemailerConfig);
 
-  let MailGenerator = new Mailgen({
+  const mailGenerator = new Mailgen({
     theme: 'default',
     product: {
       name: 'AgroHub',
@@ -19,39 +25,42 @@ const sendVerificationEmail = async ({ name, email, verificationToken }) => {
     },
   });
 
-  let response = {
+  // Create the email content using Mailgen
+  const emailContent = {
     body: {
       name: name,
-      intro: "Welcome to AgroHub! We're very excited to have you on board.",
+      intro: title,
       action: {
-        instructions: 'To get started, please enter the code below:',
+        instructions: message,
         button: {
           color: '#22BC66',
-          text: verificationToken,
+          text: 'Click Here',
+          link: action,
         },
       },
-      outro:
-        "Need help, or have questions? Just reply to this email, we'd love to help.",
+      outro: `If you have any questions, feel free to reach out to us.`,
     },
   };
 
-  let mailBody = MailGenerator.generate(response);
+  let mailBody = mailGenerator.generate(emailContent);
 
-  let message = {
+  let messageBody = {
     from: process.env.email,
     to: email,
-    subject: 'Verification Code',
+    subject: subject,
     html: mailBody,
     inReplyTo: undefined,
     references: undefined,
   };
 
+  const transporter = nodemailer.createTransport(nodemailerConfig);
+
   try {
-    await transporter.sendMail(message);
+    await transporter.sendMail(messageBody);
     return { msg: 'Email send Successful' };
   } catch (error) {
     return { msg: 'Email not sent, something went wrong' };
   }
-};
+}
 
-module.exports = sendVerificationEmail;
+module.exports = sendAlertEmail;
