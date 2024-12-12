@@ -74,8 +74,6 @@ transactionSchema.pre('save', async function (next) {
     });
 
     // create a notification
-
-    console.log('creating notification');
     await mongoose.model('Notification').create({
       user: budget.user._id,
       message: `You have exceeded the budget for ${this.title}

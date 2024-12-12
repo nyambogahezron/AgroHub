@@ -40,7 +40,7 @@ export default function Page(): React.JSX.Element {
 
     // Add title
     doc.setFontSize(20);
-    doc.text(' Report', 70, 20);
+    doc.text('AgroHub General Report', 70, 20);
 
     doc.setFontSize(12);
     doc.text(`Total Sales: ${currencyFormatter(totalSales)}`, 10, 50);
@@ -67,6 +67,10 @@ export default function Page(): React.JSX.Element {
       styles: { fontSize: 10 },
     });
 
+    startY += 50; // Add spacing between tables
+
+    doc.addPage();
+
     budgetData.forEach((budget) => {
       doc.setFontSize(14);
       doc.text(`Budget Title: ${budget.title}`, 10, startY);
@@ -89,11 +93,15 @@ export default function Page(): React.JSX.Element {
       const totalBudgetAmount = currencyFormatter(budget.amount);
 
       doc.setFontSize(12);
-      doc.text(`Total Budget Amount: ${totalBudgetAmount}`, 10, startY);
+      doc.text(`Total Budget Amount: ${totalBudgetAmount}`, 10, startY + 150);
+
+      startY += 100;
     });
 
+    doc.addPage();
+
     doc.setFontSize(14);
-    doc.text('Transactions:', 10, startY);
+    doc.text('Transactions:', 10, 10);
 
     autoTable(doc, {
       head: [
@@ -119,23 +127,19 @@ export default function Page(): React.JSX.Element {
           organization ? organization.name : 'Unknown',
         ];
       }),
-      startY: startY + 10,
+      startY: 20,
       margin: { top: 10 },
     });
 
-    autoTable(doc, {
-      head: [['Name', 'ID']],
-      body: organizations.map((org) => [org.name, org._id]),
-      startY: startY + 10,
-      margin: { top: 10 },
-    });
+    doc.addPage(); // Start a new page for organizations
+
     doc.setFontSize(14);
-    doc.text('Organizations:', 10, startY);
+    doc.text('Organizations:', 10, 10);
 
     autoTable(doc, {
       head: [['Name', 'ID']],
       body: organizations.map((org) => [org.name, org._id]),
-      startY: startY + 10,
+      startY: 20,
       margin: { top: 10 },
     });
 

@@ -161,12 +161,15 @@ export default function GlobalProvider({
   useEffect(() => {
     const fetchData = async () => {
       const result = await getUserOrg();
+
+      if (result){
       localStorage.setItem('organization', JSON.stringify(result.organization));
       setOrganization(result.organization);
       const org = getCurrentOrganization();
       if (!org) {
         setCurrentOrganizationData(result.organization[0]);
       }
+    }
     };
 
     fetchData();

@@ -1,26 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const Transaction = require('../models/Transaction');
 
-// Path to your JSON file
-const jsonFilePath = path.join(__dirname, 'data.json');
+const filePath = path.join(__dirname, 'data/transactions.json');
+const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
-// Function to read and parse JSON file
-const populateData = () => {
-    fs.readFile(jsonFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading JSON file:', err);
-            return;
-        }
-
-        try {
-            const jsonData = JSON.parse(data);
-            console.log('Data from JSON file:', jsonData);
-            // Process the data as needed
-        } catch (parseErr) {
-            console.error('Error parsing JSON data:', parseErr);
-        }
-    });
-};
-
-// Call the function to populate data
-populateData();
+Transaction.insertMany(jsonData)
+  .then(() => {
+    console.log('Data successfully inserted');
+  })
+  .catch((error) => {
+    console.error('Error inserting data:', error);
+  });

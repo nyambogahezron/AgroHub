@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: 'https://agrohub-5p17.onrender.com',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
 });

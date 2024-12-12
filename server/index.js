@@ -62,7 +62,7 @@ app.get('/', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const corsOptions = {
-  origin: 'https://agro-hub-nine.vercel.app',
+  origin: ['https://agro-hub-nine.vercel.app', 'http://localhost:3000'],
   optionsSuccessStatus: 200,
   credentials: true,
 };
