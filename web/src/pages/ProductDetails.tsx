@@ -30,7 +30,7 @@ const ProductDetails = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
-        <div className="container mx-auto px-4 py-16 flex-grow flex flex-col items-center justify-center">
+        <div className="container mx-auto px-4 py-16 grow flex flex-col items-center justify-center">
           <AlertCircle size={48} className="text-red-500 mb-4" />
           <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
           <p className="text-gray-600 mb-6">
@@ -53,7 +53,7 @@ const ProductDetails = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow bg-gray-50 py-12">
+      <main className="grow bg-gray-50 py-12">
         <div className="container mx-auto px-4">
           <div className="mb-6">
             <Link

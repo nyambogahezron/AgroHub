@@ -8,7 +8,7 @@ const CTA = () => {
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-agri-green to-agri-green-dark rounded-2xl overflow-hidden shadow-xl">
+        <div className="max-w-4xl mx-auto bg-linear-to-r from-agri-green to-agri-green-dark rounded-2xl overflow-hidden shadow-xl">
           <div className="p-8 md:p-12 relative">
             {/* Background Pattern */}
             <div className="absolute top-0 right-0 opacity-10">

@@ -14,7 +14,7 @@ const Analytics = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow bg-gray-50 py-12">
+      <main className="grow bg-gray-50 py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
             <div>

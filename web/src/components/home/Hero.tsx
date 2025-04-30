@@ -53,7 +53,7 @@ const Hero = () => {
                 alt="Agricultural landscape" 
                 className="w-full h-full object-cover rounded-lg"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <div className="flex items-center justify-between">
                   <div>

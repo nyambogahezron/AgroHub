@@ -8,7 +8,7 @@ const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
-		<nav className='bg-white shadow-sm py-4 sticky top-0 z-50'>
+		<nav className='bg-white shadow-xs py-4 sticky top-0 z-50'>
 			<div className='container mx-auto px-4 flex justify-between items-center'>
 				<Link to='/' className='flex items-center space-x-2'>
 					<motion.div
@@ -16,7 +16,7 @@ const Navbar = () => {
 						animate={{ rotate: 360 }}
 						transition={{ duration: 1.5, ease: 'easeInOut' }}
 					>
-						<div className='w-8 h-8 rounded-full bg-gradient-to-r from-agri-green to-agri-earth-dark flex items-center justify-center'>
+						<div className='w-8 h-8 rounded-full bg-linear-to-r from-agri-green to-agri-earth-dark flex items-center justify-center'>
 							<span className='text-white font-bold'>A</span>
 						</div>
 					</motion.div>

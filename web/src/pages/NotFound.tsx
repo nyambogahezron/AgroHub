@@ -10,7 +10,7 @@ const NotFound = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow flex items-center justify-center bg-gray-50 py-12">
+      <main className="grow flex items-center justify-center bg-gray-50 py-12">
         <div className="container mx-auto px-4 text-center">
           <AlertCircle size={64} className="text-agri-green mx-auto mb-6" />
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Page Not Found</h1>

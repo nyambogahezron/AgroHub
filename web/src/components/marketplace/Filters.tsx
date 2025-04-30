@@ -70,7 +70,7 @@ const Filters = ({ onFilterChange }: FiltersProps) => {
           placeholder="Search products..."
           value={filters.search}
           onChange={(e) => handleChange("search", e.target.value)}
-          className="pl-10 w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-agri-green focus:border-transparent"
+          className="pl-10 w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-hidden focus:ring-2 focus:ring-agri-green focus:border-transparent"
         />
       </div>
 
@@ -80,7 +80,7 @@ const Filters = ({ onFilterChange }: FiltersProps) => {
           <select
             value={filters.category}
             onChange={(e) => handleChange("category", e.target.value)}
-            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-agri-green focus:border-transparent"
+            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-hidden focus:ring-2 focus:ring-agri-green focus:border-transparent"
           >
             <option value="">All Categories</option>
             {categories.map((category) => (
@@ -96,7 +96,7 @@ const Filters = ({ onFilterChange }: FiltersProps) => {
           <select
             value={filters.location}
             onChange={(e) => handleChange("location", e.target.value)}
-            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-agri-green focus:border-transparent"
+            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-hidden focus:ring-2 focus:ring-agri-green focus:border-transparent"
           >
             <option value="">All Locations</option>
             {locations.map((location) => (
@@ -112,7 +112,7 @@ const Filters = ({ onFilterChange }: FiltersProps) => {
           <select
             value={filters.season}
             onChange={(e) => handleChange("season", e.target.value)}
-            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-agri-green focus:border-transparent"
+            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-hidden focus:ring-2 focus:ring-agri-green focus:border-transparent"
           >
             <option value="">All Seasons</option>
             {seasons.map((season) => (
