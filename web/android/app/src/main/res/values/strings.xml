@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AgroHub</string>
+    <string name="title_activity_main">AgroHub</string>
+    <string name="package_name">com.hezron.agrohub</string>
+    <string name="custom_url_scheme">com.hezron.agrohub</string>
+</resources>
