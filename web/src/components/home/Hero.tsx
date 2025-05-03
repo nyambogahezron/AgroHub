@@ -31,7 +31,11 @@ const Hero = () => {
 							<Button asChild className='btn-secondary text-base'>
 								<Link to='/analytics'>View Price Analytics</Link>
 							</Button>
+							<Button asChild className='btn-secondary text-base'>
+								<Link to='/dashboard'>View Dashboard</Link>
+							</Button>
 						</div>
+
 						<div className='mt-8 flex items-center space-x-4'>
 							<div className='flex -space-x-2'>
 								<img
