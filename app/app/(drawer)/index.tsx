@@ -1,18 +1,8 @@
-import {
-	View,
-	Text,
-	ScrollView,
-	TouchableOpacity,
-	useWindowDimensions,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from 'react-native';
 
-export default function Index() {
-	const colorScheme = useColorScheme();
-	const { width } = useWindowDimensions();
-
+export default function HomeScreen() {
 	return (
 		<ScrollView className='flex-1 bg-background'>
 			{/* Hero Section */}

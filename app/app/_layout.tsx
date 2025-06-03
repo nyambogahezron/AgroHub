@@ -4,6 +4,7 @@ import { useColorScheme } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import './global.css';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -30,21 +31,34 @@ export default function RootLayout() {
 	}
 
 	return (
-		<Stack
-			screenOptions={{
-				headerStyle: {
-					backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
-				},
-				headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
-				headerTitleStyle: {
-					fontWeight: 'bold',
-				},
-			}}
+		<Animated.View
+			entering={FadeIn.duration(800).delay(200)}
+			style={{ flex: 1 }}
 		>
-			<Stack.Screen name='(auth)' options={{ headerShown: false }} />
-			<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-			<Stack.Screen name='marketplace' options={{ title: 'Marketplace' }} />
-			<Stack.Screen name='dashboard' options={{ title: 'Dashboard' }} />
-		</Stack>
+			<Stack
+				screenOptions={{
+					headerStyle: {
+						backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
+					},
+					headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+					headerTitleStyle: {
+						fontWeight: 'bold',
+					},
+				}}
+			>
+				<Stack.Screen
+					name='(drawer)'
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name='(auth)'
+					options={{
+						headerShown: false,
+					}}
+				/>
+			</Stack>
+		</Animated.View>
 	);
 }
