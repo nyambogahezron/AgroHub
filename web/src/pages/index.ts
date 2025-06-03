@@ -10,6 +10,8 @@ import ProductDetails from './ProductDetails';
 import Settings from './Settings';
 import Yields from './Yields';
 import Home from './Home';
+import Login from './auth/login';
+import Register from './auth/register';
 
 const PAGES = {
 	Analytics,
@@ -24,5 +26,7 @@ const PAGES = {
 	Settings,
 	Yields,
 	Home,
+	Login,
+	Register,
 };
 export default PAGES;

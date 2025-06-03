@@ -1,16 +1,14 @@
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PageLayout } from './components/layout/PageLayout';
 import PAGES from './pages';
-
-const queryClient = new QueryClient();
+import { QueryProvider } from './lib/query-client';
 
 export default function App() {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<QueryProvider>
 			<TooltipProvider>
 				<Toaster />
 				<Sonner />
@@ -20,6 +18,8 @@ export default function App() {
 						<Route path='/marketplace' element={<PAGES.Marketplace />} />
 						<Route path='/product/:id' element={<PAGES.ProductDetails />} />
 						<Route path='/analytics' element={<PAGES.Analytics />} />
+						<Route path='/login' element={<PAGES.Login />} />
+						<Route path='/register' element={<PAGES.Register />} />
 						<Route path='/dashboard' element={<PageLayout />}>
 							<Route index element={<PAGES.Dashboard />} />
 							<Route path='expenses' element={<PAGES.Expenses />} />
@@ -34,6 +34,6 @@ export default function App() {
 					</Routes>
 				</BrowserRouter>
 			</TooltipProvider>
-		</QueryClientProvider>
+		</QueryProvider>
 	);
 }
