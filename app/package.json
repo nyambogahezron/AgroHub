@@ -22,6 +22,7 @@
 		"@react-navigation/native-stack": "^7.3.10",
 		"@react-navigation/stack": "^7.3.3",
 		"@shopify/flash-list": "1.7.6",
+		"@tanstack/react-form": "^1.12.1",
 		"expo": "^53.0.9",
 		"expo-blur": "~14.1.4",
 		"expo-constants": "~17.1.6",
@@ -34,10 +35,12 @@
 		"expo-symbols": "~0.4.4",
 		"expo-system-ui": "~5.0.7",
 		"expo-web-browser": "~14.1.6",
+		"lucide-react-native": "^0.513.0",
 		"nativewind": "^4.1.23",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
 		"react-native": "0.79.2",
+		"react-native-chart-kit": "^6.12.0",
 		"react-native-gesture-handler": "~2.24.0",
 		"react-native-reanimated": "~3.17.4",
 		"react-native-safe-area-context": "5.4.0",
@@ -46,6 +49,7 @@
 		"react-native-web": "^0.20.0",
 		"react-native-webview": "13.13.5",
 		"tailwindcss": "^3.4.17",
+		"zod": "^3.25.51",
 		"zustand": "^5.0.5"
 	},
 	"devDependencies": {
