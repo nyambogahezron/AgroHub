@@ -6,12 +6,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import './global.css';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
-// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
-		// Add your custom fonts here if needed
+		// Add your custom fonts
 	});
 
 	const colorScheme = useColorScheme();
@@ -47,7 +46,7 @@ export default function RootLayout() {
 				}}
 			>
 				<Stack.Screen
-					name='(drawer)'
+					name='(home)'
 					options={{
 						headerShown: false,
 					}}
