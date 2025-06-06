@@ -1,6 +1,7 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { Button } from '@/components/ui/button';
 
 export default function HomeScreen() {
 	return (
@@ -12,6 +13,13 @@ export default function HomeScreen() {
 				</Text>
 				<Text className='text-white/90 text-lg'>Your farming companion</Text>
 			</View>
+			{/* dashboard */}
+			<Button
+				className='mt-2 mx-4 h-12 text-white'
+				onPress={() => router.push('/(dashboard)')}
+			>
+				Dashboard
+			</Button>
 
 			{/* Features Section */}
 			<View className='p-4'>

@@ -6,9 +6,8 @@ import {
 	TextInput,
 	TouchableOpacity,
 } from 'react-native';
-import { useStore } from '@/store/useStore';
+import { useInventoryStore, type InventoryItem } from '@/store/inventoryStore';
 import { useForm } from '@/hooks/use-form';
-import { inventorySchema, type InventoryFormData } from '@/lib/schemas';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,10 +15,19 @@ import { Select } from '@/components/ui/select';
 import { Modal } from '@/components/ui/modal';
 import { Form } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
-import { Package, Plus, Search, AlertTriangle } from 'lucide-react-native';
+import { Plus, Search, AlertTriangle } from 'lucide-react-native';
+import { z } from 'zod';
+
+const inventorySchema = z.object({
+	name: z.string().min(1, 'Name is required'),
+	quantity: z.number().min(0, 'Quantity must be positive'),
+	unit: z.string().min(1, 'Unit is required'),
+});
+
+type InventoryFormData = z.infer<typeof inventorySchema>;
 
 export default function Inventory() {
-	const { inventory, addInventoryItem, updateInventoryItem } = useStore();
+	const { inventory, addItem } = useInventoryStore();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editingItem, setEditingItem] = useState<string | null>(null);
@@ -27,44 +35,39 @@ export default function Inventory() {
 	const { form, handleSubmit } = useForm(inventorySchema);
 
 	// Filter inventory based on search query
-	const filteredInventory = inventory.filter(
-		(item) =>
-			item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			item.category.toLowerCase().includes(searchQuery.toLowerCase())
+	const filteredInventory = inventory.filter((item: InventoryItem) =>
+		item.name.toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
 	const onSubmit = async (data: InventoryFormData) => {
 		if (editingItem) {
-			updateInventoryItem(editingItem, data);
+			// TODO: Implement update functionality in store
 			setEditingItem(null);
 		} else {
-			const newItem = {
-				name: data.name!,
-				category: data.category!,
-				quantity: data.quantity!,
-				unit: data.unit!,
-				lastUpdated: new Date().toISOString().split('T')[0],
+			const newItem: InventoryItem = {
+				id: Date.now().toString(),
+				name: data.name,
+				quantity: data.quantity,
+				unit: data.unit,
 			};
-			addInventoryItem(newItem);
+			addItem(newItem);
 		}
 		setIsModalOpen(false);
 		form.reset();
 	};
 
-	const handleEdit = (item: (typeof inventory)[0]) => {
+	const handleEdit = (item: InventoryItem) => {
 		setEditingItem(item.id);
-		form.reset({
-			name: item.name,
-			category: item.category,
-			quantity: item.quantity,
-			unit: item.unit,
-			lastUpdated: item.lastUpdated,
-		});
+		form.setValue('name', item.name);
+		form.setValue('quantity', item.quantity);
+		form.setValue('unit', item.unit);
 		setIsModalOpen(true);
 	};
 
 	// Calculate low stock items
-	const lowStockItems = inventory.filter((item) => item.quantity < 100);
+	const lowStockItems = inventory.filter(
+		(item: InventoryItem) => item.quantity < 100
+	);
 
 	return (
 		<ScrollView className='flex-1 bg-background'>

@@ -6,39 +6,35 @@ import {
 	TextInput,
 	TouchableOpacity,
 } from 'react-native';
-import { useStore } from '@/store/useStore';
+import { useLaborStore, type LaborEntry } from '@/store/laborStore';
 import { useForm } from '@/hooks/use-form';
 import { laborSchema, type LaborFormData } from '@/lib/schemas';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Select } from '@/components/ui/select';
 import { Modal } from '@/components/ui/modal';
 import { Form } from '@/components/ui/form';
-import { Badge } from '@/components/ui/badge';
-import { Users, Plus, Search, Download, Clock } from 'lucide-react-native';
+import { Plus, Search, Download, Clock } from 'lucide-react-native';
 
 export default function Labor() {
-	const { labor, addLabor } = useStore();
+	const { labor, addLabor } = useLaborStore();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const { form, handleSubmit } = useForm(laborSchema);
 
 	// Filter labor records based on search query
-	const filteredLabor = labor.filter(
-		(entry) =>
-			entry.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-			entry.role.toLowerCase().includes(searchQuery.toLowerCase())
+	const filteredLabor = labor.filter((entry: LaborEntry) =>
+		entry.worker.toLowerCase().includes(searchQuery.toLowerCase())
 	);
 
 	const onSubmit = async (data: LaborFormData) => {
-		const newLabor = {
-			name: data.name!,
-			role: data.role!,
+		const newLabor: LaborEntry = {
+			id: Date.now().toString(), // Generate a unique ID
+			worker: data.name!,
 			hours: data.hours!,
-			date: data.date!,
 			rate: data.rate!,
+			date: data.date!,
 		};
 		addLabor(newLabor);
 		setIsModalOpen(false);
@@ -46,26 +42,21 @@ export default function Labor() {
 	};
 
 	// Calculate total hours and labor cost
-	const totalHours = labor.reduce((total, entry) => total + entry.hours, 0);
+	const totalHours = labor.reduce(
+		(total: number, entry: LaborEntry) => total + entry.hours,
+		0
+	);
 	const totalLaborCost = labor.reduce(
-		(total, entry) => total + entry.hours * entry.rate,
+		(total: number, entry: LaborEntry) => total + entry.hours * entry.rate,
 		0
 	);
 
 	// Count workers by role
-	const roleCount: Record<string, number> = {};
-	labor.forEach((entry) => {
-		if (roleCount[entry.role]) {
-			roleCount[entry.role]++;
-		} else {
-			roleCount[entry.role] = 1;
-		}
-	});
+	const workerCount = new Set(labor.map((entry: LaborEntry) => entry.worker))
+		.size;
 
-	// Simulate export function (would connect to actual export in real app)
 	const handleExport = () => {
 		console.log('Exporting labor logs...');
-		// In a real app, this would generate and download a CSV or Excel file
 		alert('Labor logs would be exported as CSV in the full implementation.');
 	};
 
@@ -114,9 +105,7 @@ export default function Labor() {
 						<Card className='flex-1'>
 							<View className='p-4'>
 								<Text className='text-lg font-medium mb-2'>Workers</Text>
-								<Text className='text-3xl font-bold'>
-									{new Set(labor.map((entry) => entry.name)).size}
-								</Text>
+								<Text className='text-3xl font-bold'>{workerCount}</Text>
 							</View>
 						</Card>
 
@@ -134,25 +123,27 @@ export default function Labor() {
 								Recent Labor Records
 							</Text>
 							<View className='space-y-2'>
-								{filteredLabor.slice(0, 5).map((entry, index) => (
-									<View
-										key={index}
-										className='flex-row justify-between items-center p-2 bg-muted/50 rounded-lg'
-									>
-										<View>
-											<Text className='font-medium'>{entry.name}</Text>
-											<Text className='text-sm text-muted-foreground'>
-												{entry.role}
-											</Text>
+								{filteredLabor
+									.slice(0, 5)
+									.map((entry: LaborEntry, index: number) => (
+										<View
+											key={entry.id}
+											className='flex-row justify-between items-center p-2 bg-muted/50 rounded-lg'
+										>
+											<View>
+												<Text className='font-medium'>{entry.worker}</Text>
+												<Text className='text-sm text-muted-foreground'>
+													{entry.date}
+												</Text>
+											</View>
+											<View className='items-end'>
+												<Text className='font-medium'>{entry.hours} hours</Text>
+												<Text className='text-sm text-muted-foreground'>
+													${entry.hours * entry.rate}
+												</Text>
+											</View>
 										</View>
-										<View className='items-end'>
-											<Text className='font-medium'>{entry.hours} hours</Text>
-											<Text className='text-sm text-muted-foreground'>
-												${entry.hours * entry.rate}
-											</Text>
-										</View>
-									</View>
-								))}
+									))}
 							</View>
 						</View>
 					</Card>
@@ -172,21 +163,6 @@ export default function Labor() {
 								placeholder='Full name'
 								value={form.watch('name')}
 								onChangeText={(value) => form.setValue('name', value)}
-							/>
-						</View>
-
-						<View>
-							<Text className='text-sm font-medium mb-1'>Role</Text>
-							<Select
-								value={form.watch('role')}
-								onValueChange={(value) => form.setValue('role', value)}
-								items={[
-									{ label: 'Harvester', value: 'Harvester' },
-									{ label: 'Field Worker', value: 'Field Worker' },
-									{ label: 'Equipment Operator', value: 'Equipment Operator' },
-									{ label: 'Supervisor', value: 'Supervisor' },
-									{ label: 'Other', value: 'Other' },
-								]}
 							/>
 						</View>
 

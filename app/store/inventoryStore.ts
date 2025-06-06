@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 export interface InventoryItem {
 	id: string;
@@ -7,16 +7,18 @@ export interface InventoryItem {
 	unit: string;
 }
 
-interface InventoryState {
+export interface InventoryState {
 	inventory: InventoryItem[];
 	addItem: (item: InventoryItem) => void;
 	removeItem: (id: string) => void;
 }
 
-export const useInventoryStore = create<InventoryState>((set) => ({
+export const useInventoryStore = create<InventoryState>()((set) => ({
 	inventory: [],
-	addItem: (item) =>
-		set((state) => ({ inventory: [...state.inventory, item] })),
-	removeItem: (id) =>
-		set((state) => ({ inventory: state.inventory.filter((i) => i.id !== id) })),
+	addItem: (item: InventoryItem) =>
+		set((state: InventoryState) => ({ inventory: [...state.inventory, item] })),
+	removeItem: (id: string) =>
+		set((state: InventoryState) => ({
+			inventory: state.inventory.filter((i: InventoryItem) => i.id !== id),
+		})),
 }));

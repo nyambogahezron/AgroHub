@@ -1,14 +1,7 @@
 import { View, Text, ScrollView } from 'react-native';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-	Cloud,
-	Sun,
-	CloudRain,
-	Wind,
-	Thermometer,
-	Droplets,
-} from 'lucide-react-native';
+import { Cloud, Sun, CloudRain, Wind, Droplets } from 'lucide-react-native';
 
 // Mock weather data
 const currentWeather = {

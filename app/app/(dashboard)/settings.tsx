@@ -1,11 +1,5 @@
 import { useState } from 'react';
-import {
-	View,
-	Text,
-	ScrollView,
-	TextInput,
-	TouchableOpacity,
-} from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';

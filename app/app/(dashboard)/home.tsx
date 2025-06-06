@@ -1,7 +1,7 @@
 import { View, Text, ScrollView } from 'react-native';
 import { useExpensesStore } from '@/store/expensesStore';
 import { useYieldsStore } from '@/store/yieldsStore';
-import { useInventoryStore } from '@/store/inventoryStore';
+import { useInventoryStore, type InventoryItem } from '@/store/inventoryStore';
 import { useLaborStore } from '@/store/laborStore';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { WeatherCard } from '@/components/dashboard/WeatherCard';
@@ -10,29 +10,41 @@ import { YieldChart } from '@/components/dashboard/YieldChart';
 import { DollarSign, Sprout, Package, Users } from 'lucide-react-native';
 
 export default function Dashboard() {
-	const expenses = useExpensesStore((state) => state.expenses);
-	const yields = useYieldsStore((state) => state.yields);
-	const inventory = useInventoryStore((state) => state.inventory);
-	const labor = useLaborStore((state) => state.labor);
+	const expenses = useExpensesStore(
+		(state: { expenses: Array<{ amount: number }> }) => state.expenses
+	);
+	const yields = useYieldsStore(
+		(state: { yields: Array<{ quantity: number }> }) => state.yields
+	);
+	const inventory = useInventoryStore(
+		(state: { inventory: InventoryItem[] }) => state.inventory
+	);
+	const labor = useLaborStore(
+		(state: { labor: Array<{ hours: number; rate: number }> }) => state.labor
+	);
 
 	// Calculate total expenses
 	const totalExpenses = expenses.reduce(
-		(total, expense) => total + expense.amount,
+		(total: number, expense: { amount: number }) => total + expense.amount,
 		0
 	);
 
 	// Calculate total yield
 	const totalYield = yields.reduce(
-		(total, yieldEntry) => total + yieldEntry.quantity,
+		(total: number, yieldEntry: { quantity: number }) =>
+			total + yieldEntry.quantity,
 		0
 	);
 
 	// Calculate low stock items
-	const lowStockItems = inventory.filter((item) => item.quantity < 100).length;
+	const lowStockItems = inventory.filter(
+		(item: InventoryItem) => item.quantity < 100
+	).length;
 
 	// Calculate total labor cost
 	const totalLaborCost = labor.reduce(
-		(total, entry) => total + entry.hours * entry.rate,
+		(total: number, entry: { hours: number; rate: number }) =>
+			total + entry.hours * entry.rate,
 		0
 	);
 
@@ -63,7 +75,7 @@ export default function Dashboard() {
 					/>
 					<StatCard
 						title='Low Stock Items'
-						value={lowStockItems}
+						value={lowStockItems.toString()}
 						icon={Package}
 						description='Items needing restock'
 					/>
