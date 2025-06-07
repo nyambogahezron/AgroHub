@@ -49,18 +49,14 @@ export default function RootLayout() {
 					name='(home)'
 					options={{
 						headerShown: false,
+						animation: 'fade',
 					}}
 				/>
 				<Stack.Screen
 					name='(auth)'
 					options={{
 						headerShown: false,
-					}}
-				/>
-				<Stack.Screen
-					name='(dashboard)'
-					options={{
-						headerShown: false,
+						animation: 'fade',
 					}}
 				/>
 			</Stack>

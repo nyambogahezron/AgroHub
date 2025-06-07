@@ -14,12 +14,9 @@ export default function HomeScreen() {
 				<Text className='text-white/90 text-lg'>Your farming companion</Text>
 			</View>
 			{/* dashboard */}
-			<Button
-				className='mt-2 mx-4 h-12 text-white'
-				onPress={() => router.push('/(dashboard)/home')}
-			>
-				Dashboard
-			</Button>
+			<Link href='/home' asChild>
+				<Button className='mt-2 mx-4 h-12 text-white'>Dashboard</Button>
+			</Link>
 
 			{/* Features Section */}
 			<View className='p-4'>
