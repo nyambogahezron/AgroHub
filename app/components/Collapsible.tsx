@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
 	useAnimatedStyle,
 	withSpring,
@@ -8,7 +8,6 @@ import Animated, {
 	withTiming,
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedText } from './ThemedText';
 
 interface CollapsibleProps {
 	title: string;
@@ -47,7 +46,7 @@ export function Collapsible({
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity onPress={toggleExpand} style={styles.header}>
-				<ThemedText style={styles.title}>{title}</ThemedText>
+				<Text style={styles.title}>{title}</Text>
 				<Animated.View style={iconStyle}>
 					<Ionicons name='chevron-down' size={24} color='#666' />
 				</Animated.View>

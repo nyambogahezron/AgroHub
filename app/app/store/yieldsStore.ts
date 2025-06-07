@@ -6,20 +6,22 @@ interface Yield {
 	crop: string;
 	quantity: number;
 	unit: string;
-	field: string;
 }
 
 interface YieldsStore {
 	yields: Yield[];
-	addYield: (yield_: Yield) => void;
+	addYield: (yieldEntry: Yield) => void;
 	removeYield: (id: string) => void;
 }
 
-export const useYieldsStore = create<YieldsStore>((set) => ({
+const useYieldsStore = create<YieldsStore>((set) => ({
 	yields: [],
-	addYield: (yield_) => set((state) => ({ yields: [...state.yields, yield_] })),
+	addYield: (yieldEntry) =>
+		set((state) => ({ yields: [...state.yields, yieldEntry] })),
 	removeYield: (id) =>
 		set((state) => ({
-			yields: state.yields.filter((yield_) => yield_.id !== id),
+			yields: state.yields.filter((yieldEntry) => yieldEntry.id !== id),
 		})),
 }));
+
+export default useYieldsStore;

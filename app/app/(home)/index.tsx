@@ -16,7 +16,7 @@ export default function HomeScreen() {
 			{/* dashboard */}
 			<Button
 				className='mt-2 mx-4 h-12 text-white'
-				onPress={() => router.push('/(dashboard)')}
+				onPress={() => router.push('/(dashboard)/home')}
 			>
 				Dashboard
 			</Button>

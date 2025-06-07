@@ -6,7 +6,7 @@ export interface InventoryItem {
 	quantity: number;
 	unit: string;
 	category: string;
-	minQuantity: number;
+	reorderLevel: number;
 }
 
 interface InventoryStore {

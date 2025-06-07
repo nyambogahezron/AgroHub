@@ -16,7 +16,7 @@ import { Modal } from '@/components/ui/modal';
 import { Form } from '@/components/ui/form';
 import { Plus, Search, Download, Clock } from 'lucide-react-native';
 
-export default function Labor() {
+function Labor() {
 	const { labor, addLabor } = useLaborStore();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -206,3 +206,5 @@ export default function Labor() {
 		</ScrollView>
 	);
 }
+
+export default Labor;

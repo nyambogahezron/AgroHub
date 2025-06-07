@@ -9,7 +9,7 @@ import { ExpenseChart } from '@/components/dashboard/ExpenseChart';
 import { YieldChart } from '@/components/dashboard/YieldChart';
 import { DollarSign, Sprout, Package, Users } from 'lucide-react-native';
 
-export default function Dashboard() {
+function Dashboard() {
 	const expenses = useExpensesStore(
 		(state: { expenses: Array<{ amount: number }> }) => state.expenses
 	);
@@ -134,3 +134,5 @@ export default function Dashboard() {
 		</ScrollView>
 	);
 }
+
+export default Dashboard;

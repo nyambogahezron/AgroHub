@@ -16,7 +16,7 @@ interface LaborStore {
 	updateEntry: (id: string, entry: Partial<LaborEntry>) => void;
 }
 
-export const useLaborStore = create<LaborStore>((set) => ({
+const useLaborStore = create<LaborStore>((set) => ({
 	labor: [],
 	addEntry: (entry) => set((state) => ({ labor: [...state.labor, entry] })),
 	removeEntry: (id) =>
@@ -30,3 +30,5 @@ export const useLaborStore = create<LaborStore>((set) => ({
 			),
 		})),
 }));
+
+export default useLaborStore;

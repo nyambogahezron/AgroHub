@@ -11,7 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Select } from '@/components/ui/select';
 import { Search, RefreshCw } from 'lucide-react-native';
 
-export default function Market() {
+function Market() {
 	const { labor } = useLaborStore();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedWorker, setSelectedWorker] = useState('all');
@@ -131,3 +131,5 @@ export default function Market() {
 		</ScrollView>
 	);
 }
+
+export default Market;

@@ -22,6 +22,7 @@ const inventorySchema = z.object({
 	name: z.string().min(1, 'Name is required'),
 	quantity: z.number().min(0, 'Quantity must be positive'),
 	unit: z.string().min(1, 'Unit is required'),
+	category: z.string().min(1, 'Category is required'),
 });
 
 type InventoryFormData = z.infer<typeof inventorySchema>;
@@ -49,6 +50,9 @@ export default function Inventory() {
 				name: data.name,
 				quantity: data.quantity,
 				unit: data.unit,
+				category: data.category,
+				minQuantity: 100,
+				lastUpdated: new Date().toISOString(),
 			};
 			addItem(newItem);
 		}
@@ -61,6 +65,7 @@ export default function Inventory() {
 		form.setValue('name', item.name);
 		form.setValue('quantity', item.quantity);
 		form.setValue('unit', item.unit);
+		form.setValue('category', item.category);
 		setIsModalOpen(true);
 	};
 

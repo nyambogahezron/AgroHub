@@ -14,7 +14,7 @@ interface ExpensesStore {
 	removeExpense: (id: string) => void;
 }
 
-export const useExpensesStore = create<ExpensesStore>((set) => ({
+const useExpensesStore = create<ExpensesStore>((set) => ({
 	expenses: [],
 	addExpense: (expense) =>
 		set((state) => ({ expenses: [...state.expenses, expense] })),
@@ -23,3 +23,5 @@ export const useExpensesStore = create<ExpensesStore>((set) => ({
 			expenses: state.expenses.filter((expense) => expense.id !== id),
 		})),
 }));
+
+export default useExpensesStore;
