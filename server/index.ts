@@ -25,6 +25,9 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 // Database connection
 import connectDB from './config/connectDB';
 
+// Import GraphQL server setup
+import { setupApolloServer } from './graphql/server';
+
 // Import routes
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
@@ -60,7 +63,8 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 app.get('/', (req: Request, res: Response) => {
 	res.send(` AgroHub API is live. <br>
-    <a href="/api-docs">API Documentation</a>`);
+    <a href="/api-docs">REST API Documentation</a> <br>
+    <a href="/graphql">GraphQL Playground</a>`);
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -94,6 +98,10 @@ const startApp = async (): Promise<void> => {
 	try {
 		const mongoUrl = process.env.MONGO_URL as string;
 		await connectDB(mongoUrl);
+
+		// Set up Apollo GraphQL server
+		await setupApolloServer(app);
+
 		app.listen(port, () => console.log(`Server is listen on port ${port}`));
 	} catch (error) {
 		console.log(error);
