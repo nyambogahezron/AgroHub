@@ -1,5 +1,6 @@
-import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
+import nodemailer, { Transporter } from 'nodemailer';
+import Mailgen, { Content } from 'mailgen';
+import * as CustomError from '../errors';
 
 interface VerificationEmailParams {
 	name: string;
@@ -9,60 +10,100 @@ interface VerificationEmailParams {
 
 interface EmailResponse {
 	msg: string;
+	success: boolean;
 }
+
+interface EmailConfig {
+	service: string;
+	auth: {
+		user: string;
+		pass: string;
+	};
+}
+
+const createTransporter = (): Transporter => {
+	const email = process.env.email;
+	const pass = process.env.pass;
+
+	if (!email || !pass) {
+		throw new CustomError.BadRequestError('Email configuration is missing');
+	}
+
+	const config: EmailConfig = {
+		service: 'gmail',
+		auth: {
+			user: email,
+			pass: pass,
+		},
+	};
+
+	return nodemailer.createTransport(config);
+};
+
+const createMailGenerator = () => {
+	const clientLink = process.env.clientLink;
+	if (!clientLink) {
+		throw new CustomError.BadRequestError('Client link is missing');
+	}
+
+	return new Mailgen({
+		theme: 'default',
+		product: {
+			name: 'AgroHub',
+			link: clientLink,
+		},
+	});
+};
 
 const sendVerificationEmail = async ({
 	name,
 	email,
 	verificationToken,
 }: VerificationEmailParams): Promise<EmailResponse> => {
-	const nodemailerConfig = {
-		service: 'gmail',
-		auth: {
-			user: process.env.email,
-			pass: process.env.pass,
-		},
-	};
-	const transporter = nodemailer.createTransport(nodemailerConfig);
-
-	let MailGenerator = new Mailgen({
-		theme: 'default',
-		product: {
-			name: 'AgroHub',
-			link: process.env.clientLink as string,
-		},
-	});
-
-	let response = {
-		body: {
-			name: name,
-			intro: "Welcome to AgroHub! We're very excited to have you on board.",
-			action: {
-				instructions: 'To get started, please enter the code below:',
-				button: {
-					color: '#22BC66',
-					text: verificationToken,
-				},
-			},
-			outro:
-				"Need help, or have questions? Just reply to this email, we'd love to help.",
-		},
-	};
-
-	let mailBody = MailGenerator.generate(response);
-
-	let message = {
-		from: process.env.email as string,
-		to: email,
-		subject: 'Verification Code',
-		html: mailBody,
-	};
-
 	try {
+		const transporter = createTransporter();
+		const MailGenerator = createMailGenerator();
+
+		const response: Content = {
+			body: {
+				name,
+				intro: "Welcome to AgroHub! We're very excited to have you on board.",
+				action: {
+					instructions: 'To get started, please enter the code below:',
+					button: {
+						color: '#22BC66',
+						text: verificationToken,
+						link: `${process.env.clientLink}/verify?token=${verificationToken}`,
+					},
+				},
+				outro:
+					"Need help, or have questions? Just reply to this email, we'd love to help.",
+			},
+		};
+
+		const mailBody = MailGenerator.generate(response);
+		const emailFrom = process.env.email;
+
+		if (!emailFrom) {
+			throw new CustomError.BadRequestError('Sender email is missing');
+		}
+
+		const message = {
+			from: emailFrom,
+			to: email,
+			subject: 'Verification Code',
+			html: mailBody,
+		};
+
 		await transporter.sendMail(message);
-		return { msg: 'Email send Successful' };
+		return { msg: 'Email sent successfully', success: true };
 	} catch (error) {
-		return { msg: 'Email not sent, something went wrong' };
+		if (error instanceof CustomError.BadRequestError) {
+			throw error;
+		}
+		throw new CustomError.InternalServerError(
+			'Failed to send verification email'
+		);
 	}
 };
 

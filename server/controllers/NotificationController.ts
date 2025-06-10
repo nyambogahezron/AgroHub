@@ -1,12 +1,10 @@
 import { Response } from 'express';
 import Notification from '../models/Notification';
-import User from '../models/User';
 import * as CustomError from '../errors';
 import asyncWrapper from '../middleware/asyncHandler';
 import { StatusCodes } from 'http-status-codes';
 import { AuthenticatedRequest } from '../types/auth';
 
-// @desc      Get all notifications
 // @route     GET /api/v1/notifications
 // @access    Private/User
 
@@ -21,7 +19,6 @@ const getNotifications = asyncWrapper(
 	}
 );
 
-// @desc      Create notification
 // @route     POST /api/v1/notifications
 // @access    Private/User
 
@@ -38,7 +35,6 @@ const createNotification = asyncWrapper(
 	}
 );
 
-// @desc      Get single notification
 // @route     GET /api/v1/notifications/:id
 // @access    Private/User
 
@@ -60,7 +56,6 @@ const getNotification = asyncWrapper(
 	}
 );
 
-// @desc      Delete single notification
 // @route     DELETE /api/v1/notifications/:id
 // @access    Private/User
 
@@ -82,7 +77,6 @@ const deleteNotification = asyncWrapper(
 	}
 );
 
-// @desc      Create notification
 // @route     POST /api/v1/notifications
 // @access    Private/User
 const deleteAllNotifications = asyncWrapper(

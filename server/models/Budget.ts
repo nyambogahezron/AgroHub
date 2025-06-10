@@ -1,16 +1,22 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import { IBudget } from '../types/models';
+import mongoose, { Schema, Document, Model, Types } from 'mongoose';
+import { IBudget, IItem } from '../types/models';
 
-interface IItem extends Document {
-	name: string;
+interface IBudgetDocument extends Document {
+	user: Types.ObjectId;
+	organization: Types.ObjectId;
+	title: string;
 	amount: number;
+	date: Date;
+	items: IItem[];
 }
 
+// Define the methods interface
 interface IBudgetMethods {
 	calculateTotalAmount(): number;
 }
 
-type IBudgetModel = IBudget & IBudgetMethods;
+// Define the model interface
+type IBudgetModel = Model<IBudgetDocument, {}, IBudgetMethods>;
 
 const ItemSchema = new Schema<IItem>({
 	name: {
@@ -26,7 +32,7 @@ const ItemSchema = new Schema<IItem>({
 	},
 });
 
-const BudgetSchema = new Schema<IBudgetModel>(
+const BudgetSchema = new Schema<IBudgetDocument, IBudgetModel>(
 	{
 		user: {
 			type: Schema.Types.ObjectId,
@@ -44,10 +50,11 @@ const BudgetSchema = new Schema<IBudgetModel>(
 		},
 		amount: {
 			type: Number,
+			default: 0,
 		},
 		date: {
 			type: Date,
-			default: '',
+			default: Date.now,
 		},
 		items: {
 			type: [ItemSchema],
@@ -58,32 +65,38 @@ const BudgetSchema = new Schema<IBudgetModel>(
 );
 
 // calculate total amount
-BudgetSchema.methods.calculateTotalAmount = function (
-	this: IBudgetModel
-): number {
-	let total = 0;
-	this.items.forEach((item) => {
-		total += item.amount;
-	});
+BudgetSchema.methods.calculateTotalAmount = function (): number {
+	const total = this.items.reduce(
+		(sum: number, item: IItem) => sum + item.amount,
+		0
+	);
 	this.amount = total;
 	return total;
 };
 
-BudgetSchema.pre('save', function (next) {
-	(this as IBudgetModel).calculateTotalAmount();
-	next();
-});
+BudgetSchema.pre(
+	'save',
+	function (this: IBudgetDocument & IBudgetMethods, next) {
+		this.calculateTotalAmount();
+		next();
+	}
+);
 
 BudgetSchema.pre('findOneAndUpdate', function (next) {
-	const update = this.getUpdate() as any;
-	if (update.items) {
-		let total = 0;
-		update.items.forEach((item: IItem) => {
-			total += item.amount;
-		});
-		update.amount = total;
+	const update = this.getUpdate() as { items?: IItem[] };
+	if (update?.items) {
+		const total = update.items.reduce(
+			(sum: number, item: IItem) => sum + item.amount,
+			0
+		);
+		(this as any).set({ amount: total });
 	}
 	next();
 });
 
-export default mongoose.model<IBudgetModel>('Budget', BudgetSchema);
+const Budget = mongoose.model<IBudgetDocument, IBudgetModel>(
+	'Budget',
+	BudgetSchema
+);
+
+export default Budget;

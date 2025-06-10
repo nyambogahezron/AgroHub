@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 const router = express.Router();
 import { authenticateUser } from '../middleware/authentication';
 import {
@@ -8,10 +8,16 @@ import {
 	updateUserPassword,
 } from '../controllers/userController';
 
-router.route('/showMe').get(authenticateUser, showCurrentUser);
-router.route('/updateUser').patch(authenticateUser, updateUser);
-router.route('/updateUserPassword').patch(authenticateUser, updateUserPassword);
+router
+	.route('/showMe')
+	.get(authenticateUser, showCurrentUser as RequestHandler);
+router
+	.route('/updateUser')
+	.patch(authenticateUser, updateUser as RequestHandler);
+router
+	.route('/updateUserPassword')
+	.patch(authenticateUser, updateUserPassword as RequestHandler);
 
-router.route('/:id').get(authenticateUser, getSingleUser);
+router.route('/:id').get(authenticateUser, getSingleUser as RequestHandler);
 
 export default router;

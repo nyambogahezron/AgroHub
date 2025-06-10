@@ -42,7 +42,7 @@ const register = asyncWrapper(async (req: Request, res: Response) => {
 	await sendVerificationEmail({
 		name: user.name,
 		email: user.email,
-		verificationToken: user.verificationToken,
+		verificationToken: user.verificationToken || '',
 	});
 
 	// @ts-ignore - Intentionally set password to null for security
@@ -80,6 +80,7 @@ const verifyEmail = asyncWrapper(async (req: Request, res: Response) => {
 	user.verificationToken = '';
 
 	await user.save();
+	// @ts-ignore - Intentionally clear password for security
 	user.password = undefined;
 
 	// create a subscription for the user

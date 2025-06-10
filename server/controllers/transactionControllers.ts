@@ -10,7 +10,7 @@ import { Request, Response } from 'express';
 // @ endpoint /api/v1/transaction/
 // @ method POST
 const createTransaction = asyncWrapper(async (req: Request, res: Response) => {
-	const user = req.user.userId;
+	const user = req.user?.userId;
 	const {
 		organization,
 		budget,
@@ -66,7 +66,7 @@ const createTransaction = asyncWrapper(async (req: Request, res: Response) => {
 // @ method GET
 const getUserTransactions = asyncWrapper(
 	async (req: Request, res: Response) => {
-		const user = req.user.userId;
+		const user = req.user?.userId;
 
 		const transactions = await Transaction.find({ user });
 
@@ -78,7 +78,7 @@ const getUserTransactions = asyncWrapper(
 // @ endpoint /api/v1/transaction/:id
 // @ method PUT
 const updateTransaction = asyncWrapper(async (req: Request, res: Response) => {
-	const user = req.user.userId;
+	const user = req.user?.userId;
 	const {
 		organization,
 		budget,
@@ -141,7 +141,7 @@ const updateTransaction = asyncWrapper(async (req: Request, res: Response) => {
 // @ endpoint /api/v1/transaction/:id
 // @ method DELETE
 const deleteTransaction = asyncWrapper(async (req: Request, res: Response) => {
-	const user = req.user.userId;
+	const user = req.user?.userId;
 
 	const transaction = await Transaction.findOne({
 		_id: req.params.id,

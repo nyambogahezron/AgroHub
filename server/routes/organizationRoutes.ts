@@ -1,7 +1,6 @@
-import express from 'express';
-const router = express.Router();
+import express, { Router, RequestHandler } from 'express';
 import { authenticateUser } from '../middleware/authentication';
-
+import { AuthenticatedRequestWithUser } from '../types/auth';
 import {
 	CreateOrganization,
 	GetUserOrganization,
@@ -10,15 +9,41 @@ import {
 	GetSingleOrganization,
 } from '../controllers/organizationController';
 
+const router: Router = express.Router();
+
+// Type assertion to ensure type safety while satisfying express's RequestHandler type
+const asAuthenticatedHandler = (
+	handler: (
+		req: AuthenticatedRequestWithUser,
+		res: express.Response,
+		next: express.NextFunction
+	) => Promise<void>
+): RequestHandler => {
+	return async (req, res, next) => {
+		if (!req.user) {
+			res.status(401).json({ message: 'Unauthorized' });
+			return;
+		}
+		try {
+			await handler(req as AuthenticatedRequestWithUser, res, next);
+		} catch (error) {
+			next(error);
+		}
+	};
+};
+
+// Apply authentication middleware to all routes
+router.use(authenticateUser);
+
 router
 	.route('/')
-	.post(authenticateUser, CreateOrganization)
-	.get(authenticateUser, GetUserOrganization);
+	.post(asAuthenticatedHandler(CreateOrganization))
+	.get(asAuthenticatedHandler(GetUserOrganization));
 
 router
 	.route('/:id')
-	.get(GetSingleOrganization)
-	.delete(authenticateUser, DeleteOrganization)
-	.patch(authenticateUser, UpdateOrganization);
+	.get(asAuthenticatedHandler(GetSingleOrganization))
+	.delete(asAuthenticatedHandler(DeleteOrganization))
+	.patch(asAuthenticatedHandler(UpdateOrganization));
 
 export default router;

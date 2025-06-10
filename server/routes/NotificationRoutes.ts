@@ -1,7 +1,6 @@
-import express from 'express';
-
-const router = express.Router();
-
+import express, { Router, RequestHandler } from 'express';
+import { authenticateUser } from '../middleware/authentication';
+import { AuthenticatedRequestWithUser } from '../types/auth';
 import {
 	getNotifications,
 	createNotification,
@@ -10,16 +9,41 @@ import {
 	deleteAllNotifications,
 } from '../controllers/NotificationController';
 
-import { authenticateUser } from '../middleware/authentication';
+const router: Router = express.Router();
 
-router.get('/', authenticateUser, getNotifications);
+// Type assertion to ensure type safety while satisfying express's RequestHandler type
+const asAuthenticatedHandler = (
+	handler: (
+		req: AuthenticatedRequestWithUser,
+		res: express.Response,
+		next: express.NextFunction
+	) => Promise<void>
+): RequestHandler => {
+	return async (req, res, next) => {
+		if (!req.user) {
+			res.status(401).json({ message: 'Unauthorized' });
+			return;
+		}
+		try {
+			await handler(req as AuthenticatedRequestWithUser, res, next);
+		} catch (error) {
+			next(error);
+		}
+	};
+};
 
-router.post('/', authenticateUser, createNotification);
+// Apply authentication middleware to all routes
+router.use(authenticateUser);
 
-router.get('/:id', authenticateUser, getNotification);
+router
+	.route('/')
+	.get(asAuthenticatedHandler(getNotifications))
+	.post(asAuthenticatedHandler(createNotification))
+	.delete(asAuthenticatedHandler(deleteAllNotifications));
 
-router.delete('/:id', authenticateUser, deleteNotification);
-
-router.delete('/', authenticateUser, deleteAllNotifications);
+router
+	.route('/:id')
+	.get(asAuthenticatedHandler(getNotification))
+	.delete(asAuthenticatedHandler(deleteNotification));
 
 export default router;

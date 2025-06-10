@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 
-type AsyncRequestHandler = (
-	req: Request,
+type AsyncRequestHandler<T extends Request = Request> = (
+	req: T,
 	res: Response,
 	next: NextFunction
 ) => Promise<any>;
 
-const asyncHandler = (fn: AsyncRequestHandler) => {
-	return async (req: Request, res: Response, next: NextFunction) => {
+const asyncHandler = <T extends Request>(fn: AsyncRequestHandler<T>) => {
+	return async (req: T, res: Response, next: NextFunction) => {
 		try {
 			await fn(req, res, next);
 		} catch (error) {

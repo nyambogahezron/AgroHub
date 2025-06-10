@@ -46,8 +46,7 @@ const authResolvers = {
 			await sendVerificationEmail({
 				name: user.name,
 				email: user.email,
-				verificationToken: user.verificationToken,
-				origin: process.env.ORIGIN || 'http://localhost:3000',
+				verificationToken: verificationToken,
 			});
 
 			return {
@@ -196,7 +195,6 @@ const authResolvers = {
 				name: user.name,
 				email: user.email,
 				token: passwordToken,
-				origin: process.env.ORIGIN || 'http://localhost:3000',
 			});
 
 			const tenMinutes = 10 * 60 * 1000;

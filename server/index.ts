@@ -1,11 +1,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import 'express-async-errors';
-import express, { Express, Request, Response } from 'express';
+import express, {
+	Express,
+	Request,
+	Response,
+	NextFunction,
+	ErrorRequestHandler,
+	RequestHandler,
+} from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import xss from 'xss-clean';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -47,7 +53,6 @@ import asyncHandler from './middleware/asyncHandler';
 // Middleware setup
 app.set('trust proxy', 1);
 app.use(helmet());
-app.use(xss());
 app.use(mongoSanitize());
 app.use(
 	rateLimit({
@@ -89,8 +94,8 @@ app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 
 // Error handling middleware
-app.use(notFoundMiddleware);
-app.use(errorHandlerMiddleware);
+app.use(notFoundMiddleware as unknown as RequestHandler);
+app.use(errorHandlerMiddleware as unknown as ErrorRequestHandler);
 
 const port = process.env.PORT || 5000;
 

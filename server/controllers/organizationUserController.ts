@@ -3,7 +3,8 @@ import Organization from '../models/organization';
 import * as CustomError from '../errors';
 import asyncHandler from '../middleware/asyncHandler';
 import { StatusCodes } from 'http-status-codes';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { AuthenticatedRequestWithUser } from '../types/auth';
 import path from 'path';
 
 // @desc  Get all organization users
@@ -11,7 +12,7 @@ import path from 'path';
 // @access Private
 
 const getOrganizationUsers = asyncHandler(
-	async (req: Request, res: Response) => {
+	async (req: AuthenticatedRequestWithUser, res: Response) => {
 		const user = req.user.userId;
 
 		const users = await OrganizationUser.find({ user: user });
@@ -28,7 +29,11 @@ const getOrganizationUsers = asyncHandler(
 // @route     GET /api/v1/organization-users/:id
 // @access    Private
 const getOrganizationUserById = asyncHandler(
-	async (req: Request, res: Response, next: NextFunction) => {
+	async (
+		req: AuthenticatedRequestWithUser,
+		res: Response,
+		next: NextFunction
+	) => {
 		const organizationUser = await OrganizationUser.findById(req.params.id);
 
 		if (!organizationUser) {
@@ -43,70 +48,38 @@ const getOrganizationUserById = asyncHandler(
 	}
 );
 
-// @desc  Create new organization user
-// @route POST /api/v1/org-user
-// @access Private
+// @desc      Create organization user
+// @route     POST /api/v1/organization-users
+// @access    Private
 const createOrganizationUser = asyncHandler(
-	async (req: Request, res: Response) => {
+	async (req: AuthenticatedRequestWithUser, res: Response) => {
 		const user = req.user.userId;
 
-		const { organization, name, email, phone, location, role, date } = req.body;
+		const organization = await Organization.findOne({ user: user });
 
 		if (!organization) {
-			throw new CustomError.BadRequestError('Invalid organization');
-		}
-		if (!name || !email || !phone || !location) {
-			throw new CustomError.BadRequestError('Please provide all  fields');
-		}
-
-		const isOrgForUser = await Organization.findOne({
-			user: user,
-			_id: organization,
-		});
-
-		if (!isOrgForUser) {
-			throw new CustomError.BadRequestError('Invalid organization');
+			throw new CustomError.NotFoundError('No organization found');
 		}
 
 		const organizationUser = await OrganizationUser.create({
+			...req.body,
 			user,
-			organization,
-			name,
-			email,
-			phone,
-			location,
-			role,
-			date,
+			organization: organization._id,
 		});
 
 		res.status(StatusCodes.CREATED).json({
 			success: true,
-			data: organizationUser,
+			organizationUser,
 		});
 	}
 );
 
-// @desc  Update organization user
-// @route PATCH /api/v1/org-user/:id
-// @access Private
+// @desc      Update organization user
+// @route     PATCH /api/v1/organization-users/:id
+// @access    Private
 const updateOrganizationUser = asyncHandler(
-	async (req: Request, res: Response) => {
+	async (req: AuthenticatedRequestWithUser, res: Response) => {
 		const user = req.user.userId;
-
-		const { organization, name, email, phone, location, role, date } = req.body;
-
-		if (!organization) {
-			throw new CustomError.BadRequestError('Invalid organization');
-		}
-
-		const isOrgForUser = await Organization.findOne({
-			user: user,
-			_id: organization,
-		});
-
-		if (!isOrgForUser) {
-			throw new CustomError.BadRequestError('Invalid organization');
-		}
 
 		const organizationUser = await OrganizationUser.findById(req.params.id);
 
@@ -116,31 +89,42 @@ const updateOrganizationUser = asyncHandler(
 			);
 		}
 
-		organizationUser.user = user || organizationUser.user;
-		organizationUser.organization =
-			organization || organizationUser.organization;
-		organizationUser.name = name || organizationUser.name;
-		organizationUser.email = email || organizationUser.email;
-		organizationUser.phone = phone || organizationUser.phone;
-		organizationUser.location = location || organizationUser.location;
-		organizationUser.role = role || organizationUser.role;
-		organizationUser.date = date || organizationUser.date;
+		// Check if user is the owner of the organization
+		const organization = await Organization.findOne({
+			_id: organizationUser.organization,
+			user: user,
+		});
 
-		await organizationUser.save();
+		if (!organization) {
+			throw new CustomError.UnauthorizedError(
+				'Not authorized to update this organization user'
+			);
+		}
 
-		res.status(200).json({ success: true, data: organizationUser });
+		const updatedOrganizationUser = await OrganizationUser.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{
+				new: true,
+				runValidators: true,
+			}
+		);
+
+		res.status(StatusCodes.OK).json({
+			success: true,
+			organizationUser: updatedOrganizationUser,
+		});
 	}
 );
 
-// @desc  Delete organization user
-// @route DELETE /api/v1/org-user/:id
-// @access Private
+// @desc      Delete organization user
+// @route     DELETE /api/v1/organization-users/:id
+// @access    Private
 const deleteOrganizationUser = asyncHandler(
-	async (req: Request, res: Response) => {
-		const organizationUser = await OrganizationUser.findOne({
-			_id: req.params.id,
-			user: req.user.userId,
-		});
+	async (req: AuthenticatedRequestWithUser, res: Response) => {
+		const user = req.user.userId;
+
+		const organizationUser = await OrganizationUser.findById(req.params.id);
 
 		if (!organizationUser) {
 			throw new CustomError.NotFoundError(
@@ -148,9 +132,24 @@ const deleteOrganizationUser = asyncHandler(
 			);
 		}
 
+		// Check if user is the owner of the organization
+		const organization = await Organization.findOne({
+			_id: organizationUser.organization,
+			user: user,
+		});
+
+		if (!organization) {
+			throw new CustomError.UnauthorizedError(
+				'Not authorized to delete this organization user'
+			);
+		}
+
 		await organizationUser.deleteOne();
 
-		res.status(200).json({ success: true, msg: 'Organization user deleted' });
+		res.status(StatusCodes.OK).json({
+			success: true,
+			msg: 'Organization user deleted',
+		});
 	}
 );
 
@@ -158,7 +157,11 @@ const deleteOrganizationUser = asyncHandler(
 // @route     PUT /api/v1/organization-users/:id/photo
 // @access    Private
 const organizationUserPhotoUpload = asyncHandler(
-	async (req: Request, res: Response, next: NextFunction) => {
+	async (
+		req: AuthenticatedRequestWithUser,
+		res: Response,
+		next: NextFunction
+	) => {
 		const organizationUser = await OrganizationUser.findById(req.params.id);
 
 		if (!organizationUser) {
@@ -183,10 +186,12 @@ const organizationUserPhotoUpload = asyncHandler(
 		}
 
 		// Check file size
-		if (file.size > process.env.MAX_FILE_UPLOAD) {
+		const maxFileSize = process.env.MAX_FILE_UPLOAD || '15000';
+
+		if (file.size > parseInt(maxFileSize)) {
 			return next(
 				new CustomError.BadRequestError(
-					`Please upload an image less than ${process.env.MAX_FILE_UPLOAD}`
+					`Please upload an image less than ${maxFileSize}`
 				)
 			);
 		}

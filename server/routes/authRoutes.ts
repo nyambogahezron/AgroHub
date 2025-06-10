@@ -1,6 +1,4 @@
-import express from 'express';
-const router = express.Router();
-
+import express, { Router, RequestHandler } from 'express';
 import {
 	register,
 	login,
@@ -10,11 +8,31 @@ import {
 	resetPassword,
 } from '../controllers/authController';
 
-router.post('/register', register);
-router.post('/login', login);
-router.delete('/logout', logout);
-router.post('/verify-email', verifyEmail);
-router.post('/reset-password', resetPassword);
-router.post('/forgot-password', forgotPassword);
+const router: Router = express.Router();
+
+// Type assertion to ensure type safety while satisfying express's RequestHandler type
+const asHandler = (
+	handler: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => Promise<void>
+): RequestHandler => {
+	return async (req, res, next) => {
+		try {
+			await handler(req, res, next);
+		} catch (error) {
+			next(error);
+		}
+	};
+};
+
+// Public routes
+router.post('/register', asHandler(register));
+router.post('/login', asHandler(login));
+router.post('/logout', asHandler(logout));
+router.get('/verify-email/:token', asHandler(verifyEmail));
+router.post('/forgot-password', asHandler(forgotPassword));
+router.post('/reset-password/:token', asHandler(resetPassword));
 
 export default router;
