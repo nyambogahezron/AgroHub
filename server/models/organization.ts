@@ -91,7 +91,6 @@ const OrganizationSchema = new Schema<
 );
 
 // Add indexes for better query performance
-OrganizationSchema.index({ email: 1 }, { unique: true });
 OrganizationSchema.index({ name: 'text' });
 
 // Add method to validate user reference

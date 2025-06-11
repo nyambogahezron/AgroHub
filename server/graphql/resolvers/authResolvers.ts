@@ -1,4 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
 import * as CustomError from '../../errors';
 import User from '../../models/User';
 import { createTokenUser, attachCookiesToResponse } from '../../utils';

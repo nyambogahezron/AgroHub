@@ -1,11 +1,12 @@
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { isTokenValid, attachCookiesToResponse } from '../utils';
 import Token from '../models/Token';
 import { AuthenticatedRequest, UserPayload } from '../types/auth';
 import { GraphQLContext } from './types/context';
 
+// Accept ExpressContext from apollo-server-express
 interface ContextParams {
-	req: AuthenticatedRequest;
+	req: Request | AuthenticatedRequest;
 	res: Response;
 }
 
@@ -15,13 +16,15 @@ export const createContext = async ({
 	res,
 }: ContextParams): Promise<GraphQLContext> => {
 	try {
+		// Ensure we have cookies to check
+		const authReq = req as AuthenticatedRequest;
 		// Add authentication to GraphQL context
-		const { refreshToken, accessToken } = req.signedCookies;
+		const { refreshToken, accessToken } = authReq.signedCookies || {};
 
 		if (accessToken) {
 			const payload = isTokenValid(accessToken);
-			req.user = payload.user as UserPayload;
-			return { req, res };
+			authReq.user = payload.user as UserPayload;
+			return { req: authReq, res };
 		}
 
 		if (refreshToken) {
@@ -39,13 +42,14 @@ export const createContext = async ({
 					refreshToken: existingToken.refreshToken,
 				});
 
-				req.user = payload.user as UserPayload;
+				authReq.user = payload.user as UserPayload;
 			}
 		}
 
-		return { req, res };
+		return { req: authReq, res };
 	} catch (error) {
 		// If authentication fails, still provide req and res without user info
-		return { req, res };
+		console.log('Auth error in GraphQL context:', error);
+		return { req: req as AuthenticatedRequest, res };
 	}
 };

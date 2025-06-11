@@ -29,9 +29,21 @@ const dateScalar = {
 	},
 };
 
+// Health check resolver
+const healthResolver = {
+	Query: {
+		health: () => ({
+			status: 'ok',
+			message: 'GraphQL server is running',
+			timestamp: new Date(),
+		}),
+	},
+};
+
 // Combine all resolvers
 export default [
 	dateScalar,
+	healthResolver,
 	authResolvers,
 	userResolvers,
 	organizationResolvers,

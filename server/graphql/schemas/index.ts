@@ -13,10 +13,17 @@ import organizationUserTypeDefs from './organizationUserSchema';
 const baseTypeDefs = gql`
 	type Query {
 		_: Boolean
+		health: HealthStatus!
 	}
 
 	type Mutation {
 		_: Boolean
+	}
+
+	type HealthStatus {
+		status: String!
+		message: String!
+		timestamp: Date!
 	}
 
 	scalar Date
