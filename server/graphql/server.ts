@@ -1,24 +1,20 @@
 import { ApolloServer } from 'apollo-server-express';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { Express } from 'express';
 import typeDefs from './schemas';
 import resolvers from './resolvers';
 import { createContext } from './context';
 
-export const setupApolloServer = async (app: Express): Promise<void> => {
+export const setupApolloServer = async (app: any): Promise<void> => {
 	try {
-		// Create schema with typeDefs and resolvers
 		const schema = makeExecutableSchema({
 			typeDefs,
 			resolvers,
 		});
 
-		// Create ApolloServer instance
 		const server = new ApolloServer({
 			schema,
 			context: createContext,
 			formatError: (error) => {
-				// Log errors for debugging
 				console.error('GraphQL Error:', error);
 				const message = error.message || 'An error occurred';
 				const code = error.extensions?.code || 'INTERNAL_SERVER_ERROR';
@@ -30,22 +26,25 @@ export const setupApolloServer = async (app: Express): Promise<void> => {
 					statusCode,
 				};
 			},
-			introspection: true, // Enable introspection in all environments
-			csrfPrevention: false, // Allow operations from sources other than graphQL playground
+			introspection: true,
+			csrfPrevention: false,
 		});
 
-		// Start the Apollo Server
 		await server.start();
 
 		console.log('Apollo Server started successfully');
 
-		// Apply Express middleware with specific path and CORS configuration
 		server.applyMiddleware({
 			app,
 			path: '/graphql',
-			// Use the existing CORS configuration from Express
-			cors: false,
-			// Ensure GraphQL routes are properly accessible
+			cors: {
+				origin: [
+					'https://agro-hub-nine.vercel.app',
+					'http://localhost:3000',
+					'https://studio.apollographql.com',
+				],
+				credentials: true,
+			},
 			bodyParserConfig: false,
 		});
 

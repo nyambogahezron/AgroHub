@@ -39,9 +39,14 @@ import notificationRoutes from './routes/NotificationRoutes';
 
 import notFoundMiddleware from './middleware/notFound';
 import errorHandlerMiddleware from './middleware/errorHandler';
+import graphqlCors from './middleware/graphqlCors';
 
 const corsOptions = {
-	origin: ['https://agro-hub-nine.vercel.app', 'http://localhost:3000'],
+	origin: [
+		'https://agro-hub-nine.vercel.app',
+		'http://localhost:3000',
+		'https://studio.apollographql.com',
+	],
 	optionsSuccessStatus: 200,
 	credentials: true,
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -51,11 +56,12 @@ const corsOptions = {
 		'X-Requested-With',
 		'Accept',
 		'Origin',
-		'Apollo-Require-Preflight', // Required for Apollo Client
+		'Apollo-Require-Preflight',
 	],
 };
 
 app.use(cors(corsOptions));
+app.use(graphqlCors);
 
 app.set('trust proxy', 1);
 app.use(
